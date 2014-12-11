@@ -1,7 +1,85 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="${relativePackage}.${activityClass}" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-</RelativeLayout>
+    <!--
+    all of the calendar, and option screen will appear in FrameLayout
+    according to software specification, this layout is named 'main screen'
+    -->
+
+    <FrameLayout
+        android:id="@+id/mainscreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.00" >
+
+        <CalendarView
+            android:id="@+id/monthlycalendar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/dailycalendar_screen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="invisible" >
+
+            <TextView
+                android:id="@+id/dailycalendar_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="date" />
+
+            <ListView
+                android:id="@+id/dailyeventlist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </ListView>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <!-- this layout has five function icons -->
+
+    <LinearLayout
+        android:id="@+id/functioniconframe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal" >
+
+        <ImageView
+            android:id="@+id/btn_monthly"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/pic_monthly" />
+
+        <ImageView
+            android:id="@+id/btn_several"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/pic_several" />
+
+        <ImageView
+            android:id="@+id/btn_daily"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/pic_daily" />
+
+        <ImageView
+            android:id="@+id/btn_eventcal"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/pic_eventcal" />
+
+        <ImageView
+            android:id="@+id/btn_option"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/pic_option" />
+    </LinearLayout>
+
+</LinearLayout>
