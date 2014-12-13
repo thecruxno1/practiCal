@@ -13,11 +13,51 @@
         android:layout_height="wrap_content"
         android:layout_weight="1.00" >
 
+        <!--
         <CalendarView
             android:id="@+id/monthlycalendar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible" />
+            android:visibility="visible" />        -->
+
+        <LinearLayout
+            android:id="@+id/monthlycalendar_screen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible" >
+
+            <LinearLayout
+                android:id="@+id/monthlycalendar_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/monthlycalendar_top_previous"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Previous" />
+			
+				<TextView
+                android:id="@+id/monthlycalendar_top_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Monthly Calendar"
+                />
+			
+                <Button
+                    android:id="@+id/monthlycalendar_top_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Next" />
+            </LinearLayout>
+
+            <com.tejava.practical.MonthlyCalendarView
+                android:id="@+id/monthlycalendar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/severaldayscalender_screen"
@@ -85,7 +125,7 @@
             android:id="@+id/option_screen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" 
+            android:orientation="vertical"
             android:visibility="invisible" >
 
             <TextView

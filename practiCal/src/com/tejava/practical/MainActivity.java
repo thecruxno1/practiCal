@@ -1,18 +1,20 @@
 package com.tejava.practical;
 
 import java.util.Calendar;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.CalendarView;
-import android.widget.CalendarView.OnDateChangeListener;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -25,21 +27,33 @@ public class MainActivity extends Activity {
 	ImageView btnEventCal;
 	ImageView btnOption;
 
-	// calendar view
-	CalendarView monthlyCal;
-	LinearLayout severalCal;
-	LinearLayout dailyCal;
-	LinearLayout eventCal;
-	LinearLayout optionmenu;
+	// Monthly Calendar related variable
+	// CalendarView monthlyCal;
+	LinearLayout monthlyCalScreen;
+	MonthlyCalendarView monthlyCal;
+	MonthlyCalendarAdapter monthlyCalAdapter;
+	Button monthlyCalPrevious;
+	Button monthlyCalNext;
+	TextView monthlyCalTop;
 
-	// daily calendar
+	// Several Calendar related variable
+	LinearLayout severalCalScreen;
+
+	// Daily calendar related variable
+	LinearLayout dailyCalScreen;
 	TextView dailyCalTop;
 
-	// option menu
+	// Event calendar related variable
+	LinearLayout eventCalScreen;
+
+	// option menu related variable
+	LinearLayout optionScreen;
 	int setting;
 	RadioButton month_onclick_option1;
 	RadioButton month_onclick_option2;
 	RadioButton month_onclick_option3;
+
+	// option menu
 
 	// global variable
 	int selectedDay;
@@ -54,6 +68,11 @@ public class MainActivity extends Activity {
 
 		variableInitialize();
 		listenerInitialize();
+		monthlyCalInitialize();
+		severalCalInitialize();
+		dailyCalInitialize();
+		eventCalInitizliize();
+		optionInitailize();
 	}
 
 	private void variableInitialize() {
@@ -65,21 +84,6 @@ public class MainActivity extends Activity {
 		btnEventCal = (ImageView) findViewById(R.id.btn_eventcal);
 		btnOption = (ImageView) findViewById(R.id.btn_option);
 
-		// calendar view find
-		monthlyCal = (CalendarView) findViewById(R.id.monthlycalendar);
-		severalCal = (LinearLayout) findViewById(R.id.severaldayscalender_screen);
-		dailyCal = (LinearLayout) findViewById(R.id.dailycalendar_screen);
-		eventCal = (LinearLayout) findViewById(R.id.eventcalendar_screen);
-		optionmenu = (LinearLayout) findViewById(R.id.option_screen);
-		
-		// daily calendar find
-		dailyCalTop = (TextView) findViewById(R.id.dailycalendar_top);
-
-		// option menu find
-		month_onclick_option1 = (RadioButton) findViewById(R.id.onclick_monthlycal_noaction);
-		month_onclick_option2 = (RadioButton) findViewById(R.id.onclick_monthlycal_several);
-		month_onclick_option3 = (RadioButton) findViewById(R.id.onclick_monthlycal_daily);
-
 		// global variable init
 		fortoday = Calendar.getInstance();
 		selectedDay = fortoday.get(fortoday.DATE);
@@ -87,102 +91,105 @@ public class MainActivity extends Activity {
 		selectedYear = fortoday.get(fortoday.YEAR);
 	}
 
-	private void listenerInitialize() {
-		// five function button onclicklistener
+	private void monthlyCalInitialize() {
+		// Monthly Calendar valiable Init
+		monthlyCalScreen = (LinearLayout) findViewById(R.id.monthlycalendar_screen);
+		// monthlyCal = (CalendarView) findViewById(R.id.monthlycalendar);
+		monthlyCal = (MonthlyCalendarView) findViewById(R.id.monthlycalendar);
+		monthlyCalAdapter = new MonthlyCalendarAdapter(this);
+		monthlyCal.setAdapter(monthlyCalAdapter);
+		monthlyCalPrevious = (Button) findViewById(R.id.monthlycalendar_top_previous);
+		monthlyCalNext = (Button) findViewById(R.id.monthlycalendar_top_next);
+		monthlyCalTop = (TextView) findViewById(R.id.monthlycalendar_top_date);
+		monthlyCalTop.setText(selectedYear + " - " + selectedMonth + " - "
+				+ selectedDay);
 
-		btnMonthlyCal.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				monthlyCal.setVisibility(View.VISIBLE);
-				severalCal.setVisibility(View.INVISIBLE);
-				dailyCal.setVisibility(View.INVISIBLE);
-				eventCal.setVisibility(View.INVISIBLE);
-				optionmenu.setVisibility(View.INVISIBLE);
-				// printMonthlyCal();
+		// Monthly Calendar listner Init
+		monthlyCal.setOnDataSelectionListener(new OnDataSelectionListener() {
+			public void onDataSelected(AdapterView parent, View v,
+					int position, long id) {
+				MonthlyCalendarOneDay curItem = (MonthlyCalendarOneDay) monthlyCalAdapter
+						.getItem(position);
+
+				selectedDay = curItem.getDay();
+				selectedMonth = 1 + monthlyCalAdapter.curMonth;
+				selectedYear = monthlyCalAdapter.curYear;
+				monthlyCalTop.setText(selectedYear + " - " + selectedMonth
+						+ " - " + selectedDay);
+
+				if (setting == 2) {
+					monthlyCalScreen.setVisibility(View.INVISIBLE);
+					severalCalScreen.setVisibility(View.VISIBLE);
+					dailyCalScreen.setVisibility(View.INVISIBLE);
+					eventCalScreen.setVisibility(View.INVISIBLE);
+					optionScreen.setVisibility(View.INVISIBLE);
+				} else if (setting == 3) {
+					monthlyCalScreen.setVisibility(View.INVISIBLE);
+					severalCalScreen.setVisibility(View.INVISIBLE);
+					dailyCalScreen.setVisibility(View.VISIBLE);
+					eventCalScreen.setVisibility(View.INVISIBLE);
+					optionScreen.setVisibility(View.INVISIBLE);
+				}
 			}
 		});
 
-		btnSeveralCal.setOnClickListener(new OnClickListener() {
+		monthlyCalTop.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
-				monthlyCal.setVisibility(View.INVISIBLE);
-				severalCal.setVisibility(View.VISIBLE);
-				dailyCal.setVisibility(View.INVISIBLE);
-				eventCal.setVisibility(View.INVISIBLE);
-				optionmenu.setVisibility(View.INVISIBLE);
-				// printSeveralCal();
+				Toast.makeText(
+						getBaseContext(),
+						"Selected Date is\n" + selectedYear + " - "
+								+ selectedMonth + " - " + selectedDay,
 
+						Toast.LENGTH_SHORT).show();
 			}
 		});
 
-		btnDailyCal.setOnClickListener(new OnClickListener() {
-			@Override
+		monthlyCalPrevious.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				dailyCalTop.setText(selectedYear + ". " + selectedMonth + ". "
-						+ selectedDay);
-				monthlyCal.setVisibility(View.INVISIBLE);
-				severalCal.setVisibility(View.INVISIBLE);
-				dailyCal.setVisibility(View.VISIBLE);
-				eventCal.setVisibility(View.INVISIBLE);
-				optionmenu.setVisibility(View.INVISIBLE);
-
-				// printDailyCal();
-
-			}
-		});
-
-		btnEventCal.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				monthlyCal.setVisibility(View.INVISIBLE);
-				severalCal.setVisibility(View.INVISIBLE);
-				dailyCal.setVisibility(View.INVISIBLE);
-				eventCal.setVisibility(View.VISIBLE);
-				optionmenu.setVisibility(View.INVISIBLE);
-				// printEventCal();
-			}
-		});
-
-		btnOption.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				monthlyCal.setVisibility(View.INVISIBLE);
-				severalCal.setVisibility(View.INVISIBLE);
-				dailyCal.setVisibility(View.INVISIBLE);
-				eventCal.setVisibility(View.INVISIBLE);
-				optionmenu.setVisibility(View.VISIBLE);
-				// printOption();
-			}
-		});
-
-		// monthly calendar
-		monthlyCal.setOnDateChangeListener(new OnDateChangeListener() {
-			@Override
-			public void onSelectedDayChange(CalendarView view, int year,
-					int month, int dayOfMonth) {
-				selectedDay = dayOfMonth;
-				selectedMonth = month + 1;
-				selectedYear = year;
-				dailyCalTop.setText(selectedYear + ". " + selectedMonth + ". "
-						+ selectedDay);
+				monthlyCalAdapter.setPreviousMonth();
+				monthlyCalAdapter.notifyDataSetChanged();
 				
-				if(setting==2){
-					monthlyCal.setVisibility(View.INVISIBLE);
-					severalCal.setVisibility(View.VISIBLE);
-					dailyCal.setVisibility(View.INVISIBLE);
-					eventCal.setVisibility(View.INVISIBLE);
-					optionmenu.setVisibility(View.INVISIBLE);
-				}
-				else if(setting==3)
-				{
-					monthlyCal.setVisibility(View.INVISIBLE);
-					severalCal.setVisibility(View.INVISIBLE);
-					dailyCal.setVisibility(View.VISIBLE);
-					eventCal.setVisibility(View.INVISIBLE);
-					optionmenu.setVisibility(View.INVISIBLE);
-				}
+				int tempmonth = monthlyCalAdapter.curMonth+1;
+				monthlyCalTop.setText(monthlyCalAdapter.curYear + " - " + tempmonth);
 			}
 		});
+
+		monthlyCalNext.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				monthlyCalAdapter.setNextMonth();
+				monthlyCalAdapter.notifyDataSetChanged();
+				
+				int tempmonth = monthlyCalAdapter.curMonth+1;
+				monthlyCalTop.setText(monthlyCalAdapter.curYear + " - " + tempmonth);
+			}
+		});
+	}
+
+	private void severalCalInitialize() {
+		// // Several Calendar variable Init
+		severalCalScreen = (LinearLayout) findViewById(R.id.severaldayscalender_screen);
+
+	}
+
+	private void dailyCalInitialize() {
+		// Daily Calendar Init
+		dailyCalScreen = (LinearLayout) findViewById(R.id.dailycalendar_screen);
+		dailyCalTop = (TextView) findViewById(R.id.dailycalendar_top);
+	}
+
+	private void eventCalInitizliize() {
+		// Event Calendar Init
+		eventCalScreen = (LinearLayout) findViewById(R.id.eventcalendar_screen);
+	}
+
+	private void optionInitailize() {
+		// Option calendar Init
+		optionScreen = (LinearLayout) findViewById(R.id.option_screen);
+		month_onclick_option1 = (RadioButton) findViewById(R.id.onclick_monthlycal_noaction);
+		month_onclick_option2 = (RadioButton) findViewById(R.id.onclick_monthlycal_several);
+		month_onclick_option3 = (RadioButton) findViewById(R.id.onclick_monthlycal_daily);
 
 		// Option menu
 		month_onclick_option1
@@ -215,5 +222,73 @@ public class MainActivity extends Activity {
 							setting = 3;
 					}
 				});
+	}
+
+	private void listenerInitialize() {
+		// five function button onclicklistener
+
+		btnMonthlyCal.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				monthlyCalScreen.setVisibility(View.VISIBLE);
+				severalCalScreen.setVisibility(View.INVISIBLE);
+				dailyCalScreen.setVisibility(View.INVISIBLE);
+				eventCalScreen.setVisibility(View.INVISIBLE);
+				optionScreen.setVisibility(View.INVISIBLE);
+				// printMonthlyCal();
+			}
+		});
+
+		btnSeveralCal.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				monthlyCalScreen.setVisibility(View.INVISIBLE);
+				severalCalScreen.setVisibility(View.VISIBLE);
+				dailyCalScreen.setVisibility(View.INVISIBLE);
+				eventCalScreen.setVisibility(View.INVISIBLE);
+				optionScreen.setVisibility(View.INVISIBLE);
+				// printSeveralCal();
+
+			}
+		});
+
+		btnDailyCal.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dailyCalTop.setText(selectedYear + ". " + selectedMonth + ". "
+						+ selectedDay);
+				monthlyCalScreen.setVisibility(View.INVISIBLE);
+				severalCalScreen.setVisibility(View.INVISIBLE);
+				dailyCalScreen.setVisibility(View.VISIBLE);
+				eventCalScreen.setVisibility(View.INVISIBLE);
+				optionScreen.setVisibility(View.INVISIBLE);
+				// printDailyCal();
+			}
+		});
+
+		btnEventCal.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				monthlyCalScreen.setVisibility(View.INVISIBLE);
+				severalCalScreen.setVisibility(View.INVISIBLE);
+				dailyCalScreen.setVisibility(View.INVISIBLE);
+				eventCalScreen.setVisibility(View.VISIBLE);
+				optionScreen.setVisibility(View.INVISIBLE);
+				// printEventCal();
+			}
+		});
+
+		btnOption.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				monthlyCalScreen.setVisibility(View.INVISIBLE);
+				severalCalScreen.setVisibility(View.INVISIBLE);
+				dailyCalScreen.setVisibility(View.INVISIBLE);
+				eventCalScreen.setVisibility(View.INVISIBLE);
+				optionScreen.setVisibility(View.VISIBLE);
+				// printOption();
+			}
+		});
+
 	}
 }
