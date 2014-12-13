@@ -28,7 +28,6 @@ public class MainActivity extends Activity {
 	ImageView btnOption;
 
 	// Monthly Calendar related variable
-	// CalendarView monthlyCal;
 	LinearLayout monthlyCalScreen;
 	MonthlyCalendarView monthlyCal;
 	MonthlyCalendarAdapter monthlyCalAdapter;
@@ -59,6 +58,7 @@ public class MainActivity extends Activity {
 	int selectedDay;
 	int selectedMonth;
 	int selectedYear;
+	int selectedDayOfWeek;
 	Calendar fortoday;
 
 	@Override
@@ -89,6 +89,7 @@ public class MainActivity extends Activity {
 		selectedDay = fortoday.get(fortoday.DATE);
 		selectedMonth = fortoday.get(fortoday.MONTH) + 1;
 		selectedYear = fortoday.get(fortoday.YEAR);
+		selectedDayOfWeek = fortoday.get(fortoday.DAY_OF_WEEK)-1;
 	}
 
 	private void monthlyCalInitialize() {
@@ -102,7 +103,7 @@ public class MainActivity extends Activity {
 		monthlyCalNext = (Button) findViewById(R.id.monthlycalendar_top_next);
 		monthlyCalTop = (TextView) findViewById(R.id.monthlycalendar_top_date);
 		monthlyCalTop.setText(selectedYear + " - " + selectedMonth + " - "
-				+ selectedDay);
+				+ selectedDay + ", " + selectedDayOfWeek);
 
 		// Monthly Calendar listner Init
 		monthlyCal.setOnDataSelectionListener(new OnDataSelectionListener() {
@@ -112,10 +113,11 @@ public class MainActivity extends Activity {
 						.getItem(position);
 
 				selectedDay = curItem.getDay();
-				selectedMonth = 1 + monthlyCalAdapter.curMonth;
-				selectedYear = monthlyCalAdapter.curYear;
+				selectedMonth = curItem.getMonth();
+				selectedYear = curItem.getYear();
+				selectedDayOfWeek = curItem.getDayOfWeek();
 				monthlyCalTop.setText(selectedYear + " - " + selectedMonth
-						+ " - " + selectedDay);
+						+ " - " + selectedDay + ", " + selectedDayOfWeek);
 
 				if (setting == 2) {
 					monthlyCalScreen.setVisibility(View.INVISIBLE);
@@ -140,7 +142,7 @@ public class MainActivity extends Activity {
 				Toast.makeText(
 						getBaseContext(),
 						"Selected Date is\n" + selectedYear + " - "
-								+ selectedMonth + " - " + selectedDay,
+								+ selectedMonth + " - " + selectedDay + ", " + selectedDayOfWeek,
 
 						Toast.LENGTH_SHORT).show();
 			}
@@ -235,7 +237,6 @@ public class MainActivity extends Activity {
 				dailyCalScreen.setVisibility(View.INVISIBLE);
 				eventCalScreen.setVisibility(View.INVISIBLE);
 				optionScreen.setVisibility(View.INVISIBLE);
-				// printMonthlyCal();
 			}
 		});
 
@@ -247,7 +248,6 @@ public class MainActivity extends Activity {
 				dailyCalScreen.setVisibility(View.INVISIBLE);
 				eventCalScreen.setVisibility(View.INVISIBLE);
 				optionScreen.setVisibility(View.INVISIBLE);
-				// printSeveralCal();
 
 			}
 		});
@@ -262,7 +262,6 @@ public class MainActivity extends Activity {
 				dailyCalScreen.setVisibility(View.VISIBLE);
 				eventCalScreen.setVisibility(View.INVISIBLE);
 				optionScreen.setVisibility(View.INVISIBLE);
-				// printDailyCal();
 			}
 		});
 
@@ -274,7 +273,6 @@ public class MainActivity extends Activity {
 				dailyCalScreen.setVisibility(View.INVISIBLE);
 				eventCalScreen.setVisibility(View.VISIBLE);
 				optionScreen.setVisibility(View.INVISIBLE);
-				// printEventCal();
 			}
 		});
 
@@ -286,7 +284,6 @@ public class MainActivity extends Activity {
 				dailyCalScreen.setVisibility(View.INVISIBLE);
 				eventCalScreen.setVisibility(View.INVISIBLE);
 				optionScreen.setVisibility(View.VISIBLE);
-				// printOption();
 			}
 		});
 
