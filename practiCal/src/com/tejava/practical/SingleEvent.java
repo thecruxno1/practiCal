@@ -22,6 +22,30 @@ public class SingleEvent
 				newStartHour, newEndHour, newStartMin, newEndMin,
 				newName, newDescription);
 	}
+	
+	public void Copy(SingleEvent newSingleEvent) throws Exception
+	{
+		SetId(newSingleEvent.GetId());
+		SetYear(newSingleEvent.GetYear());
+		SetMonth(newSingleEvent.GetMonth());
+		SetDay(newSingleEvent.GetDay());
+	}
+	
+	public void Copy(int newId, int newYear, int newMonth, int newDay,
+			int newStartHour, int newEndHour, int newStartMin, int newEndMin,
+			String newName, String newDescription) throws Exception
+	{
+		SetId(newId);
+		SetYear(newYear);
+		SetMonth(newMonth);
+		SetDay(newDay);
+		SetStartHour(newStartHour);
+		SetEndHour(newEndHour);
+		SetStartMin(newStartMin);
+		SetEndMin(newEndMin);
+		SetName(newName);
+		SetDescription(newDescription);
+	}
 
 	private int getMonthLastDay()
 	{

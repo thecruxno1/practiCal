@@ -46,7 +46,6 @@ public class MainActivity extends Activity {
 
 	// Event calendar related variable
 	LinearLayout eventCalScreen;
-	EventCalendarView eventCal;
 	EventCalendarAdapter eventCalAdapter;
 
 	// option menu related variable
@@ -191,8 +190,23 @@ public class MainActivity extends Activity {
 		
 		eventCalAdapter = new EventCalendarAdapter(this);
 		
+		SingleEvent event = null;
+		try {
+			event = new SingleEvent(0, 2014, 12, 14, 8, 9, 0, 0, "mabinogi heroes", "golden time");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		
+		eventCalAdapter.addItem(event);
+		eventCalAdapter.addItem(event);
+		eventCalAdapter.addItem(event);
+		eventCalAdapter.addItem(event);
+		eventCalAdapter.addItem(event);
+		eventCalAdapter.addItem(event);
+		eventCalAdapter.addItem(event);
+		eventCalAdapter.addItem(event);
+		eventCalAdapter.addItem(event);
 		eventCalAdapter.addItem(event);
 		
 		ListView eventListView = (ListView) findViewById(R.id.eventcalendar_eventlist);
