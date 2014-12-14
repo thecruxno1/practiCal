@@ -1,7 +1,6 @@
 package com.tejava.practical;
 
 import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -14,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -49,7 +49,16 @@ public class MainActivity extends Activity {
 
 	// Event calendar related variable
 	LinearLayout eventCalScreen;
-//	EventCalendarView eventCal;
+	Button startDay;
+	Button endDay;
+	Button printEventRange;
+	TextView upcoming;
+	EditText eventNumber;
+	Button printEventNumber;
+	ListView eventList;
+	
+	EventCalendar eventCalendar;
+	EventListAdapter eventListAdapter;
 
 	// option menu related variable
 	LinearLayout optionScreen;
@@ -68,7 +77,7 @@ public class MainActivity extends Activity {
 	int selectedDayOfWeek;
 	
 	//variables for Test()
-	private EventList eventList = new EventList(MainActivity.this);
+	private EventList eventList1 = new EventList(MainActivity.this);
 	private EventList eventList2 = new EventList(MainActivity.this);
 	private SingleEvent singleEvent = new SingleEvent();
     FileOutputStream fos;
@@ -112,18 +121,17 @@ public class MainActivity extends Activity {
 	//test function
 	private void Test() throws Exception
 	{
-		eventList.Insert(1, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
-		eventList.Insert(2, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
-		eventList.Insert(3, 2014, 2, 3, 4, 5, 6, 7, "Third", "This is third event");
-		eventList.Insert(4, 2014, 2, 3, 4, 5, 6, 7, "Fourth", "This is fourth event");
-		eventList.Save("test.txt");
+		eventList1.Insert(1, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
+		eventList1.Insert(2, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
+		eventList1.Insert(3, 2014, 2, 3, 4, 5, 6, 7, "Third", "This is third event");
+		eventList1.Insert(4, 2014, 2, 3, 4, 5, 6, 7, "Fourth", "This is fourth event");
+		eventList1.Save("test.txt");
 		
 		eventList2.Load("test.txt");
 		eventList2.Delete(3);
 		ArrayList<SingleEvent> list = eventList2.Search(2014, 2, 3);
 		Toast.makeText(MainActivity.this, list.get(0).GetDescription(), Toast.LENGTH_LONG).show();
 	}
-	//////////////////////////////////
 
 	private void variableInitialize() {
 
@@ -313,26 +321,70 @@ public class MainActivity extends Activity {
 	}
 
 	private void eventCalInitizliize() throws Exception {
-		// Event Calendar Init
+		// Event Calendar variable initialize
 		eventCalScreen = (LinearLayout) findViewById(R.id.eventcalendar_screen);
+		startDay = (Button) findViewById(R.id.start_day);
+		endDay = (Button) findViewById(R.id.end_day);
+		printEventRange = (Button) findViewById(R.id.print_event_range);
+		upcoming = (TextView) findViewById(R.id.upcoming);
+		eventNumber = (EditText) findViewById(R.id.event_number);
+		printEventNumber = (Button) findViewById(R.id.print_event_number);
+		eventList = (ListView) findViewById(R.id.eventcalendar_eventlist);
 		
-//		eventCalAdapter = new EventListAdapter(this);
-//		
-//		eventList.Insert(1, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
-//		eventList.Insert(2, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
-//		eventList.Insert(3, 2014, 2, 3, 4, 5, 6, 7, "Third", "This is third event");
-//		eventList.Insert(4, 2014, 2, 3, 4, 5, 6, 7, "Fourth", "This is fourth event");
-//		eventList.Save("test.txt");
+		eventCalendar = new EventCalendar();
+		eventListAdapter = new EventListAdapter(this);
+		
+		// Event Calendar listener initialize
+		printEventNumber.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String eventNumberStr = (eventNumber.getText().toString().equals(""))? null : eventNumber.getText().toString();
+				
+				if (eventNumberStr == null) {
+//					Toast.makeText(MainActivity.this, "empty is null", Toast.LENGTH_LONG).show();
+				} else {
+					eventCalendar.eventNumber = Integer.parseInt(eventNumberStr);
+//					Toast.makeText(MainActivity.this, "event number: " + eventCalendar.eventNumber, Toast.LENGTH_LONG).show();
+				}
+				
+				// save modified data
+				// must be changed... use db_access_info
+
+				// db_access_info.start_year = start_year;
+				// db_access_info.start_month = start_month;
+				// db_access_info.start_day = start_day;
+				// db_access_info.start_hour = start_hour;
+				// db_access_info.start_min = start_min;
+				
+				// db_access_info.end_year = end_year;
+				// db_access_info.end_month = end_month;
+				// db_access_info.end_day = end_day;
+				// db_access_info.end_hour = end_hour;
+				// db_access_info.end_min = end_min;
+				
+				// db_access_info.name = ET_event_name.getText().toString();
+				// db_access_info.dscrpt = ET_event_description.getText().toString();
+				// db_access_info.adm_1 = ET_event_additional_memo_1.getText().toString();
+				// db_access_info.adm_2 = ET_event_additional_memo_2.getText().toString();
+				// db_access_info.adm_3 = ET_event_additional_memo_3.getText().toString();
+				// db_access_info.adm_4 = ET_event_additional_memo_4.getText().toString();
+				
+			}
+		});
+		
+//		eventList1.Insert(1, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
+//		eventList1.Insert(2, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
+//		eventList1.Insert(3, 2014, 2, 3, 4, 5, 6, 7, "Third", "This is third event");
+//		eventList1.Insert(4, 2014, 2, 3, 4, 5, 6, 7, "Fourth", "This is fourth event");
+//		eventList1.Save("test.txt");
 //		
 //		eventList2.Load("test.txt");
-//		eventList2.Delete(3);
 //		ArrayList<SingleEvent> list = eventList2.Search(2014, 2, 3);
 //		
 //		for(int i=0; i<list.size(); ++i)
-//			eventCalAdapter.addItem(list.get(i));
-		
-		ListView eventListView = (ListView) findViewById(R.id.eventcalendar_eventlist);
-//		eventListView.setAdapter(eventCalAdapter);
+//			eventListAdapter.addItem(list.get(i));
+//		
+//		eventList.setAdapter(eventListAdapter);;
 	}
 
 	private void optionInitailize() {

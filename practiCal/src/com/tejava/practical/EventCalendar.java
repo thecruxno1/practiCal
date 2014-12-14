@@ -13,7 +13,7 @@ public class EventCalendar {
 	
 	public EventCalendar()
 	{
-		
+		eventNumber = 10;
 	}
 	
 	public void SetEventNumber(int newEventNumber)

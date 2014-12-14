@@ -157,7 +157,8 @@
                     android:id="@+id/event_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="3" />
+                    android:ems="3"
+                    android:hint="10" />
                 
                 <Button
                     android:id="@+id/print_event_number"
