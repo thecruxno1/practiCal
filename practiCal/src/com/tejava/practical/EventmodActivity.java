@@ -41,7 +41,7 @@ public class EventmodActivity extends Activity {
 	Button btn_end_day;
 	Button btn_end_time;
 	Button btn_ok;
-	// Button btn_cancel;
+	Button btn_delete;
 
 	// define
 	static final int EVENT_MOD_START_DATE_DIALOG_ID = 100;
@@ -99,7 +99,7 @@ public class EventmodActivity extends Activity {
 		btn_end_day = (Button) findViewById(R.id.btn_eventmod_end_day);
 		btn_end_time = (Button) findViewById(R.id.btn_eventmod_end_time);
 		btn_ok = (Button) findViewById(R.id.btn_eventmod_ok);
-		// btn_cancel = (Button) findViewById(R.id.btn_eventmod_cancel);
+		btn_delete = (Button) findViewById(R.id.btn_eventmod_del);
 
 		btn_start_day.setText(start_year+"/"+(int)(start_month+1)+"/"+start_day);
 		btn_start_time.setText(start_hour+":"+start_min);
@@ -181,16 +181,43 @@ public class EventmodActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// save modified data
+				// must be changed... use db_access_info
+
+				// db_access_info.start_year = start_year;
+				// db_access_info.start_month = start_month;
+				// db_access_info.start_day = start_day;
+				// db_access_info.start_hour = start_hour;
+				// db_access_info.start_min = start_min;
+				
+				// db_access_info.end_year = end_year;
+				// db_access_info.end_month = end_month;
+				// db_access_info.end_day = end_day;
+				// db_access_info.end_hour = end_hour;
+				// db_access_info.end_min = end_min;
+				
+				// db_access_info.name = ET_event_name.getText().toString();
+				// db_access_info.dscrpt = ET_event_description.getText().toString();
+				// db_access_info.adm_1 = ET_event_additional_memo_1.getText().toString();
+				// db_access_info.adm_2 = ET_event_additional_memo_2.getText().toString();
+				// db_access_info.adm_3 = ET_event_additional_memo_3.getText().toString();
+				// db_access_info.adm_4 = ET_event_additional_memo_4.getText().toString();
+				
 			}
 		});
 
-		/*
-		 * btn_cancel.setOnClickListener(new OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) {
-		 * 
-		 * } });
-		 */
+		
+		 btn_delete.setOnClickListener(new OnClickListener() {
+			 @Override
+			 public void onClick(View v) {
+				if (operation_mode == 1) { // new
+					// do nothing
+				} else // modify
+				{
+					// delete event + must be check logic for repeated event
+				}
+			 }
+		});
+		
 	}
 
 	private DatePickerDialog.OnDateSetListener mStartDateSetListener = new DatePickerDialog.OnDateSetListener() {

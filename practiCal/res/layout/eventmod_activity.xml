@@ -210,15 +210,13 @@
                 android:layout_weight="1"
                 android:text="OK" />
 
-            <!--
             <Button
-                android:id="@+id/btn_eventmod_cancel"
+                android:id="@+id/btn_eventmod_del"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_weight="1"
-                android:text="CANCEL" />
-            -->
+                android:text="DELETE" />
 
         </LinearLayout>
     </LinearLayout>
