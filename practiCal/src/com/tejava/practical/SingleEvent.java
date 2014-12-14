@@ -8,6 +8,20 @@ public class SingleEvent
 	private int startHour, endHour;
 	private int startMin, endMin;
 	private String name, description;
+	
+	public SingleEvent(SingleEvent newSingleEvent) throws Exception
+	{
+		Copy(newSingleEvent);
+	}
+	
+	public SingleEvent(int newId, int newYear, int newMonth, int newDay,
+			int newStartHour, int newEndHour, int newStartMin, int newEndMin,
+			String newName, String newDescription) throws Exception
+	{
+		Copy(newId, newYear, newMonth, newDay,
+				newStartHour, newEndHour, newStartMin, newEndMin,
+				newName, newDescription);
+	}
 
 	private int getMonthLastDay()
 	{
