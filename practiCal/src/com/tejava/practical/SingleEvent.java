@@ -8,8 +8,51 @@ public class SingleEvent
 	private int startHour, endHour;
 	private int startMin, endMin;
 	private String name, description;
+	
+	public SingleEvent()
+	{
+		
+	}
+	
+	public SingleEvent(SingleEvent newSingleEvent) throws Exception
+	{
+		Copy(newSingleEvent);
+	}
+	
+	public SingleEvent(int newId, int newYear, int newMonth, int newDay,
+			int newStartHour, int newEndHour, int newStartMin, int newEndMin,
+			String newName, String newDescription) throws Exception
+	{
+		Copy(newId, newYear, newMonth, newDay,
+				newStartHour, newEndHour, newStartMin, newEndMin,
+				newName, newDescription);
+	}
+	
+	public void Copy(SingleEvent newSingleEvent) throws Exception
+	{
+		SetId(newSingleEvent.GetId());
+		SetYear(newSingleEvent.GetYear());
+		SetMonth(newSingleEvent.GetMonth());
+		SetDay(newSingleEvent.GetDay());
+	}
+	
+	public void Copy(int newId, int newYear, int newMonth, int newDay,
+			int newStartHour, int newEndHour, int newStartMin, int newEndMin,
+			String newName, String newDescription) throws Exception
+	{
+		SetId(newId);
+		SetYear(newYear);
+		SetMonth(newMonth);
+		SetDay(newDay);
+		SetStartHour(newStartHour);
+		SetEndHour(newEndHour);
+		SetStartMin(newStartMin);
+		SetEndMin(newEndMin);
+		SetName(newName);
+		SetDescription(newDescription);
+	}
 
-	private int getMonthLastDay()
+	private int GetMonthLastDay()
 	{
 		switch (month) {
 		case 0:
@@ -19,19 +62,22 @@ public class SingleEvent
 		case 7:
 		case 9:
 		case 11:
-			return (31);
+			return 31;
 
 		case 3:
 		case 5:
 		case 8:
 		case 10:
-			return (30);
+			return 30;
 
 		default:
-			if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) {
-				return (29);
-			} else {
-				return (28);
+			if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0))
+			{
+				return 29;
+			}
+			else
+			{
+				return 28;
 			}
 		}
 	}
@@ -222,7 +268,7 @@ public class SingleEvent
 	{
 		try
 		{
-			if((newDay < 0) || (newDay > getMonthLastDay()))
+			if((newDay < 0) || (newDay > GetMonthLastDay()))
 			{
 				throw new Exception();
 			}

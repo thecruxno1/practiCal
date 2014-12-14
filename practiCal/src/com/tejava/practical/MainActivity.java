@@ -1,9 +1,14 @@
 package com.tejava.practical;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -60,9 +65,16 @@ public class MainActivity extends Activity {
 	int selectedMonth;
 	int selectedYear;
 	Calendar fortoday;
+	
+	//variables for Test()
+	private EventList eventList = new EventList(MainActivity.this);
+	private SingleEvent singleEvent = new SingleEvent();
+    FileOutputStream fos;
+	//////////////////////////////////
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) throws RuntimeException
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
@@ -73,7 +85,44 @@ public class MainActivity extends Activity {
 		dailyCalInitialize();
 		eventCalInitizliize();
 		optionInitailize();
+		try
+		{
+			Test();
+		}
+		catch(Exception ex)
+		{
+			
+		}
+		OutputStream out = null;
+		
+		//Toast.makeText(MainActivity.this, Environment.getExternalStoragePublicDirectory( Environment.DIRECTORY_DOWNLOADS).toString(), Toast.LENGTH_LONG).show();
+
+		File file = new File(MainActivity.this.getFilesDir(), "test");
+
+		String filename = Environment.getExternalStoragePublicDirectory( Environment.DIRECTORY_DOWNLOADS).toString() + "/myfile";
+		String string = "Hello world";
+		FileOutputStream outputStream;
+
+		try{
+			outputStream = openFileOutput( filename, Context.MODE_PRIVATE);
+			outputStream.write( string.getBytes());
+			outputStream.close();
+		}catch( Exception e){
+			Toast.makeText(MainActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+			e.printStackTrace();
+		}
+		//Toast.makeText(MainActivity.this, MainActivity.this.getFilesDir().toString(), Toast.LENGTH_LONG).show();
 	}
+	
+	//test function
+	private void Test() throws Exception
+	{
+		//Toast.makeText(MainActivity.this, "Test() is running", Toast.LENGTH_LONG).show();
+		//eventList.Insert(1, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
+		eventList.Save("test.txt");
+		//Toast.makeText(MainActivity.this, "Test() is done", Toast.LENGTH_LONG).show();
+	}
+	//////////////////////////////////
 
 	private void variableInitialize() {
 
