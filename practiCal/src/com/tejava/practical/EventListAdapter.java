@@ -10,12 +10,12 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class EventCalendarAdapter extends BaseAdapter {
+public class EventListAdapter extends BaseAdapter {
 	
 	private Context context;
 	private ArrayList<SingleEvent> dataList;
 	
-	public EventCalendarAdapter(Context context)
+	public EventListAdapter(Context context)
 	{
 		this.context = context;
 		dataList = new ArrayList<SingleEvent>();

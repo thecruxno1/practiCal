@@ -7,6 +7,7 @@ public class MonthlyCalendarOneDay {
 	private int yearValue;
 	private int monthValue;
 	private int dayValue;
+	private int dayOfWeek;
 	//public Vector<String> singleEventList;
 	
 	public MonthlyCalendarOneDay() {
@@ -48,5 +49,14 @@ public class MonthlyCalendarOneDay {
 	
 	public void setYear(int year){
 		this.yearValue = year;
+	}
+	
+	public int getDayOfWeek(){
+		return dayOfWeek;
+	}
+	
+	public void setDayOfWeek(int dow)
+	{
+		this.dayOfWeek = dow;
 	}
 }

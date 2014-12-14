@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/eventmod_main_sc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/eventmod_set_range_sc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:id="@+id/eventmod_set_start_sc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_weight="4"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/eventmod_start_day"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:text="start_day" />
+
+                <Button
+                    android:id="@+id/eventmod_start_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:text="start_time" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/eventmod_repeated_option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="r_setting" />
+
+            <LinearLayout
+                android:id="@+id/eventmod_set_end_sc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_weight="4"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/eventmod_end_day"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:text="end_day" />
+
+                <Button
+                    android:id="@+id/eventmod_end_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:text="end_time" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/eventmod_name_sc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/eventmod_event_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="#dddddd"
+                android:ems="10"
+                android:hint="type event name"
+                android:textSize="24dp" >
+
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/eventmod_description_sc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="Description" />
+
+            <EditText
+                android:id="@+id/eventmod_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="#dddddd"
+                android:ems="10"
+                android:hint="type description"
+                android:lines="8" >
+
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/eventmod_additional_sc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="Additional Memo 1" />
+
+            <EditText
+                android:id="@+id/eventmod_adm_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="#dddddd"
+                android:ems="10"
+                android:hint="type additional memo 1" >
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="Additional Memo 2" />
+
+            <EditText
+                android:id="@+id/eventmod_adm_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="#dddddd"
+                android:ems="10"
+                android:hint="type additional memo 2" >
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="Additional Memo 3" />
+
+            <EditText
+                android:id="@+id/eventmod_adm_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="#dddddd"
+                android:ems="10"
+                android:hint="type additional memo 3" >
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="Additional Memo 4" />
+
+            <EditText
+                android:id="@+id/eventmod_adm_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="#dddddd"
+                android:ems="10"
+                android:hint="type additional memo 4" >
+
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/eventmod_confirm_sc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btn_eventmod_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_weight="1"
+                android:text="OK" />
+
+            <!--
+            <Button
+                android:id="@+id/btn_eventmod_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_weight="1"
+                android:text="CANCEL" />
+            -->
+
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

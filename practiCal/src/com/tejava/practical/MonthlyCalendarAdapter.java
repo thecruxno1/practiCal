@@ -2,6 +2,7 @@ package com.tejava.practical;
 
 import java.util.Calendar;
 
+import android.R.color;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.format.Time;
@@ -34,7 +35,9 @@ public class MonthlyCalendarAdapter extends BaseAdapter {
 
 	int firstDay;
 	int lastDay;
-
+	
+	int dayOfWeek;
+	
 	Calendar mCalendar;
 	boolean recreateItems = false;
 
@@ -98,7 +101,8 @@ public class MonthlyCalendarAdapter extends BaseAdapter {
 				dayNumber = 0;
 			}
 			// save as a data item
-			items[i] = new MonthlyCalendarOneDay(dayNumber, curMonth+1, curYear);
+			items[i] = new MonthlyCalendarOneDay(dayNumber, curMonth + 1,
+					curYear);
 		}
 	}
 
@@ -174,16 +178,39 @@ public class MonthlyCalendarAdapter extends BaseAdapter {
 
 		if (columnIndex == 0) {
 			itemView.dayValue.setTextColor(Color.RED);
+		} else if (columnIndex == 6) {
+			itemView.dayValue.setTextColor(Color.BLUE);
 		} else {
 			itemView.dayValue.setTextColor(Color.BLACK);
 		}
+		items[position].setDayOfWeek(columnIndex);
+		
 		// set background color
 		if (position == getSelectedPosition()) {
 			itemView.setBackgroundColor(Color.rgb(2, 217, 255));
 		} else {
 			itemView.setBackgroundColor(Color.WHITE);
 		}
-		itemView.adapter.add("hello");
+
+		// FIXME
+		// get database
+		// remove db
+		itemView.adapter.clear();
+		// insert db
+		if (items[position].getDay() == 25 && items[position].getMonth() == 12)
+			itemView.adapter.add("Christmas");
+		if (items[position].getDay() == 20 && items[position].getMonth() == 6) {
+			itemView.adapter.add("Seungdo's Birthday1");
+			itemView.adapter.add("Seungdo's Birthday2");
+			itemView.adapter.add("Seungdo's Birthday3");
+			itemView.adapter.add("Seungdo's Birthday4");
+			itemView.adapter.add("Seungdo's Birthday5");
+			itemView.adapter.add("Seungdo's Birthday6");
+			itemView.adapter.add("Seungdo's Birthday7");
+			itemView.adapter.add("Seungdo's Birthday8");
+			itemView.adapter.add("Seungdo's Birthday9");
+			itemView.adapter.add("Seungdo's Birthday10");
+		}
 		return itemView;
 	}
 

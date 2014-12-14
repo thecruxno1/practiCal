@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,7 +23,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-	/* variable decleration */
+	/* variable declaration */
 
 	// five function button
 	ImageView btnMonthlyCal;
@@ -32,7 +33,6 @@ public class MainActivity extends Activity {
 	ImageView btnOption;
 
 	// Monthly Calendar related variable
-	// CalendarView monthlyCal;
 	LinearLayout monthlyCalScreen;
 	MonthlyCalendarView monthlyCal;
 	MonthlyCalendarAdapter monthlyCalAdapter;
@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
 
 	// Event calendar related variable
 	LinearLayout eventCalScreen;
-	EventCalendarAdapter eventCalAdapter;
+	EventCalendarView eventCal;
 
 	// option menu related variable
 	LinearLayout optionScreen;
@@ -58,20 +58,23 @@ public class MainActivity extends Activity {
 	RadioButton month_onclick_option2;
 	RadioButton month_onclick_option3;
 
-	// option menu
+	// option menu <- (-_-)?
 
 	// global variable
+	Calendar fortoday;
 	int selectedDay;
 	int selectedMonth;
 	int selectedYear;
-	Calendar fortoday;
+	int selectedDayOfWeek;
 	
 	//variables for Test()
 	private EventList eventList = new EventList(MainActivity.this);
 	private EventList eventList2 = new EventList(MainActivity.this);
 	private SingleEvent singleEvent = new SingleEvent();
     FileOutputStream fos;
-	//////////////////////////////////
+
+	// test variable
+	Button btnTEST;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) throws RuntimeException
@@ -82,12 +85,14 @@ public class MainActivity extends Activity {
 		try
 		{
 			variableInitialize();
-			listenerInitialize();
+			
 			monthlyCalInitialize();
 			severalCalInitialize();
 			dailyCalInitialize();
 			eventCalInitizliize();
 			optionInitailize();
+			
+			listenerInitialize();
 		}
 		catch(Exception ex)
 		{
@@ -129,15 +134,91 @@ public class MainActivity extends Activity {
 		btnEventCal = (ImageView) findViewById(R.id.btn_eventcal);
 		btnOption = (ImageView) findViewById(R.id.btn_option);
 
-		// global variable init
+		// global variable initialize
 		fortoday = Calendar.getInstance();
 		selectedDay = fortoday.get(fortoday.DATE);
 		selectedMonth = fortoday.get(fortoday.MONTH) + 1;
 		selectedYear = fortoday.get(fortoday.YEAR);
+		selectedDayOfWeek = fortoday.get(fortoday.DAY_OF_WEEK) - 1;
+
+		// test
+		btnTEST = (Button) findViewById(R.id.test_btn1);
+	}
+
+	private void listenerInitialize() {
+		// five function button's OnClickListener
+
+		btnMonthlyCal.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				monthlyCalScreen.setVisibility(View.VISIBLE);
+				severalCalScreen.setVisibility(View.INVISIBLE);
+				dailyCalScreen.setVisibility(View.INVISIBLE);
+				eventCalScreen.setVisibility(View.INVISIBLE);
+				optionScreen.setVisibility(View.INVISIBLE);
+			}
+		});
+
+		btnSeveralCal.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				monthlyCalScreen.setVisibility(View.INVISIBLE);
+				severalCalScreen.setVisibility(View.VISIBLE);
+				dailyCalScreen.setVisibility(View.INVISIBLE);
+				eventCalScreen.setVisibility(View.INVISIBLE);
+				optionScreen.setVisibility(View.INVISIBLE);
+
+			}
+		});
+
+		btnDailyCal.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dailyCalTop.setText(selectedYear + ". " + selectedMonth + ". "
+						+ selectedDay);
+				monthlyCalScreen.setVisibility(View.INVISIBLE);
+				severalCalScreen.setVisibility(View.INVISIBLE);
+				dailyCalScreen.setVisibility(View.VISIBLE);
+				eventCalScreen.setVisibility(View.INVISIBLE);
+				optionScreen.setVisibility(View.INVISIBLE);
+			}
+		});
+
+		btnEventCal.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				monthlyCalScreen.setVisibility(View.INVISIBLE);
+				severalCalScreen.setVisibility(View.INVISIBLE);
+				dailyCalScreen.setVisibility(View.INVISIBLE);
+				eventCalScreen.setVisibility(View.VISIBLE);
+				optionScreen.setVisibility(View.INVISIBLE);
+			}
+		});
+
+		btnOption.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				monthlyCalScreen.setVisibility(View.INVISIBLE);
+				severalCalScreen.setVisibility(View.INVISIBLE);
+				dailyCalScreen.setVisibility(View.INVISIBLE);
+				eventCalScreen.setVisibility(View.INVISIBLE);
+				optionScreen.setVisibility(View.VISIBLE);
+			}
+		});
+		
+		btnTEST.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
+				intent.putExtra("mode_setting", 1); // 0: modify, 1: new
+				intent.putExtra("db_access_info", "test_value");
+				startActivity(intent);				
+			}
+		});
 	}
 
 	private void monthlyCalInitialize() {
-		// Monthly Calendar valiable Init
+		// monthly calendar variable initialize
 		monthlyCalScreen = (LinearLayout) findViewById(R.id.monthlycalendar_screen);
 		// monthlyCal = (CalendarView) findViewById(R.id.monthlycalendar);
 		monthlyCal = (MonthlyCalendarView) findViewById(R.id.monthlycalendar);
@@ -150,7 +231,7 @@ public class MainActivity extends Activity {
 		monthlyCalTop = (TextView) findViewById(R.id.monthlycalendar_top_date);
 		
 		monthlyCalTop.setText(selectedYear + " - " + selectedMonth + " - "
-				+ selectedDay);
+				+ selectedDay + ", " + selectedDayOfWeek);
 
 		// Monthly Calendar listner Init
 		monthlyCal.setOnDataSelectionListener(new OnDataSelectionListener() {
@@ -160,10 +241,11 @@ public class MainActivity extends Activity {
 						.getItem(position);
 
 				selectedDay = curItem.getDay();
-				selectedMonth = 1 + monthlyCalAdapter.curMonth;
-				selectedYear = monthlyCalAdapter.curYear;
+				selectedMonth = curItem.getMonth();
+				selectedYear = curItem.getYear();
+				selectedDayOfWeek = curItem.getDayOfWeek();
 				monthlyCalTop.setText(selectedYear + " - " + selectedMonth
-						+ " - " + selectedDay);
+						+ " - " + selectedDay + ", " + selectedDayOfWeek);
 
 				if (setting == 2) {
 					monthlyCalScreen.setVisibility(View.INVISIBLE);
@@ -188,7 +270,8 @@ public class MainActivity extends Activity {
 				Toast.makeText(
 						getBaseContext(),
 						"Selected Date is\n" + selectedYear + " - "
-								+ selectedMonth + " - " + selectedDay,
+								+ selectedMonth + " - " + selectedDay + ", "
+								+ selectedDayOfWeek,
 
 						Toast.LENGTH_SHORT).show();
 			}
@@ -198,9 +281,10 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				monthlyCalAdapter.setPreviousMonth();
 				monthlyCalAdapter.notifyDataSetChanged();
-				
-				int tempmonth = monthlyCalAdapter.curMonth+1;
-				monthlyCalTop.setText(monthlyCalAdapter.curYear + " - " + tempmonth);
+
+				int tempmonth = monthlyCalAdapter.curMonth + 1;
+				monthlyCalTop.setText(monthlyCalAdapter.curYear + " - "
+						+ tempmonth);
 			}
 		});
 
@@ -208,9 +292,10 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				monthlyCalAdapter.setNextMonth();
 				monthlyCalAdapter.notifyDataSetChanged();
-				
-				int tempmonth = monthlyCalAdapter.curMonth+1;
-				monthlyCalTop.setText(monthlyCalAdapter.curYear + " - " + tempmonth);
+
+				int tempmonth = monthlyCalAdapter.curMonth + 1;
+				monthlyCalTop.setText(monthlyCalAdapter.curYear + " - "
+						+ tempmonth);
 			}
 		});
 	}
@@ -231,7 +316,7 @@ public class MainActivity extends Activity {
 		// Event Calendar Init
 		eventCalScreen = (LinearLayout) findViewById(R.id.eventcalendar_screen);
 		
-		eventCalAdapter = new EventCalendarAdapter(this);
+		eventCalAdapter = new EventListAdapter(this);
 		
 		eventList.Insert(1, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
 		eventList.Insert(2, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
@@ -290,71 +375,4 @@ public class MainActivity extends Activity {
 				});
 	}
 
-	private void listenerInitialize() {
-		// five function button onclicklistener
-
-		btnMonthlyCal.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				monthlyCalScreen.setVisibility(View.VISIBLE);
-				severalCalScreen.setVisibility(View.INVISIBLE);
-				dailyCalScreen.setVisibility(View.INVISIBLE);
-				eventCalScreen.setVisibility(View.INVISIBLE);
-				optionScreen.setVisibility(View.INVISIBLE);
-				// printMonthlyCal();
-			}
-		});
-
-		btnSeveralCal.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				monthlyCalScreen.setVisibility(View.INVISIBLE);
-				severalCalScreen.setVisibility(View.VISIBLE);
-				dailyCalScreen.setVisibility(View.INVISIBLE);
-				eventCalScreen.setVisibility(View.INVISIBLE);
-				optionScreen.setVisibility(View.INVISIBLE);
-				// printSeveralCal();
-
-			}
-		});
-
-		btnDailyCal.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dailyCalTop.setText(selectedYear + ". " + selectedMonth + ". "
-						+ selectedDay);
-				monthlyCalScreen.setVisibility(View.INVISIBLE);
-				severalCalScreen.setVisibility(View.INVISIBLE);
-				dailyCalScreen.setVisibility(View.VISIBLE);
-				eventCalScreen.setVisibility(View.INVISIBLE);
-				optionScreen.setVisibility(View.INVISIBLE);
-				// printDailyCal();
-			}
-		});
-
-		btnEventCal.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				monthlyCalScreen.setVisibility(View.INVISIBLE);
-				severalCalScreen.setVisibility(View.INVISIBLE);
-				dailyCalScreen.setVisibility(View.INVISIBLE);
-				eventCalScreen.setVisibility(View.VISIBLE);
-				optionScreen.setVisibility(View.INVISIBLE);
-				// printEventCal();
-			}
-		});
-
-		btnOption.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				monthlyCalScreen.setVisibility(View.INVISIBLE);
-				severalCalScreen.setVisibility(View.INVISIBLE);
-				dailyCalScreen.setVisibility(View.INVISIBLE);
-				eventCalScreen.setVisibility(View.INVISIBLE);
-				optionScreen.setVisibility(View.VISIBLE);
-				// printOption();
-			}
-		});
-
-	}
 }
