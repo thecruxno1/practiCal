@@ -1,6 +1,6 @@
 package com.tejava.practical;
 
-public class SingleEvent
+public class SingleEvent implements java.io.Serializable
 {
 
 	private int id;

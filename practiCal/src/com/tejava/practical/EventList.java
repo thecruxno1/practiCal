@@ -1,6 +1,5 @@
 package com.tejava.practical;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -8,6 +7,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.os.Environment;
+import android.widget.Toast;
 
 
 public class EventList
@@ -18,6 +19,7 @@ public class EventList
 	
 	public EventList(Context newContext)
 	{
+		eventList = new ArrayList<SingleEvent>();
 		context = newContext;
 	}
 	
@@ -74,60 +76,36 @@ public class EventList
 	
 	public void Save(String saveFileName) throws Exception
 	{
+		String fullPath = Environment.getExternalStorageDirectory().toString() + "/" + saveFileName;
+		FileOutputStream fileOut;
 		try
 		{
-			File file = new File(saveFileName);
-			if(file.exists())
-			{
-				if(!file.delete())
-				{
-					throw new Exception("Can't delete file: " + saveFileName);
-				}
-				
-			}
-			if(!file.createNewFile())
-			{
-				throw new Exception("Can't create file: " + saveFileName);
-			}
-			if(!file.canWrite())
-			{
-				throw new Exception("Can't write file: "+ saveFileName);
-			}
-			FileOutputStream fileOut = context.openFileOutput(saveFileName, Context.MODE_PRIVATE);
-			fileOut.write(1);
-			fileOut.close();
-			/*ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+			fileOut = new FileOutputStream(fullPath);
+			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
 			objectOut.writeObject(eventList);
-			objectOut.close();*/
-			
+			objectOut.close();
 		}
 		catch(Exception ex)
 		{
-			System.out.println(ex.getMessage());
+			Toast.makeText(context, ex.getMessage(), Toast.LENGTH_LONG).show();
 		}
 	}
 	
 	public void Load(String loadFileName) throws Exception
 	{
+
+		String fullPath = Environment.getExternalStorageDirectory().toString() + "/" + loadFileName;
+		FileInputStream fileIn;
 		try
 		{
-			File file = new File(loadFileName);
-			if(!file.exists())
-			{
-				throw new Exception("Does not exist file: " + loadFileName);		
-			}
-			if(!file.canRead())
-			{
-				throw new Exception("Can't read file: " + loadFileName);
-			}
-			FileInputStream fileIn = new FileInputStream(file);
+			fileIn = new FileInputStream(fullPath);
 			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
 			eventList = (ArrayList<SingleEvent>)objectIn.readObject();
 			objectIn.close();
 		}
 		catch(Exception ex)
 		{
-			System.out.println(ex.getMessage());
+			Toast.makeText(context, ex.getMessage(), Toast.LENGTH_LONG).show();
 		}
 	}
 }

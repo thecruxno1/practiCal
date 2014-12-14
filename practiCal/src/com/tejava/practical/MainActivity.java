@@ -1,14 +1,12 @@
 package com.tejava.practical;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -68,6 +66,7 @@ public class MainActivity extends Activity {
 	
 	//variables for Test()
 	private EventList eventList = new EventList(MainActivity.this);
+	private EventList eventList2 = new EventList(MainActivity.this);
 	private SingleEvent singleEvent = new SingleEvent();
     FileOutputStream fos;
 	//////////////////////////////////
@@ -97,30 +96,36 @@ public class MainActivity extends Activity {
 		
 		//Toast.makeText(MainActivity.this, Environment.getExternalStoragePublicDirectory( Environment.DIRECTORY_DOWNLOADS).toString(), Toast.LENGTH_LONG).show();
 
-		File file = new File(MainActivity.this.getFilesDir(), "test");
-
-		String filename = Environment.getExternalStoragePublicDirectory( Environment.DIRECTORY_DOWNLOADS).toString() + "/myfile";
-		String string = "Hello world";
-		FileOutputStream outputStream;
-
-		try{
-			outputStream = openFileOutput( filename, Context.MODE_PRIVATE);
-			outputStream.write( string.getBytes());
-			outputStream.close();
-		}catch( Exception e){
-			Toast.makeText(MainActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-			e.printStackTrace();
-		}
+//		File file = new File(MainActivity.this.getFilesDir(), "test");
+//
+//		String filename = Environment.getExternalStorageDirectory().toString() + "/myfile";
+//		String string = "Hello world";
+//		FileOutputStream outputStream;
+//
+//		try{
+//			outputStream = new FileOutputStream( filename);
+//			outputStream.write( string.getBytes());
+//			outputStream.close();
+//		}catch( Exception e){
+//			Toast.makeText(MainActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+//			e.printStackTrace();
+//		}
 		//Toast.makeText(MainActivity.this, MainActivity.this.getFilesDir().toString(), Toast.LENGTH_LONG).show();
 	}
 	
 	//test function
 	private void Test() throws Exception
 	{
-		//Toast.makeText(MainActivity.this, "Test() is running", Toast.LENGTH_LONG).show();
-		//eventList.Insert(1, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
+		eventList.Insert(1, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
+		eventList.Insert(2, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
+		eventList.Insert(3, 2014, 2, 3, 4, 5, 6, 7, "Third", "This is third event");
+		eventList.Insert(4, 2014, 2, 3, 4, 5, 6, 7, "Fourth", "This is fourth event");
 		eventList.Save("test.txt");
-		//Toast.makeText(MainActivity.this, "Test() is done", Toast.LENGTH_LONG).show();
+		
+		eventList2.Load("test.txt");
+		eventList2.Delete(3);
+		ArrayList<SingleEvent> list = eventList2.Search(2014, 2, 3);
+		Toast.makeText(MainActivity.this, list.get(0).GetDescription(), Toast.LENGTH_LONG).show();
 	}
 	//////////////////////////////////
 
