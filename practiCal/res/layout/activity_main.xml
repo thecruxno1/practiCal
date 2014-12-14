@@ -108,21 +108,25 @@
             android:visibility="invisible" >
             
             <LinearLayout
-                android:id="@+id/eventcalendar_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+            	android:id="@+id/eventcalendar_number"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:orientation="horizontal" >
                 
                 <TextView
-                android:id="@+id/upcoming"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Upcoming Events"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:id="@+id/upcoming"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Upcomg Events"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
                 
-                <NumberPicker
-                    android:id="@+id/event_number" />
-            </LinearLayout>
+                <EditText
+                    android:id="@+id/event_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                
+            </LinearLayout>
+
             <ListView
                 android:id="@+id/eventcalendar_eventlist"
                 android:layout_width="match_parent"

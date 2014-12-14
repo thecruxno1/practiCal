@@ -1,5 +1,8 @@
 package com.tejava.practical;
 
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.app.Activity;
@@ -62,20 +65,60 @@ public class MainActivity extends Activity {
 	int selectedMonth;
 	int selectedYear;
 	Calendar fortoday;
+	
+	//variables for Test()
+	private EventList eventList = new EventList(MainActivity.this);
+	private EventList eventList2 = new EventList(MainActivity.this);
+	private SingleEvent singleEvent = new SingleEvent();
+    FileOutputStream fos;
+	//////////////////////////////////
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) throws RuntimeException
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		variableInitialize();
-		listenerInitialize();
-		monthlyCalInitialize();
-		severalCalInitialize();
-		dailyCalInitialize();
-		eventCalInitizliize();
-		optionInitailize();
+		try
+		{
+			variableInitialize();
+			listenerInitialize();
+			monthlyCalInitialize();
+			severalCalInitialize();
+			dailyCalInitialize();
+			eventCalInitizliize();
+			optionInitailize();
+		}
+		catch(Exception ex)
+		{
+			
+		}
+		
+//		try
+//		{
+//			Test();
+//		}
+//		catch(Exception ex)
+//		{
+//			
+//		}
 	}
+	
+	//test function
+	private void Test() throws Exception
+	{
+		eventList.Insert(1, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
+		eventList.Insert(2, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
+		eventList.Insert(3, 2014, 2, 3, 4, 5, 6, 7, "Third", "This is third event");
+		eventList.Insert(4, 2014, 2, 3, 4, 5, 6, 7, "Fourth", "This is fourth event");
+		eventList.Save("test.txt");
+		
+		eventList2.Load("test.txt");
+		eventList2.Delete(3);
+		ArrayList<SingleEvent> list = eventList2.Search(2014, 2, 3);
+		Toast.makeText(MainActivity.this, list.get(0).GetDescription(), Toast.LENGTH_LONG).show();
+	}
+	//////////////////////////////////
 
 	private void variableInitialize() {
 
@@ -184,30 +227,24 @@ public class MainActivity extends Activity {
 		dailyCalTop = (TextView) findViewById(R.id.dailycalendar_top);
 	}
 
-	private void eventCalInitizliize() {
+	private void eventCalInitizliize() throws Exception {
 		// Event Calendar Init
 		eventCalScreen = (LinearLayout) findViewById(R.id.eventcalendar_screen);
 		
 		eventCalAdapter = new EventCalendarAdapter(this);
 		
-		SingleEvent event = null;
-		try {
-			event = new SingleEvent(0, 2014, 12, 14, 8, 9, 0, 0, "mabinogi heroes", "golden time");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		eventList.Insert(1, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
+		eventList.Insert(2, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
+		eventList.Insert(3, 2014, 2, 3, 4, 5, 6, 7, "Third", "This is third event");
+		eventList.Insert(4, 2014, 2, 3, 4, 5, 6, 7, "Fourth", "This is fourth event");
+		eventList.Save("test.txt");
 		
-		eventCalAdapter.addItem(event);
-		eventCalAdapter.addItem(event);
-		eventCalAdapter.addItem(event);
-		eventCalAdapter.addItem(event);
-		eventCalAdapter.addItem(event);
-		eventCalAdapter.addItem(event);
-		eventCalAdapter.addItem(event);
-		eventCalAdapter.addItem(event);
-		eventCalAdapter.addItem(event);
-		eventCalAdapter.addItem(event);
+		eventList2.Load("test.txt");
+		eventList2.Delete(3);
+		ArrayList<SingleEvent> list = eventList2.Search(2014, 2, 3);
+		
+		for(int i=0; i<list.size(); ++i)
+			eventCalAdapter.addItem(list.get(i));
 		
 		ListView eventListView = (ListView) findViewById(R.id.eventcalendar_eventlist);
 		eventListView.setAdapter(eventCalAdapter);
