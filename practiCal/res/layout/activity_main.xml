@@ -5,7 +5,8 @@
 
     <!--
     all of the calendar, and option screen will appear in FrameLayout
-    according to software specification, this layout is named 'main screen'    -->
+    according to software specification, this layout is named 'main screen'
+    -->
 
     <FrameLayout
         android:id="@+id/mainscreen"
@@ -18,7 +19,8 @@
             android:id="@+id/monthlycalendar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible" />        -->
+            android:visibility="visible" />
+        -->
 
         <LinearLayout
             android:id="@+id/monthlycalendar_screen"
@@ -38,14 +40,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Previous" />
-			
-				<TextView
-                android:id="@+id/monthlycalendar_top_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Monthly Calendar"
-                />
-			
+
+                <TextView
+                    android:id="@+id/monthlycalendar_top_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Monthly Calendar" />
+
                 <Button
                     android:id="@+id/monthlycalendar_top_next"
                     android:layout_width="wrap_content"
@@ -72,6 +73,12 @@
                 android:layout_height="wrap_content"
                 android:text="Several days View"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <Button
+                android:id="@+id/test_btn1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="test_event_mod_activity" />
 
             <ListView
                 android:id="@+id/severaldayscalender_eventlist"
