@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
@@ -15,9 +16,9 @@ public class EventListAdapter extends BaseAdapter {
 	private Context context;
 	private ArrayList<SingleEvent> dataList;
 	
-	public EventListAdapter(Context context)
+	public EventListAdapter(OnClickListener onClickListener)
 	{
-		this.context = context;
+		this.context = (Context) onClickListener;	// confirm (Context)
 		dataList = new ArrayList<SingleEvent>();
 	}
 	

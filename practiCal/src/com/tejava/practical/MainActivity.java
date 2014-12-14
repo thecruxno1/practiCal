@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
 
 	// Event calendar related variable
 	LinearLayout eventCalScreen;
-	EventCalendarView eventCal;
+//	EventCalendarView eventCal;
 
 	// option menu related variable
 	LinearLayout optionScreen;
