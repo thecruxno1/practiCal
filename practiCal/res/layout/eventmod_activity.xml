@@ -25,14 +25,14 @@
                 android:orientation="vertical" >
 
                 <Button
-                    android:id="@+id/eventmod_start_day"
+                    android:id="@+id/btn_eventmod_start_day"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
                     android:text="start_day" />
 
                 <Button
-                    android:id="@+id/eventmod_start_time"
+                    android:id="@+id/btn_eventmod_start_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
@@ -56,14 +56,14 @@
                 android:orientation="vertical" >
 
                 <Button
-                    android:id="@+id/eventmod_end_day"
+                    android:id="@+id/btn_eventmod_end_day"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
                     android:text="end_day" />
 
                 <Button
-                    android:id="@+id/eventmod_end_time"
+                    android:id="@+id/btn_eventmod_end_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
