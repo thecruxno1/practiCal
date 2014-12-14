@@ -115,6 +115,31 @@
             android:visibility="invisible" >
             
             <LinearLayout
+                android:id="@+id/eventcalendar_range"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+                
+                <Button
+                    android:id="@+id/start_day"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Start Day" />
+                
+                <Button
+                    android:id="@+id/end_day"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="End Day" />
+                
+                <Button
+                    android:id="@+id/print_event_range"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Print" />
+            </LinearLayout>
+            
+            <LinearLayout
             	android:id="@+id/eventcalendar_number"
             	android:layout_width="wrap_content"
             	android:layout_height="wrap_content"

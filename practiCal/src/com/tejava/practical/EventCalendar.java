@@ -1,6 +1,8 @@
 package com.tejava.practical;
 
 public class EventCalendar {
+	
+	
 	private int eventNumber;
 	
 	public EventCalendar()

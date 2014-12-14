@@ -316,23 +316,23 @@ public class MainActivity extends Activity {
 		// Event Calendar Init
 		eventCalScreen = (LinearLayout) findViewById(R.id.eventcalendar_screen);
 		
-		eventCalAdapter = new EventListAdapter(this);
-		
-		eventList.Insert(1, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
-		eventList.Insert(2, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
-		eventList.Insert(3, 2014, 2, 3, 4, 5, 6, 7, "Third", "This is third event");
-		eventList.Insert(4, 2014, 2, 3, 4, 5, 6, 7, "Fourth", "This is fourth event");
-		eventList.Save("test.txt");
-		
-		eventList2.Load("test.txt");
-		eventList2.Delete(3);
-		ArrayList<SingleEvent> list = eventList2.Search(2014, 2, 3);
-		
-		for(int i=0; i<list.size(); ++i)
-			eventCalAdapter.addItem(list.get(i));
+//		eventCalAdapter = new EventListAdapter(this);
+//		
+//		eventList.Insert(1, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
+//		eventList.Insert(2, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
+//		eventList.Insert(3, 2014, 2, 3, 4, 5, 6, 7, "Third", "This is third event");
+//		eventList.Insert(4, 2014, 2, 3, 4, 5, 6, 7, "Fourth", "This is fourth event");
+//		eventList.Save("test.txt");
+//		
+//		eventList2.Load("test.txt");
+//		eventList2.Delete(3);
+//		ArrayList<SingleEvent> list = eventList2.Search(2014, 2, 3);
+//		
+//		for(int i=0; i<list.size(); ++i)
+//			eventCalAdapter.addItem(list.get(i));
 		
 		ListView eventListView = (ListView) findViewById(R.id.eventcalendar_eventlist);
-		eventListView.setAdapter(eventCalAdapter);
+//		eventListView.setAdapter(eventCalAdapter);
 	}
 
 	private void optionInitailize() {

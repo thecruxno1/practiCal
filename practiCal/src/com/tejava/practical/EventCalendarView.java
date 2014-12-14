@@ -9,12 +9,21 @@ import android.widget.TextView;
 
 public class EventCalendarView extends LinearLayout {
 
+	// view
+	Button startDay;
+	Button endDay;
+	Button printEventRange;
+	
 	TextView upcoming;
 	EditText eventNumber;
 	Button printEventNumber;
+	
 	ListView eventList;
 	
+	// data
 	EventCalendar eventCal;
+	
+	// adapter
 	EventListAdapter eventListAdapter;
 	
 	public EventCalendarView(Context context) {
