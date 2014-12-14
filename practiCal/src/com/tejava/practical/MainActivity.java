@@ -12,6 +12,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,8 @@ public class MainActivity extends Activity {
 
 	// Event calendar related variable
 	LinearLayout eventCalScreen;
+	EventCalendarView eventCal;
+	EventCalendarAdapter eventCalAdapter;
 
 	// option menu related variable
 	LinearLayout optionScreen;
@@ -96,18 +99,21 @@ public class MainActivity extends Activity {
 		monthlyCalScreen = (LinearLayout) findViewById(R.id.monthlycalendar_screen);
 		// monthlyCal = (CalendarView) findViewById(R.id.monthlycalendar);
 		monthlyCal = (MonthlyCalendarView) findViewById(R.id.monthlycalendar);
+		
 		monthlyCalAdapter = new MonthlyCalendarAdapter(this);
 		monthlyCal.setAdapter(monthlyCalAdapter);
+		
 		monthlyCalPrevious = (Button) findViewById(R.id.monthlycalendar_top_previous);
 		monthlyCalNext = (Button) findViewById(R.id.monthlycalendar_top_next);
 		monthlyCalTop = (TextView) findViewById(R.id.monthlycalendar_top_date);
+		
 		monthlyCalTop.setText(selectedYear + " - " + selectedMonth + " - "
 				+ selectedDay);
 
 		// Monthly Calendar listner Init
 		monthlyCal.setOnDataSelectionListener(new OnDataSelectionListener() {
 			public void onDataSelected(AdapterView parent, View v,
-					int position, long id) {
+					int position, long id) {	
 				MonthlyCalendarOneDay curItem = (MonthlyCalendarOneDay) monthlyCalAdapter
 						.getItem(position);
 
@@ -182,6 +188,15 @@ public class MainActivity extends Activity {
 	private void eventCalInitizliize() {
 		// Event Calendar Init
 		eventCalScreen = (LinearLayout) findViewById(R.id.eventcalendar_screen);
+		
+		eventCalAdapter = new EventCalendarAdapter(this);
+		
+		
+		
+		eventCalAdapter.addItem(event);
+		
+		ListView eventListView = (ListView) findViewById(R.id.eventcalendar_eventlist);
+		eventListView.setAdapter(eventCalAdapter);
 	}
 
 	private void optionInitailize() {
