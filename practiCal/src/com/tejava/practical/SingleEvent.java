@@ -7,7 +7,10 @@ public class SingleEvent implements java.io.Serializable
 	private int year, month, day;
 	private int startHour, endHour;
 	private int startMin, endMin;
+	private long startYearMonthDayAndTime, endYearMonthDayAndTime;
+	private int yearMonthDay;
 	private String name, description;
+	public static final long serialVersionUID = 1L;
 	
 	public SingleEvent()
 	{
@@ -28,12 +31,23 @@ public class SingleEvent implements java.io.Serializable
 				newName, newDescription);
 	}
 	
+	public static CustomComparator startYearMonthDayAndTimeComparator = new CustomComparator();
+	
 	public void Copy(SingleEvent newSingleEvent) throws Exception
 	{
 		SetId(newSingleEvent.GetId());
 		SetYear(newSingleEvent.GetYear());
 		SetMonth(newSingleEvent.GetMonth());
 		SetDay(newSingleEvent.GetDay());
+		SetStartHour(newSingleEvent.GetStartHour());
+		SetEndHour(newSingleEvent.GetEndHour());
+		SetStartMin(newSingleEvent.GetStartMin());
+		SetEndMin(newSingleEvent.GetEndMin());
+		SetName(newSingleEvent.GetName());
+		SetDescription(newSingleEvent.GetDescription());
+		SetStartDayAndTime(newSingleEvent.GetStartYearMonthDayAndTime());
+		SetEndYearMonthDayAndTime(newSingleEvent.GetEndYearMonthDayAndTime());
+		SetYearMonthDay(newSingleEvent.GetYearMonthDay());
 	}
 	
 	public void Copy(int newId, int newYear, int newMonth, int newDay,
@@ -50,6 +64,56 @@ public class SingleEvent implements java.io.Serializable
 		SetEndMin(newEndMin);
 		SetName(newName);
 		SetDescription(newDescription);
+		SetStartYearMonthDayAndTime();
+		SetEndYearMonthDayAndTime();
+		SetYearMonthDay();
+	}
+	
+	public void SetStartYearMonthDayAndTime()
+	{
+		startYearMonthDayAndTime = (year * 100000000) + (month * 1000000) + (day * 10000)
+				+ (startHour * 100) + startMin;
+	}
+	
+	public void SetStartDayAndTime(long newStartYearMonthDayAndTime)
+	{
+		startYearMonthDayAndTime = newStartYearMonthDayAndTime;
+	}
+	
+	public void SetEndYearMonthDayAndTime()
+	{
+		endYearMonthDayAndTime = (year * 100000000) + (month * 1000000) + (day * 10000)
+				+ (endHour * 100) + endMin;
+	}
+	
+	public void SetEndYearMonthDayAndTime(long newEndYearMonthDayAndTime)
+	{
+		endYearMonthDayAndTime = newEndYearMonthDayAndTime;
+	}
+	
+	public void SetYearMonthDay()
+	{
+		yearMonthDay = (year * 10000) + (month * 100) + day;
+	}
+	
+	public void SetYearMonthDay(int newYearMonthDay)
+	{
+		yearMonthDay = newYearMonthDay;
+	}
+	
+	public int GetYearMonthDay()
+	{
+		return yearMonthDay;
+	}
+	
+	public long GetStartYearMonthDayAndTime()
+	{
+		return startYearMonthDayAndTime;
+	}
+	
+	public long GetEndYearMonthDayAndTime()
+	{
+		return endYearMonthDayAndTime;
 	}
 
 	private int GetMonthLastDay()

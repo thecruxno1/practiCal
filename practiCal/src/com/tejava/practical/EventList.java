@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import android.content.Context;
 import android.os.Environment;
@@ -58,19 +59,72 @@ public class EventList
 	
 	public ArrayList<SingleEvent> Search(int targetYear, int targetMonth, int targetDay)
 	{
+		int targetYearMonthDay = (targetYear * 10000) + (targetMonth * 100) + targetDay;
 		ArrayList<SingleEvent> newEventList = new ArrayList<SingleEvent>();
 		
 		for(int i = 0; i < eventList.size(); i++)
 		{
 			singleEvent = eventList.get(i);
-			if((singleEvent.GetYear() == targetYear)
-					&& (singleEvent.GetMonth() == targetMonth)
-					&& (singleEvent.GetDay() == targetDay))
+			if(targetYearMonthDay == singleEvent.GetYearMonthDay())
 			{
 				newEventList.add(singleEvent);
 			}
 		}
 
+		return newEventList;
+	}
+	
+	public ArrayList<SingleEvent> Search(int targetYear1, int targetMonth1, int targetDay1,
+			int targetYear2, int targetMonth2, int targetDay2)
+	{
+		int targetYearMonthDay1 = (targetYear1 * 10000) + (targetMonth1 * 100) + targetDay1;
+		int targetYearMonthDay2 = (targetYear2 * 10000) + (targetMonth2 * 100) + targetDay2;
+		int yearMonthDay;
+		ArrayList<SingleEvent> newEventList = new ArrayList<SingleEvent>();
+		
+		for(int i = 0; i < eventList.size(); i++)
+		{
+			singleEvent = eventList.get(i);
+			yearMonthDay = singleEvent.GetYearMonthDay();
+			if(yearMonthDay >= targetYearMonthDay1)
+			{
+				if(yearMonthDay <= targetYearMonthDay2)
+				{
+					newEventList.add(singleEvent);
+				}
+			}
+			else if(yearMonthDay <= targetYearMonthDay1)
+			{
+				if(yearMonthDay >= targetYearMonthDay2)
+				{
+					newEventList.add(singleEvent);
+				}
+			}
+		}
+
+		return newEventList;
+	}
+	
+	public ArrayList<SingleEvent> Search(int targetYear, int targetMonth, int targetDay, int numberofEvents)
+	{
+		int targetYearMonthDay = (targetYear * 10000) + (targetMonth * 100) + targetDay;
+		Collections.sort(eventList, SingleEvent.startYearMonthDayAndTimeComparator);
+		ArrayList<SingleEvent> newEventList = new ArrayList<SingleEvent>();
+		
+		int count = 0;
+		for(int i = 0; i < eventList.size(); i++)
+		{
+			singleEvent = eventList.get(i);
+			if(targetYearMonthDay <= singleEvent.GetYearMonthDay())
+			{
+				newEventList.add(singleEvent);
+				count += 1;
+				if(count >= numberofEvents)
+				{
+					break;
+				}
+			}
+		}
 		return newEventList;
 	}
 	

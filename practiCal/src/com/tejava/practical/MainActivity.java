@@ -92,40 +92,24 @@ public class MainActivity extends Activity {
 		{
 			
 		}
-		OutputStream out = null;
-		
-		//Toast.makeText(MainActivity.this, Environment.getExternalStoragePublicDirectory( Environment.DIRECTORY_DOWNLOADS).toString(), Toast.LENGTH_LONG).show();
-
-//		File file = new File(MainActivity.this.getFilesDir(), "test");
-//
-//		String filename = Environment.getExternalStorageDirectory().toString() + "/myfile";
-//		String string = "Hello world";
-//		FileOutputStream outputStream;
-//
-//		try{
-//			outputStream = new FileOutputStream( filename);
-//			outputStream.write( string.getBytes());
-//			outputStream.close();
-//		}catch( Exception e){
-//			Toast.makeText(MainActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-//			e.printStackTrace();
-//		}
-		//Toast.makeText(MainActivity.this, MainActivity.this.getFilesDir().toString(), Toast.LENGTH_LONG).show();
 	}
 	
 	//test function
 	private void Test() throws Exception
 	{
-		eventList.Insert(1, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
-		eventList.Insert(2, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
-		eventList.Insert(3, 2014, 2, 3, 4, 5, 6, 7, "Third", "This is third event");
-		eventList.Insert(4, 2014, 2, 3, 4, 5, 6, 7, "Fourth", "This is fourth event");
-		eventList.Save("test.txt");
+		eventList.Insert( 1, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
+		eventList.Insert( 2, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
+		eventList.Insert( 3, 2014, 2, 3, 4, 5, 6, 8, "Third", "This is third event");
+		eventList.Insert( 4, 2014, 2, 3, 4, 5, 6, 9, "Fourth", "This is fourth event");
+		eventList.Insert( 5, 2014, 2, 4, 4, 5, 6, 10, "Fifth", "This is fifth event");
+		eventList.Insert( 6, 2014, 2, 5, 4, 5, 6, 11, "Sixth", "This is sixth event");
+		eventList.Insert( 7, 2014, 2, 6, 4, 5, 6, 12, "Seventh", "This is seventh event");
+		eventList.Insert( 8, 2014, 2, 6, 4, 5, 6, 13, "Eighth", "This is eighth event");
+		eventList.Insert( 9, 2014, 2, 7, 4, 5, 6, 14, "Ninth", "This is ninth event");
+		eventList.Insert(10, 2014, 2, 7, 4, 5, 6, 15, "Tenth", "This is tenth event");
 		
-		eventList2.Load("test.txt");
-		eventList2.Delete(3);
-		ArrayList<SingleEvent> list = eventList2.Search(2014, 2, 3);
-		Toast.makeText(MainActivity.this, list.get(0).GetDescription(), Toast.LENGTH_LONG).show();
+		ArrayList<SingleEvent> list = eventList.Search(2014, 2, 7, 7);
+		Toast.makeText(MainActivity.this, list.size() + " event searched!", Toast.LENGTH_LONG).show();
 	}
 	//////////////////////////////////
 
