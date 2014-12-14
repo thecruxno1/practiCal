@@ -39,9 +39,10 @@ public class EventList
 		eventList.add(singleEvent);
 	}
 	
-	public void Delete(int delId)
+	public void Delete(int delId) throws Exception
 	{
-		for(int i = 0; i < eventList.size(); i++)
+		int i;
+		for(i = 0; i < eventList.size(); i++)
 		{
 			singleEvent = eventList.get(i);
 			if(singleEvent.GetId() == delId)
@@ -50,11 +51,30 @@ public class EventList
 				break;
 			}
 		}
+		//Collections.sort(eventList, SingleEvent.startYearMonthDayAndTimeComparator);
+		for(i = 0; i < eventList.size(); i++)
+		{
+			singleEvent = eventList.get(i);
+			singleEvent.SetId(i);
+			eventList.set(i, singleEvent);
+		}
 	}
 	
-	public void Delete(SingleEvent delSingleEvent)
+	public void Delete(SingleEvent delSingleEvent) throws Exception
 	{
 		eventList.remove(delSingleEvent);
+		Collections.sort(eventList, SingleEvent.startYearMonthDayAndTimeComparator);
+		for(int i = 0; i < eventList.size(); i++)
+		{
+			singleEvent = eventList.get(i);
+			singleEvent.SetId(i);
+			eventList.add(i, singleEvent);
+		}
+	}
+	
+	public int GetSize()
+	{
+		return eventList.size();
 	}
 	
 	public ArrayList<SingleEvent> Search(int targetYear, int targetMonth, int targetDay)
