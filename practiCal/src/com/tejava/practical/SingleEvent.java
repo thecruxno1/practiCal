@@ -7,9 +7,13 @@ public class SingleEvent implements java.io.Serializable
 	private int year, month, day;
 	private int startHour, endHour;
 	private int startMin, endMin;
+	private String name, description;
+	private int eventGroup;
+	private int color;
+	private int important;
+	private String location;
 	private long startYearMonthDayAndTime, endYearMonthDayAndTime;
 	private int yearMonthDay;
-	private String name, description;
 	public static final long serialVersionUID = 1L;
 	
 	public SingleEvent()
@@ -24,11 +28,13 @@ public class SingleEvent implements java.io.Serializable
 	
 	public SingleEvent(int newId, int newYear, int newMonth, int newDay,
 			int newStartHour, int newEndHour, int newStartMin, int newEndMin,
-			String newName, String newDescription) throws Exception
+			String newName, String newDescription, int newEventGroup, int newColor,
+			int newImportant, String newLocation) throws Exception
 	{
 		Copy(newId, newYear, newMonth, newDay,
 				newStartHour, newEndHour, newStartMin, newEndMin,
-				newName, newDescription);
+				newName, newDescription, newEventGroup, newColor,
+				newImportant, newLocation);
 	}
 	
 	public static CustomComparator startYearMonthDayAndTimeComparator = new CustomComparator();
@@ -45,14 +51,19 @@ public class SingleEvent implements java.io.Serializable
 		SetEndMin(newSingleEvent.GetEndMin());
 		SetName(newSingleEvent.GetName());
 		SetDescription(newSingleEvent.GetDescription());
-		SetStartDayAndTime(newSingleEvent.GetStartYearMonthDayAndTime());
+		SetEventGroup(newSingleEvent.GetEventGroup());
+		SetColor(newSingleEvent.GetColor());
+		SetImportant(newSingleEvent.GetImportant());
+		SetLocation(newSingleEvent.GetLocation());
+		SetStartYearMonthDayAndTime(newSingleEvent.GetStartYearMonthDayAndTime());
 		SetEndYearMonthDayAndTime(newSingleEvent.GetEndYearMonthDayAndTime());
 		SetYearMonthDay(newSingleEvent.GetYearMonthDay());
 	}
 	
 	public void Copy(int newId, int newYear, int newMonth, int newDay,
 			int newStartHour, int newEndHour, int newStartMin, int newEndMin,
-			String newName, String newDescription) throws Exception
+			String newName, String newDescription, int newEventGroup, int newColor,
+			int newImportant, String newLocation) throws Exception
 	{
 		SetId(newId);
 		SetYear(newYear);
@@ -64,6 +75,10 @@ public class SingleEvent implements java.io.Serializable
 		SetEndMin(newEndMin);
 		SetName(newName);
 		SetDescription(newDescription);
+		SetEventGroup(newEventGroup);
+		SetColor(newColor);
+		SetImportant(newImportant);
+		SetLocation(newLocation);
 		SetStartYearMonthDayAndTime();
 		SetEndYearMonthDayAndTime();
 		SetYearMonthDay();
@@ -75,7 +90,7 @@ public class SingleEvent implements java.io.Serializable
 				+ (startHour * 100) + startMin;
 	}
 	
-	public void SetStartDayAndTime(long newStartYearMonthDayAndTime)
+	public void SetStartYearMonthDayAndTime(long newStartYearMonthDayAndTime)
 	{
 		startYearMonthDayAndTime = newStartYearMonthDayAndTime;
 	}
@@ -347,5 +362,45 @@ public class SingleEvent implements java.io.Serializable
 	public int GetDay()
 	{
 		return day;
+	}
+	
+	public void SetEventGroup(int newEventGroup)
+	{
+		eventGroup = newEventGroup;
+	}
+	
+	public int GetEventGroup()
+	{
+		return eventGroup;
+	}
+	
+	public void SetColor(int newColor)
+	{
+		color = newColor;
+	}
+	
+	public int GetColor()
+	{
+		return color;
+	}
+	
+	public void SetImportant(int newImportant)
+	{
+		important = newImportant;
+	}
+	
+	public int GetImportant()
+	{
+		return important;
+	}
+	
+	public void SetLocation(String newLocation)
+	{
+		location = newLocation;
+	}
+	
+	public String GetLocation()
+	{
+		return location;
 	}
 }

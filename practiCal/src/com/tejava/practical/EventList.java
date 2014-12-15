@@ -26,6 +26,9 @@ public class EventList
 	
 	public void Insert(SingleEvent newSingleEvent) throws Exception
 	{
+		newSingleEvent.SetStartYearMonthDayAndTime();
+		newSingleEvent.SetEndYearMonthDayAndTime();
+		newSingleEvent.SetYearMonthDay();
 		eventList.add(newSingleEvent);
 		Collections.sort(eventList, SingleEvent.startYearMonthDayAndTimeComparator);
 		for(int i = 0; i < eventList.size(); i++)
@@ -38,12 +41,29 @@ public class EventList
 	
 	public void Insert(int newYear, int newMonth, int newDay,
 				int newStartHour, int newEndHour, int newStartMin, int newEndMin,
-				String newName, String newDescription) throws Exception
+				String newName, String newDescription, int newEventGroup, int newColor,
+				int newImportant, String newLocation) throws Exception
 	{
 		singleEvent = new SingleEvent(0, newYear, newMonth, newDay,
 				newStartHour, newEndHour, newStartMin, newEndMin,
-				newName, newDescription);
+				newName, newDescription, newEventGroup, newColor,
+				newImportant, newLocation);
 		eventList.add(singleEvent);
+		Collections.sort(eventList, SingleEvent.startYearMonthDayAndTimeComparator);
+		for(int i = 0; i < eventList.size(); i++)
+		{
+			singleEvent = eventList.get(i);
+			singleEvent.SetId(i);
+			eventList.set(i, singleEvent);
+		}
+	}
+	
+	public void Edit(SingleEvent newSingleEvent) throws Exception
+	{
+		newSingleEvent.SetStartYearMonthDayAndTime();
+		newSingleEvent.SetEndYearMonthDayAndTime();
+		newSingleEvent.SetYearMonthDay();
+		eventList.set(newSingleEvent.GetId(), newSingleEvent);
 		Collections.sort(eventList, SingleEvent.startYearMonthDayAndTimeComparator);
 		for(int i = 0; i < eventList.size(); i++)
 		{

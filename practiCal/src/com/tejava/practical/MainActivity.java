@@ -97,33 +97,48 @@ public class MainActivity extends Activity {
 	//test function
 	private void Test() throws Exception
 	{
-		eventList.Insert(2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
-		eventList.Insert(2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
-		eventList.Insert(2014, 2, 3, 4, 5, 6, 8, "Third", "This is third event");
-		eventList.Insert(2014, 2, 3, 4, 5, 6, 9, "Fourth", "This is fourth event");
-		eventList.Insert(2014, 2, 4, 4, 5, 6, 10, "Fifth", "This is fifth event");
-		eventList.Insert(2014, 2, 5, 4, 5, 6, 11, "Sixth", "This is sixth event");
-		eventList.Insert(2014, 2, 6, 4, 5, 6, 12, "Seventh", "This is seventh event");
-		eventList.Insert(2014, 2, 6, 4, 5, 6, 13, "Eighth", "This is eighth event");
-		eventList.Insert(2014, 2, 7, 4, 5, 6, 14, "Ninth", "This is ninth event");
-		eventList.Insert(2014, 2, 7, 4, 5, 6, 15, "Tenth", "This is tenth event");
-		eventList.Insert(2014, 3, 7, 4, 5, 6, 16, "Eleventh", "This is eleventh event");
-
+		eventList.Insert(2014, 1, 2, 3, 4, 5, 6,     "First",    "This is first event", 0, 0, 0, "Hanyang Univ.");
+		eventList.Insert(2014, 2, 3, 4, 5, 6, 7,    "Second",   "This is second event", 0, 1, 1, "Hanyang Univ.");
+		eventList.Insert(2014, 2, 3, 4, 5, 6, 8,     "Third",    "This is third event", 1, 0, 0, "Hanyang Univ.");
+		eventList.Insert(2014, 2, 3, 4, 5, 6, 9,    "Fourth",   "This is fourth event", 1, 4, 0, "The temple of the RilyongGod");
+		eventList.Insert(2014, 2, 4, 4, 5, 6, 10,    "Fifth",    "This is fifth event", 2, 5, 0, "Hanyang Univ.");
+		eventList.Insert(2014, 2, 5, 4, 5, 6, 11,    "Sixth",    "This is sixth event", 2, 6, 0, "Seoul");
+		eventList.Insert(2014, 2, 6, 4, 5, 6, 12,  "Seventh",  "This is seventh event", 4, 2, 1, "Hell");
+		eventList.Insert(2014, 2, 6, 4, 5, 6, 13,   "Eighth",   "This is eighth event", 3, 1, 0, "Heaven");
+		eventList.Insert(2014, 2, 7, 4, 5, 6, 14,    "Ninth",    "This is ninth event", 3, 9, 0, "Paradise");
+		eventList.Insert(2014, 2, 7, 4, 5, 6, 15,    "Tenth",    "This is tenth event", 0, 4, 0, "USA");
+		eventList.Insert(2014, 3, 7, 4, 5, 6, 16, "Eleventh", "This is eleventh event", 6, 4, 0, "Lab");
+		
+		singleEvent.SetId(9);
+		singleEvent.SetYear(2014);
+		singleEvent.SetMonth(1);
+		singleEvent.SetDay(1);
+		singleEvent.SetStartHour(1);
+		singleEvent.SetStartMin(1);
+		singleEvent.SetEndHour(1);
+		singleEvent.SetEndMin(2);
+		singleEvent.SetName("Modified");
+		singleEvent.SetDescription("This event is modified");
+		singleEvent.SetEventGroup(9);
+		singleEvent.SetColor(1);
+		singleEvent.SetImportant(1);
+		singleEvent.SetLocation("Here I am");
+		
 		//Toast.makeText(MainActivity.this, "size before delete: " + eventList.GetSize(), Toast.LENGTH_LONG).show();
 		Toast.makeText(MainActivity.this, eventList.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
-		eventList.Delete(0);
+		eventList.Edit(singleEvent);
 		Toast.makeText(MainActivity.this, eventList.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
-		eventList.Insert(2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
-		Toast.makeText(MainActivity.this, eventList.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
-		eventList.Insert(2014, 1, 1, 3, 4, 5, 6, "First", "This is first event");
-		Toast.makeText(MainActivity.this, eventList.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
-		eventList.Delete(0);
-		Toast.makeText(MainActivity.this, eventList.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
-		eventList.Delete(0);
+//		eventList.Insert(2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
+//		Toast.makeText(MainActivity.this, eventList.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
+//		eventList.Insert(2014, 1, 1, 3, 4, 5, 6, "First", "This is first event");
+//		Toast.makeText(MainActivity.this, eventList.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
+//		eventList.Delete(0);
+//		Toast.makeText(MainActivity.this, eventList.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
+//		eventList.Delete(0);
 		//Toast.makeText(MainActivity.this, "size before delete: " + eventList.GetSize(), Toast.LENGTH_LONG).show();
 		
 		//ArrayList<SingleEvent> list = eventList.Search(2014, 2, 7, 7);
-		Toast.makeText(MainActivity.this, eventList.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
+//		Toast.makeText(MainActivity.this, eventList.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
 	}
 	//////////////////////////////////
 
