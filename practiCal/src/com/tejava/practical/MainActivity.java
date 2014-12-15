@@ -305,10 +305,22 @@ public class MainActivity extends Activity {
 		btnTEST.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				try{
+					SingleEvent testevent = new SingleEvent(12334, 1987, 7, 15, 15, 18, 0, 10, "birth", "birthday");	
+							
+				
 				Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
-				intent.putExtra("mode_setting", 1); // 0: modify, 1: new
+				intent.putExtra("mode_setting", 0); // 0: modify, 1: new
+				
+				intent.putExtra("event_obj", testevent);
+				
 				intent.putExtra("db_access_info", "test_value");
-				startActivity(intent);				
+				startActivity(intent);		
+				
+				}
+				catch(Exception ex){
+					
+				}	
 			}
 		});
 	}

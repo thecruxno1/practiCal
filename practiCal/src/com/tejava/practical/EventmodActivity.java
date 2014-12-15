@@ -24,16 +24,31 @@ public class EventmodActivity extends Activity {
 
 	// common value
 	int operation_mode; // 0: modify, 1: new
-	String db_access_info;
+	
+	int event_id;
+	int event_year;
+	int event_month;
+	int event_day;
+	int event_startHour;
+	int event_startMin;
+	int event_endHour;
+	int event_endMin;
+	String event_name;
+	String event_description;
+	String event_location;
+	int event_important;
+	int event_group;
+	int event_color;
+	
 	GregorianCalendar today_info;
 
 	// EditTexts
 	EditText ET_event_name;
 	EditText ET_event_description;
-	EditText ET_event_additional_memo_1;
-	EditText ET_event_additional_memo_2;
-	EditText ET_event_additional_memo_3;
-	EditText ET_event_additional_memo_4;
+	EditText ET_event_location;
+	EditText ET_event_important;
+	EditText ET_event_group_number;
+	EditText ET_event_color;
 
 	// Buttons
 	Button btn_start_day;
@@ -89,10 +104,10 @@ public class EventmodActivity extends Activity {
 
 		ET_event_name = (EditText) findViewById(R.id.eventmod_event_name);
 		ET_event_description = (EditText) findViewById(R.id.eventmod_description);
-		ET_event_additional_memo_1 = (EditText) findViewById(R.id.eventmod_adm_1);
-		ET_event_additional_memo_2 = (EditText) findViewById(R.id.eventmod_adm_2);
-		ET_event_additional_memo_3 = (EditText) findViewById(R.id.eventmod_adm_3);
-		ET_event_additional_memo_4 = (EditText) findViewById(R.id.eventmod_adm_4);
+		ET_event_location = (EditText) findViewById(R.id.eventmod_loc);
+		ET_event_important = (EditText) findViewById(R.id.eventmod_isIPT);
+		ET_event_group_number = (EditText) findViewById(R.id.eventmod_eGnum);
+		ET_event_color = (EditText) findViewById(R.id.eventmod_color);
 
 		btn_start_day = (Button) findViewById(R.id.btn_eventmod_start_day);
 		btn_start_time = (Button) findViewById(R.id.btn_eventmod_start_time);
@@ -101,47 +116,61 @@ public class EventmodActivity extends Activity {
 		btn_ok = (Button) findViewById(R.id.btn_eventmod_ok);
 		btn_delete = (Button) findViewById(R.id.btn_eventmod_del);
 
-		btn_start_day.setText(start_year+"/"+start_month+"/"+start_day);
-		btn_start_time.setText(start_hour+":"+start_min);
-		btn_end_day.setText(end_year+"/"+end_month+"/"+end_day);
-		btn_end_time.setText(end_hour+":"+end_min);
 		
 		Intent intent = getIntent();
+		
 		operation_mode = intent.getExtras().getInt("mode_setting", 1);
+		Bundle event_bundle = intent.getExtras();
+		
 		if (operation_mode == 1) { // new
-			// need initializing?
+			btn_start_day.setText(start_year+"/"+start_month+"/"+start_day);
+			btn_start_time.setText(start_hour+":"+start_min);
+			btn_end_day.setText(end_year+"/"+end_month+"/"+end_day);
+			btn_end_time.setText(end_hour+":"+end_min);
+			
 		} else // modify
 		{
-			db_access_info = intent.getExtras().getString("db_access_info");
+			SingleEvent event_object = (SingleEvent)event_bundle.getSerializable("event_obj");
+			
+			event_id = event_object.GetId();
+			event_year = event_object.GetYear();
+			event_month = event_object.GetMonth();
+			event_day = event_object.GetDay();
+			event_startHour = event_object.GetStartHour();
+			event_startMin = event_object.GetStartMin();
+			event_endHour = event_object.GetEndHour();
+			event_endMin = event_object.GetEndMin();
+			event_name = event_object.GetName();
+			event_description = event_object.GetDescription();
+			event_location = "locloclocloc";
+			event_important = 4444;
+			event_group = 666;
+			event_color = 6666;
 
-			// must be changed... db_access_info -> date/time
-			start_year = 0;
-			start_month = 0;
-			start_day = 0;
-			start_hour = 0;
-			start_min = 0;
+			// why buffer? ... sometimes later expand end date...
+			start_year = event_year;
+			start_month = event_month;
+			start_day = event_day;
+			start_hour = event_startHour;
+			start_min = event_startMin;
 
-			end_year = 0;
-			end_month = 0;
-			end_day = 0;
-			end_hour = 0;
-			end_min = 0;
+			end_year = event_year;
+			end_month = event_month;
+			end_day = event_day;
+			end_hour = event_endHour;
+			end_min = event_endMin;
 			
 			btn_start_day.setText(start_year+"/"+start_month+"/"+start_day);
 			btn_start_time.setText(start_hour+":"+start_min);
 			btn_end_day.setText(end_year+"/"+end_month+"/"+end_day);
 			btn_end_time.setText(end_hour+":"+end_min);
 			
-			ET_event_name.setText("db_access_info.event_name");
-			ET_event_description.setText(db_access_info);
-			ET_event_additional_memo_1
-					.setText("db_access_info.event_additional_memo_1");
-			ET_event_additional_memo_2
-					.setText("db_access_info.event_additional_memo_2");
-			ET_event_additional_memo_3
-					.setText("db_access_info.event_additional_memo_3");
-			ET_event_additional_memo_4
-					.setText("db_access_info.event_additional_memo_4");
+			ET_event_name.setText(event_name);
+			ET_event_description.setText(event_description);
+			ET_event_location.setText(event_location);
+			ET_event_important.setText(Integer.toString(event_important));
+			ET_event_group_number.setText(Integer.toString(event_group));
+			ET_event_color.setText(Integer.toString(event_color));
 		}
 
 	}
