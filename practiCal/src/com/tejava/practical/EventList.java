@@ -27,16 +27,30 @@ public class EventList
 	public void Insert(SingleEvent newSingleEvent) throws Exception
 	{
 		eventList.add(newSingleEvent);
+		Collections.sort(eventList, SingleEvent.startYearMonthDayAndTimeComparator);
+		for(int i = 0; i < eventList.size(); i++)
+		{
+			singleEvent = eventList.get(i);
+			singleEvent.SetId(i);
+			eventList.set(i, singleEvent);
+		}
 	}
 	
-	public void Insert(int newId, int newYear, int newMonth, int newDay,
+	public void Insert(int newYear, int newMonth, int newDay,
 				int newStartHour, int newEndHour, int newStartMin, int newEndMin,
 				String newName, String newDescription) throws Exception
 	{
-		singleEvent = new SingleEvent(newId, newYear, newMonth, newDay,
+		singleEvent = new SingleEvent(0, newYear, newMonth, newDay,
 				newStartHour, newEndHour, newStartMin, newEndMin,
 				newName, newDescription);
 		eventList.add(singleEvent);
+		Collections.sort(eventList, SingleEvent.startYearMonthDayAndTimeComparator);
+		for(int i = 0; i < eventList.size(); i++)
+		{
+			singleEvent = eventList.get(i);
+			singleEvent.SetId(i);
+			eventList.set(i, singleEvent);
+		}
 	}
 	
 	public void Delete(int delId) throws Exception
@@ -51,8 +65,7 @@ public class EventList
 				break;
 			}
 		}
-		//Collections.sort(eventList, SingleEvent.startYearMonthDayAndTimeComparator);
-		for(i = 0; i < eventList.size(); i++)
+		for(; i < eventList.size(); i++)
 		{
 			singleEvent = eventList.get(i);
 			singleEvent.SetId(i);
@@ -63,18 +76,12 @@ public class EventList
 	public void Delete(SingleEvent delSingleEvent) throws Exception
 	{
 		eventList.remove(delSingleEvent);
-		Collections.sort(eventList, SingleEvent.startYearMonthDayAndTimeComparator);
 		for(int i = 0; i < eventList.size(); i++)
 		{
 			singleEvent = eventList.get(i);
 			singleEvent.SetId(i);
 			eventList.add(i, singleEvent);
 		}
-	}
-	
-	public int GetSize()
-	{
-		return eventList.size();
 	}
 	
 	public ArrayList<SingleEvent> Search(int targetYear, int targetMonth, int targetDay)
@@ -181,5 +188,10 @@ public class EventList
 		{
 			Toast.makeText(context, ex.getMessage(), Toast.LENGTH_LONG).show();
 		}
+	}
+	
+	public int GetSize()
+	{
+		return eventList.size();
 	}
 }

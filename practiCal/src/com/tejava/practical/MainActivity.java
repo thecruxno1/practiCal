@@ -195,17 +195,17 @@ public class MainActivity extends Activity {
 		
 		PractiCalEventList.practiCalEventList = new EventList(MainActivity.this);
 		
-		PractiCalEventList.practiCalEventList.Insert( 0, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
-		PractiCalEventList.practiCalEventList.Insert( 1, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
-		PractiCalEventList.practiCalEventList.Insert( 2, 2014, 2, 3, 4, 5, 6, 8, "Third", "This is third event");
-		PractiCalEventList.practiCalEventList.Insert( 3, 2014, 2, 3, 4, 5, 6, 9, "Fourth", "This is fourth event");
-		PractiCalEventList.practiCalEventList.Insert( 4, 2014, 2, 4, 4, 5, 6, 10, "Fifth", "This is fifth event");
-		PractiCalEventList.practiCalEventList.Insert( 5, 2014, 2, 5, 4, 5, 6, 11, "Sixth", "This is sixth event");
-		PractiCalEventList.practiCalEventList.Insert( 6, 2014, 2, 6, 4, 5, 6, 12, "Seventh", "This is seventh event");
-		PractiCalEventList.practiCalEventList.Insert( 7, 2014, 2, 6, 4, 5, 6, 13, "Eighth", "This is eighth event");
-		PractiCalEventList.practiCalEventList.Insert( 8, 2014, 2, 7, 4, 5, 6, 14, "Ninth", "This is ninth event");
-		PractiCalEventList.practiCalEventList.Insert( 9, 2014, 2, 7, 4, 5, 6, 15, "Tenth", "This is tenth event");
-		PractiCalEventList.practiCalEventList.Insert(10, 2014, 3, 7, 4, 5, 6, 16, "Eleventh", "This is eleventh event");
+		PractiCalEventList.practiCalEventList.Insert(2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
+		PractiCalEventList.practiCalEventList.Insert(2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
+		PractiCalEventList.practiCalEventList.Insert(2014, 2, 3, 4, 5, 6, 8, "Third", "This is third event");
+		PractiCalEventList.practiCalEventList.Insert(2014, 2, 3, 4, 5, 6, 9, "Fourth", "This is fourth event");
+		PractiCalEventList.practiCalEventList.Insert(2014, 2, 4, 4, 5, 6, 10, "Fifth", "This is fifth event");
+		PractiCalEventList.practiCalEventList.Insert(2014, 2, 5, 4, 5, 6, 11, "Sixth", "This is sixth event");
+		PractiCalEventList.practiCalEventList.Insert(2014, 2, 6, 4, 5, 6, 12, "Seventh", "This is seventh event");
+		PractiCalEventList.practiCalEventList.Insert(2014, 2, 6, 4, 5, 6, 13, "Eighth", "This is eighth event");
+		PractiCalEventList.practiCalEventList.Insert(2014, 2, 7, 4, 5, 6, 14, "Ninth", "This is ninth event");
+		PractiCalEventList.practiCalEventList.Insert(2014, 2, 7, 4, 5, 6, 15, "Tenth", "This is tenth event");
+		PractiCalEventList.practiCalEventList.Insert(2014, 3, 7, 4, 5, 6, 16, "Eleventh", "This is eleventh event");
 		
 		PractiCalEventList.practiCalEventList.Save("save.txt");
 		PractiCalEventList.practiCalEventList.Delete(0);

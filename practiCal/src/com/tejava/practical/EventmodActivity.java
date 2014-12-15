@@ -204,12 +204,17 @@ public class EventmodActivity extends Activity {
 				// db_access_info.adm_4 = ET_event_additional_memo_4.getText().toString();
 				
 				try {
-					PractiCalEventList.practiCalEventList.Insert(11, start_year, start_month, start_day, 
+					PractiCalEventList.practiCalEventList.Insert(start_year, start_month, start_day, 
 							start_hour, end_hour, start_min, end_min, ET_event_name.getText().toString(), ET_event_description.getText().toString());
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				Intent intent = new Intent(EventmodActivity.this, MainActivity.class);
+				intent.putExtra("mode_setting", 1); // 0: modify, 1: new
+//				intent.putExtra("db_access_info", "test_value");
+				startActivity(intent);	
 			}
 		});
 
