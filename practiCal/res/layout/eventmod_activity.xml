@@ -127,16 +127,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:text="Additional Memo 1" />
+                android:text="Location" />
 
             <EditText
-                android:id="@+id/eventmod_adm_1"
+                android:id="@+id/eventmod_loc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:background="#dddddd"
                 android:ems="10"
-                android:hint="type additional memo 1" >
+                android:hint="type location" >
 
                 <requestFocus />
             </EditText>
@@ -145,16 +145,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:text="Additional Memo 2" />
+                android:text="Important Event Check" />
 
             <EditText
-                android:id="@+id/eventmod_adm_2"
+                android:id="@+id/eventmod_isIPT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:background="#dddddd"
                 android:ems="10"
-                android:hint="type additional memo 2" >
+                android:hint="is it important?" >
 
                 <requestFocus />
             </EditText>
@@ -163,16 +163,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:text="Additional Memo 3" />
+                android:text="Event Group" />
 
             <EditText
-                android:id="@+id/eventmod_adm_3"
+                android:id="@+id/eventmod_eGnum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:background="#dddddd"
                 android:ems="10"
-                android:hint="type additional memo 3" >
+                android:hint="select event group" >
 
                 <requestFocus />
             </EditText>
@@ -181,16 +181,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:text="Additional Memo 4" />
+                android:text="Event Color" />
 
             <EditText
-                android:id="@+id/eventmod_adm_4"
+                android:id="@+id/eventmod_color"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:background="#dddddd"
                 android:ems="10"
-                android:hint="type additional memo 4" >
+                android:hint="color~" >
 
                 <requestFocus />
             </EditText>

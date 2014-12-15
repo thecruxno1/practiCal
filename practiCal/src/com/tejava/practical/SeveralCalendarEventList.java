@@ -36,7 +36,7 @@ public class SeveralCalendarEventList
 	{
 		singleEvent = new SingleEvent(newId, newYear, newMonth, newDay,
 				newStartHour, newEndHour, newStartMin, newEndMin,
-				newName, newDescription);
+				newName, newDescription, 1, 1, 1, "loc");
 		eventList.add(singleEvent);
 	}
 	

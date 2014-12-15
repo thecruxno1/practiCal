@@ -160,6 +160,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp" >
             </ListView>
+            
+            <Button
+                android:id="@+id/several_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
 
         <LinearLayout
@@ -179,8 +186,16 @@
             <ListView
                 android:id="@+id/dailycalender_eventlist"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
             </ListView>
+            
+            <Button
+                android:id="@+id/daily_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
 
         <LinearLayout
@@ -247,8 +262,16 @@
             <ListView
                 android:id="@+id/eventcalendar_eventlist"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
             </ListView>
+            
+            <Button
+                android:id="@+id/event_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
 
         <LinearLayout
