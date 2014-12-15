@@ -242,7 +242,10 @@ public class EventmodActivity extends Activity {
 				if (operation_mode == 1) {	// new
 					try {
 						PractiCalEventList.practiCalEventList.Insert(start_year, start_month, start_day, 
-								start_hour, end_hour, start_min, end_min, ET_event_name.getText().toString(), ET_event_description.getText().toString());
+								start_hour, end_hour, start_min, end_min, 
+								ET_event_name.getText().toString(), ET_event_description.getText().toString(),
+								666, 6666, 4444, "locloclocloc");
+						PractiCalEventList.practiCalEventList.Save("save.txt");
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -252,10 +255,25 @@ public class EventmodActivity extends Activity {
 					int addFrom = intent.getExtras().getInt("add_from");
 
 					setResult(addFrom);
-					finish();
 				}
 				else {	// modify
+					try {
+						SingleEvent event = new SingleEvent(event_id, start_year, start_month, start_day, 
+								start_hour, end_hour, start_min, end_min, 
+								ET_event_name.getText().toString(), ET_event_description.getText().toString(),
+								666, 6666, 4444, "locloclocloc");
+						
+						PractiCalEventList.practiCalEventList.Edit(event);
+						PractiCalEventList.practiCalEventList.Save("save.txt");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					setResult(MODIFY);
 				}
+				
+				finish();
 			}
 		});
 
@@ -265,11 +283,22 @@ public class EventmodActivity extends Activity {
 			 public void onClick(View v) {
 				if (operation_mode == 1) { // new
 					// do nothing
-					finish();
+					
 				} else // modify
 				{
 					// delete event + must be check logic for repeated event
+					try {
+						PractiCalEventList.practiCalEventList.Delete(event_id);
+						PractiCalEventList.practiCalEventList.Save("save.txt");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					setResult(MODIFY);
 				}
+				
+				finish();
 			 }
 		});
 		
