@@ -10,6 +10,7 @@ import android.app.Dialog;
 import android.content.ClipData.Item;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.internal.widget.AdapterViewCompat;
 import android.support.v7.internal.widget.AdapterViewCompat.OnItemLongClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -454,6 +455,18 @@ public class MainActivity extends Activity {
 					
 					eventCalEventList.setAdapter(eventListAdapter);
 					eventCalEventList.setOnItemClickListener(onEventListItemClickListener);
+					eventCalEventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+						@Override
+						public boolean onItemLongClick(AdapterView<?> arg0,
+								View arg1, int arg2, long arg3) {
+							
+							printEventNumber.performClick();
+							
+							return true;
+						}
+						
+					});
 				}
 			}
 		});
@@ -478,6 +491,24 @@ public class MainActivity extends Activity {
 					
 					eventCalEventList.setAdapter(eventListAdapter);
 					eventCalEventList.setOnItemClickListener(onEventListItemClickListener);
+					eventCalEventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+						@Override
+						public boolean onItemLongClick(AdapterView<?> arg0,
+								View arg1, int arg2, long arg3) {
+							try {
+								eventList.Insert(11, 2014, 12, 15, 4, 5, 6, 16, "twelveth", "This is twelveth event");
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
+							printEventRange.performClick();
+							
+							return true;
+						}
+						
+					});
 				}
 			}
 		});
@@ -586,17 +617,7 @@ public class MainActivity extends Activity {
 			SingleEvent event = (SingleEvent) eventListAdapter.getItem(pos);
 			Toast.makeText(MainActivity.this, event.GetName(), Toast.LENGTH_LONG).show();
 //			intent.putExtra("Event ID", ((SingleEvent) clickedView).GetId());
-//			startActivity(intent);	
+//			startActivity(intent);
 		}
 	};
-	
-	private OnLongClickListener onEventListLongClickListener = new OnLongClickListener() {
-		
-		@Override
-		public boolean onLongClick(View v) {
-			// TODO Auto-generated method stub
-			return false;
-		}
-	};
-
 }

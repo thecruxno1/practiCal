@@ -180,6 +180,7 @@ public class EventmodActivity extends Activity {
 		btn_ok.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				
 				// save modified data
 				// must be changed... use db_access_info
 
