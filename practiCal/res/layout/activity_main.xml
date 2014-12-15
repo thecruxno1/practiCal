@@ -32,38 +32,45 @@
                 android:id="@+id/monthlycalendar_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:background="#ffffff" >
 
                 <Button
                     android:id="@+id/monthlycalendar_top_previous"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Previous" />
+                    android:text="Previous" 
+                    android:layout_weight="1"/>
 
                 <TextView
                     android:id="@+id/monthlycalendar_top_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal|center"
                     android:text="Monthly Calendar" />
 
                 <Button
                     android:id="@+id/monthlycalendar_top_next"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Next" />
+                    android:text="Next" 
+                    android:layout_weight="1"/>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/monthlycalendar_dayofweek"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:orientation="horizontal" 
+                android:background="#ffffff">
 
                 <TextView
                     android:id="@+id/monthlycalendar_dayofweek_sun"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center_horizontal|center"
                     android:text="SUN"
                     android:textColor="#ff0000" />
 
@@ -72,6 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center_horizontal|center"
                     android:text="MON"
                     android:textColor="#000000" />
 
@@ -79,6 +87,7 @@
                     android:id="@+id/monthlycalendar_dayofweek_tue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal|center"
                     android:layout_weight="1"
                     android:text="TUE"
                     android:textColor="#000000" />
@@ -87,6 +96,7 @@
                     android:id="@+id/monthlycalendar_dayofweek_wed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal|center"
                     android:layout_weight="1"
                     android:text="WED"
                     android:textColor="#000000" />
@@ -95,6 +105,7 @@
                     android:id="@+id/monthlycalendar_dayofweek_tur"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal|center"
                     android:layout_weight="1"
                     android:text="TUR"
                     android:textColor="#000000" />
@@ -103,6 +114,7 @@
                     android:id="@+id/monthlycalendar_dayofweek_fri"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal|center"
                     android:layout_weight="1"
                     android:text="FRI"
                     android:textColor="#000000" />
@@ -111,6 +123,7 @@
                     android:id="@+id/monthlycalendar_dayofweek_sat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center_horizontal|center"
                     android:layout_weight="1"
                     android:text="SAT"
                     android:textColor="#0000ff" />
@@ -282,39 +295,46 @@
 
     <LinearLayout
         android:id="@+id/functioniconframe"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal" >
+        android:layout_gravity="bottom|center_horizontal" 
+        android:background="#000000">
 
         <ImageView
             android:id="@+id/btn_monthly"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_weight="1"
             android:src="@drawable/pic_monthly" />
 
         <ImageView
             android:id="@+id/btn_several"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_weight="1"
             android:src="@drawable/pic_several" />
 
         <ImageView
             android:id="@+id/btn_daily"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_weight="1"
             android:src="@drawable/pic_daily" />
 
         <ImageView
             android:id="@+id/btn_eventcal"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_weight="1"
             android:src="@drawable/pic_eventcal" />
 
         <ImageView
             android:id="@+id/btn_option"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_weight="1"
             android:src="@drawable/pic_option" />
+
     </LinearLayout>
 
 </LinearLayout>

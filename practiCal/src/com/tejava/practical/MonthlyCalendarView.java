@@ -24,7 +24,7 @@ public class MonthlyCalendarView extends GridView {
 	}
 
 	private void init() {
-		setBackgroundColor(Color.WHITE);
+		setBackgroundColor(Color.BLACK);
 		setVerticalSpacing(1);
 		setHorizontalSpacing(1);
 		setStretchMode(GridView.STRETCH_COLUMN_WIDTH);

@@ -98,6 +98,23 @@ public class MonthlyCalendarAdapter extends BaseAdapter {
 		selectedPosition = -1;
 	}
 
+	public void setSpecificMonth(int newYear, int newMonth, int newDay){
+		mCalendar.set(newYear, newMonth, newDay);
+		recalculate();
+		
+		resetDayNumbers();
+		
+		selectedPosition=0;
+		for(int i=0;i<42;i++)
+		{
+			if(items[i].getDay() != newDay)
+				selectedPosition++;
+			else{
+				break;
+			}	
+		}
+	}
+	
 	public void resetDayNumbers() {
 		for (int i = 0; i < 42; i++) {
 			// calculate day number
@@ -179,7 +196,7 @@ public class MonthlyCalendarAdapter extends BaseAdapter {
 		itemView.setPadding(2, 2, 2, 2);
 
 		// set properties
-		itemView.setGravity(Gravity.LEFT);
+		//itemView.setGravity(Gravity.LEFT);
 
 		if (columnIndex == 0) {
 			itemView.dayValue.setTextColor(Color.RED);
@@ -192,11 +209,12 @@ public class MonthlyCalendarAdapter extends BaseAdapter {
 		
 		// set background color
 		if (position == getSelectedPosition()) {
+			if(items[position].getDay()!=0)
 			itemView.setBackgroundColor(Color.rgb(2, 217, 255));
 		} else {
 			itemView.setBackgroundColor(Color.WHITE);
 		}
-
+		
 		// FIXME
 		// get database
 		// remove db

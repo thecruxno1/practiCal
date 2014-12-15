@@ -1,16 +1,14 @@
 package com.tejava.practical;
 
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
-import android.content.ClipData.Item;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.internal.widget.AdapterViewCompat.OnItemLongClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -184,30 +182,8 @@ public class MainActivity extends Activity {
 		selectedDay = fortoday.get(fortoday.DATE);
 		selectedMonth = fortoday.get(fortoday.MONTH) + 1;
 		selectedYear = fortoday.get(fortoday.YEAR);
-		switch (fortoday.get(fortoday.DAY_OF_WEEK) - 1) {
-		case 0:
-			selectedDayOfWeek = "SUN";
-			break;
-		case 1:
-			selectedDayOfWeek = "MON";
-			break;
-		case 2:
-			selectedDayOfWeek = "TUE";
-			break;
-		case 3:
-			selectedDayOfWeek = "WED";
-			break;
-		case 4:
-			selectedDayOfWeek = "TUR";
-			break;
-		case 5:
-			selectedDayOfWeek = "FRI";
-			break;
-		case 6:
-			selectedDayOfWeek = "SAT";
-			break;
-		}
-		;
+		selectedDayOfWeek = convertDaytoString(fortoday
+				.get(fortoday.DAY_OF_WEEK) - 1);
 
 		// test
 		btnTEST = (Button) findViewById(R.id.test_btn1);
@@ -274,8 +250,8 @@ public class MainActivity extends Activity {
 		btnDailyCal.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				dailyCalTop.setText(selectedYear + ". " + selectedMonth + ". "
-						+ selectedDay);
+				dailyCalTop.setText(selectedYear + " - " + selectedMonth
+						+ " - " + selectedDay + ", " + selectedDayOfWeek);
 
 				loadDailyEvent();
 
@@ -358,54 +334,34 @@ public class MainActivity extends Activity {
 				MonthlyCalendarOneDay curItem = (MonthlyCalendarOneDay) monthlyCalAdapter
 						.getItem(position);
 
-				selectedDay = curItem.getDay();
-				selectedMonth = curItem.getMonth();
-				selectedYear = curItem.getYear();
-				switch (curItem.getDayOfWeek()) {
-				case 0:
-					selectedDayOfWeek = "SUN";
-					break;
-				case 1:
-					selectedDayOfWeek = "MON";
-					break;
-				case 2:
-					selectedDayOfWeek = "TUE";
-					break;
-				case 3:
-					selectedDayOfWeek = "WED";
-					break;
-				case 4:
-					selectedDayOfWeek = "TUR";
-					break;
-				case 5:
-					selectedDayOfWeek = "FRI";
-					break;
-				case 6:
-					selectedDayOfWeek = "SAT";
-					break;
-				}
-				;
+				if (curItem.getDay() != 0) {
+					selectedDay = curItem.getDay();
+					selectedMonth = curItem.getMonth();
+					selectedYear = curItem.getYear();
+					selectedDayOfWeek = curItem.getDayofWeekString();
 
-				monthlyCalTop.setText(selectedYear + " - " + selectedMonth
-						+ " - " + selectedDay + ", " + selectedDayOfWeek);
+					monthlyCalTop.setText(selectedYear + " - " + selectedMonth
+							+ " - " + selectedDay + ", " + selectedDayOfWeek);
 
-				if (setting == 2) {
-					monthlyCalScreen.setVisibility(View.INVISIBLE);
-					severalCalScreen.setVisibility(View.VISIBLE);
-					dailyCalScreen.setVisibility(View.INVISIBLE);
-					eventCalScreen.setVisibility(View.INVISIBLE);
-					optionScreen.setVisibility(View.INVISIBLE);
-				} else if (setting == 3) {
-					dailyCalTop.setText(selectedYear + ". " + selectedMonth
-							+ ". " + selectedDay + ". " + selectedDayOfWeek);
+					if (setting == 2) {
+						monthlyCalScreen.setVisibility(View.INVISIBLE);
+						severalCalScreen.setVisibility(View.VISIBLE);
+						dailyCalScreen.setVisibility(View.INVISIBLE);
+						eventCalScreen.setVisibility(View.INVISIBLE);
+						optionScreen.setVisibility(View.INVISIBLE);
+					} else if (setting == 3) {
+						dailyCalTop.setText(selectedYear + " - "
+								+ selectedMonth + " - " + selectedDay + ", "
+								+ selectedDayOfWeek);
 
-					loadDailyEvent();
+						loadDailyEvent();
 
-					monthlyCalScreen.setVisibility(View.INVISIBLE);
-					severalCalScreen.setVisibility(View.INVISIBLE);
-					dailyCalScreen.setVisibility(View.VISIBLE);
-					eventCalScreen.setVisibility(View.INVISIBLE);
-					optionScreen.setVisibility(View.INVISIBLE);
+						monthlyCalScreen.setVisibility(View.INVISIBLE);
+						severalCalScreen.setVisibility(View.INVISIBLE);
+						dailyCalScreen.setVisibility(View.VISIBLE);
+						eventCalScreen.setVisibility(View.INVISIBLE);
+						optionScreen.setVisibility(View.INVISIBLE);
+					}
 				}
 			}
 		});
@@ -414,13 +370,17 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(
-						getBaseContext(),
-						"Selected Date is\n" + selectedYear + " - "
-								+ selectedMonth + " - " + selectedDay + ", "
-								+ selectedDayOfWeek,
-
-						Toast.LENGTH_SHORT).show();
+				/*
+				 * Toast.makeText( getBaseContext(), "Selected Date is\n" +
+				 * selectedYear + " - " + selectedMonth + " - " + selectedDay +
+				 * ", " + selectedDayOfWeek,
+				 * 
+				 * Toast.LENGTH_SHORT).show();
+				 */
+				DatePickerDialog mDatePicker = new DatePickerDialog(
+						MainActivity.this, mMonthlyCalDateSetListener,
+						selectedYear, selectedMonth - 1, selectedDay);
+				mDatePicker.show();
 			}
 		});
 
@@ -430,9 +390,8 @@ public class MainActivity extends Activity {
 				monthlyCalAdapter.setEventlist(eventList);
 				monthlyCalAdapter.notifyDataSetChanged();
 
-				int tempmonth = monthlyCalAdapter.curMonth + 1;
 				monthlyCalTop.setText(monthlyCalAdapter.curYear + " - "
-						+ tempmonth);
+						+ (int) (monthlyCalAdapter.curMonth + 1));
 			}
 		});
 
@@ -442,9 +401,8 @@ public class MainActivity extends Activity {
 				monthlyCalAdapter.setEventlist(eventList);
 				monthlyCalAdapter.notifyDataSetChanged();
 
-				int tempmonth = monthlyCalAdapter.curMonth + 1;
 				monthlyCalTop.setText(monthlyCalAdapter.curYear + " - "
-						+ tempmonth);
+						+ (int) (monthlyCalAdapter.curMonth + 1));
 			}
 		});
 	}
@@ -698,4 +656,52 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	private DatePickerDialog.OnDateSetListener mMonthlyCalDateSetListener = new OnDateSetListener() {
+
+		@Override
+		public void onDateSet(DatePicker view, int year, int monthOfYear,
+				int dayOfMonth) {
+			fortoday.set(year, monthOfYear, dayOfMonth);
+			selectedDay = dayOfMonth;
+			selectedMonth = monthOfYear + 1;
+			selectedYear = year;
+			selectedDayOfWeek = convertDaytoString(fortoday
+					.get(fortoday.DAY_OF_WEEK) - 1);
+
+			monthlyCalTop.setText(selectedYear + " - " + selectedMonth + " - "
+					+ selectedDay + ", " + selectedDayOfWeek);
+			monthlyCalAdapter.setSpecificMonth(year, monthOfYear, dayOfMonth);
+			monthlyCalAdapter.notifyDataSetChanged();
+		}
+	};
+
+	private String convertDaytoString(int num) {
+
+		String temp = new String();
+		switch (num) {
+		case 0:
+			temp = "SUN";
+			break;
+		case 1:
+			temp = "MON";
+			break;
+		case 2:
+			temp = "TUE";
+			break;
+		case 3:
+			temp = "WED";
+			break;
+		case 4:
+			temp = "TUR";
+			break;
+		case 5:
+			temp = "FRI";
+			break;
+		case 6:
+			temp = "SAT";
+			break;
+		}
+		;
+		return temp;
+	}
 }
