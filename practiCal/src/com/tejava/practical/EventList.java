@@ -28,6 +28,12 @@ public class EventList
 	{
 		eventList.add(newSingleEvent);
 		Collections.sort(eventList, SingleEvent.startYearMonthDayAndTimeComparator);
+		for(int i = 0; i < eventList.size(); i++)
+		{
+			singleEvent = eventList.get(i);
+			singleEvent.SetId(i);
+			eventList.set(i, singleEvent);
+		}
 	}
 	
 	public void Insert(int newYear, int newMonth, int newDay,
@@ -39,9 +45,13 @@ public class EventList
 				newName, newDescription);
 		eventList.add(singleEvent);
 		Collections.sort(eventList, SingleEvent.startYearMonthDayAndTimeComparator);
+		for(int i = 0; i < eventList.size(); i++)
+		{
+			singleEvent = eventList.get(i);
+			singleEvent.SetId(i);
+			eventList.set(i, singleEvent);
+		}
 	}
-	
-	
 	
 	public void Delete(int delId) throws Exception
 	{
