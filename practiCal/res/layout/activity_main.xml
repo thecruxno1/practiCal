@@ -74,17 +74,19 @@
                 android:text="Several days View"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <Button
-                android:id="@+id/test_btn1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="test_event_mod_activity" />
-
             <ListView
                 android:id="@+id/severaldayscalender_eventlist"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
             </ListView>
+            
+            <Button
+                android:id="@+id/several_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
 
         <LinearLayout
@@ -105,6 +107,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
             </ListView>
+            
+            <Button
+                android:id="@+id/daily_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add" />
         </LinearLayout>
 
         <LinearLayout
@@ -174,6 +182,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
             </ListView>
+            
+            <Button
+                android:id="@+id/event_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add" />
         </LinearLayout>
 
         <LinearLayout

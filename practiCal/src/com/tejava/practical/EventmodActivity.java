@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class EventmodActivity extends Activity {
 
@@ -48,6 +49,11 @@ public class EventmodActivity extends Activity {
 	static final int EVENT_MOD_START_TIME_DIALOG_ID = 101;
 	static final int EVENT_MOD_END_DATE_DIALOG_ID = 110;
 	static final int EVENT_MOD_END_TIME_DIALOG_ID = 111;
+	
+	static final int SEVERAL_CAL_EVENT_LIST = 30;
+	static final int DAILY_CAL_EVENT_LIST = 31;
+	static final int PRINT_EVENT_RANGE = 32;
+	static final int PRINT_EVENT_NUMBER = 33;
 
 	// date/time
 	int start_year;
@@ -107,8 +113,9 @@ public class EventmodActivity extends Activity {
 		btn_end_time.setText(end_hour+":"+end_min);
 		
 		Intent intent = getIntent();
-		operation_mode = intent.getExtras().getInt("mode_setting", 1);
+		operation_mode = intent.getExtras().getInt("mode_setting");
 		if (operation_mode == 1) { // new
+//			Toast.makeText(EventmodActivity.this, "new", Toast.LENGTH_LONG).show();
 			// need initializing?
 		} else // modify
 		{
@@ -210,7 +217,11 @@ public class EventmodActivity extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				Intent intent = getIntent();
+				int addFrom = intent.getExtras().getInt("add_from");
 
+				setResult(addFrom);
 				finish();
 			}
 		});

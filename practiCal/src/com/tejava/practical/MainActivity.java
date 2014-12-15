@@ -73,6 +73,11 @@ public class MainActivity extends Activity {
 	
 	static final int EVENT_MOD_START_DATE_DIALOG_ID = 200;
 	static final int EVENT_MOD_END_DATE_DIALOG_ID = 210;
+
+	static final int SEVERAL_CAL_EVENT_LIST = 30;
+	static final int DAILY_CAL_EVENT_LIST = 31;
+	static final int PRINT_EVENT_RANGE = 32;
+	static final int PRINT_EVENT_NUMBER = 33;
 	
 	// option menu related variable
 	LinearLayout optionScreen;
@@ -172,9 +177,6 @@ public class MainActivity extends Activity {
 		selectedYear = fortoday.get(fortoday.YEAR);
 		selectedDayOfWeek = fortoday.get(fortoday.DAY_OF_WEEK) - 1;
 
-		// test
-		btnTEST = (Button) findViewById(R.id.test_btn1);
-		
 		// load event list
 //		eventList.Insert( 0, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
 //		eventList.Insert( 1, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
@@ -479,9 +481,12 @@ public class MainActivity extends Activity {
 						@Override
 						public boolean onItemLongClick(AdapterView<?> arg0,
 								View arg1, int arg2, long arg3) {
+							Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
+							intent.putExtra("mode_setting", 1); // 0: modify, 1: new
+							intent.putExtra("db_access_info", "test_value");
+							intent.putExtra("add_from", PRINT_EVENT_NUMBER);
 							
-							printEventNumber.performClick();
-							
+							startActivityForResult(intent, 0);
 							return true;
 						}
 						
@@ -517,9 +522,10 @@ public class MainActivity extends Activity {
 								View arg1, int arg2, long arg3) {
 							Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
 							intent.putExtra("mode_setting", 1); // 0: modify, 1: new
-//							intent.putExtra("db_access_info", "test_value");
-							startActivity(intent);	
+							intent.putExtra("db_access_info", "test_value");
+							intent.putExtra("add_from", PRINT_EVENT_RANGE);
 							
+							startActivityForResult(intent, 0);
 							return true;
 						}
 						
@@ -633,6 +639,57 @@ public class MainActivity extends Activity {
 			Toast.makeText(MainActivity.this, event.GetName(), Toast.LENGTH_LONG).show();
 //			intent.putExtra("Event ID", ((SingleEvent) clickedView).GetId());
 //			startActivity(intent);
+		}
+	};
+	
+//	protected void onResume() {
+//		if (severalCalScreen.getVisibility() == View.VISIBLE) {
+//			
+//		}
+//		else if (dailyCalScreen.getVisibility() == View.VISIBLE) {
+//			btnDailyCal.performClick();
+//		}
+//		else if (eventCalScreen.getVisibility() == View.VISIBLE) {
+//			
+//		}
+//	};
+	
+//	protected void onRestart() {
+//		if (severalCalScreen.getVisibility() == View.VISIBLE) {
+//		
+//		}
+//		else if (dailyCalScreen.getVisibility() == View.VISIBLE) {
+//			btnDailyCal.performClick();
+//		}
+//		else if (eventCalScreen.getVisibility() == View.VISIBLE) {
+//			
+//		}
+//	};
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		switch (resultCode) {
+		case SEVERAL_CAL_EVENT_LIST:
+			
+			break;
+			
+		case DAILY_CAL_EVENT_LIST:
+			btnDailyCal.performClick();
+			break;
+			
+		case PRINT_EVENT_RANGE:
+//			Toast.makeText(MainActivity.this, "fUCK!", Toast.LENGTH_LONG).show();
+			printEventRange.performClick();
+			break;
+			
+		case PRINT_EVENT_NUMBER:
+			printEventNumber.performClick();
+			break;
+
+		default:
+			break;
 		}
 	};
 }
