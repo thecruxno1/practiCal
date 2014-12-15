@@ -50,11 +50,13 @@ public class MainActivity extends Activity {
 
 	// Several Calendar related variable
 	LinearLayout severalCalScreen;
+	Button severalCalAdd;
 
 	// Daily calendar related variable
 	LinearLayout dailyCalScreen;
 	TextView dailyCalTop;
 	ListView dailyCalEventList;
+	Button dailyCalAdd;
 	
 	EventListAdapter dailyCalEventListAdapter;
 
@@ -67,17 +69,24 @@ public class MainActivity extends Activity {
 	EditText eventNumber;
 	Button printEventNumber;
 	ListView eventCalEventList;
+	Button eventCalAdd;
 	
 	EventCalendar eventCalendar;
 	EventListAdapter eventListAdapter;
+	int flag;
 	
 	static final int EVENT_MOD_START_DATE_DIALOG_ID = 200;
 	static final int EVENT_MOD_END_DATE_DIALOG_ID = 210;
 
 	static final int SEVERAL_CAL_EVENT_LIST = 30;
 	static final int DAILY_CAL_EVENT_LIST = 31;
-	static final int PRINT_EVENT_RANGE = 32;
-	static final int PRINT_EVENT_NUMBER = 33;
+	static final int EVENT_CAL_EVENT_LIST = 32;
+	
+	static final int PRINT_EVENT_RANGE = 0;
+	static final int PRINT_EVENT_NUMBER = 1;
+	static final int NONE = 2;
+	
+	static final int MODIFY = 99;
 	
 	// option menu related variable
 	LinearLayout optionScreen;
@@ -244,15 +253,14 @@ public class MainActivity extends Activity {
 		btnDailyCal.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				dailyCalTop.setText(selectedYear + ". " + selectedMonth + ". "
-						+ selectedDay);
+				dailyCalTop.setText(selectedYear + ". " + selectedMonth + ". "+ selectedDay);
 				
 				// display event list
 				dailyCalEventListAdapter.clear();
 				
 				ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(selectedYear, selectedMonth, selectedDay);
 				if (list.size() == 0) {
-					Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_LONG).show();
+					Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_SHORT).show();
 				} else {
 					for (int i = 0; i < list.size(); i++)
 					{
@@ -262,6 +270,7 @@ public class MainActivity extends Activity {
 					}
 					
 					dailyCalEventList.setAdapter(dailyCalEventListAdapter);
+					dailyCalEventList.setOnItemClickListener(onEventListItemClickListener);
 				}
 					
 				monthlyCalScreen.setVisibility(View.INVISIBLE);
@@ -307,10 +316,22 @@ public class MainActivity extends Activity {
 		btnTEST.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				try{
+					SingleEvent testevent = new SingleEvent(12334, 1987, 7, 15, 15, 18, 0, 10, "birth", "birthday");	
+							
+				
 				Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
-				intent.putExtra("mode_setting", 1); // 0: modify, 1: new
+				intent.putExtra("mode_setting", 0); // 0: modify, 1: new
+				
+				intent.putExtra("event_obj", testevent);
+				
 				intent.putExtra("db_access_info", "test_value");
-				startActivity(intent);				
+				startActivity(intent);		
+				
+				}
+				catch(Exception ex){
+					
+				}	
 			}
 		});
 	}
@@ -421,6 +442,16 @@ public class MainActivity extends Activity {
 	private void severalCalInitialize() {
 		// // Several Calendar variable Init
 		severalCalScreen = (LinearLayout) findViewById(R.id.severaldayscalender_screen);
+		severalCalAdd = (Button) findViewById(R.id.several_add);
+		
+		severalCalAdd.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 
 	}
 
@@ -429,8 +460,23 @@ public class MainActivity extends Activity {
 		dailyCalScreen = (LinearLayout) findViewById(R.id.dailycalendar_screen);
 		dailyCalTop = (TextView) findViewById(R.id.dailycalendar_top);
 		dailyCalEventList = (ListView) findViewById(R.id.dailycalender_eventlist);
+		dailyCalAdd = (Button) findViewById(R.id.daily_add);
 		
 		dailyCalEventListAdapter = new EventListAdapter(this);
+		
+		dailyCalAdd.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
+				intent.putExtra("mode_setting", 1); // 0: modify, 1: new
+				intent.putExtra("db_access_info", "test_value");
+				intent.putExtra("add_from", DAILY_CAL_EVENT_LIST);
+				
+				startActivityForResult(intent, 0);
+			}
+		});
 	}
 
 	private void eventCalInitizliize() throws Exception {
@@ -443,14 +489,32 @@ public class MainActivity extends Activity {
 		eventNumber = (EditText) findViewById(R.id.event_number);
 		printEventNumber = (Button) findViewById(R.id.print_event_number);
 		eventCalEventList = (ListView) findViewById(R.id.eventcalendar_eventlist);
+		eventCalAdd = (Button) findViewById(R.id.event_add);
 		
 		eventCalendar = new EventCalendar();
 		eventListAdapter = new EventListAdapter(this);
+		flag = NONE;
 		
 		// Event Calendar listener initialize
+		eventCalAdd.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
+				intent.putExtra("mode_setting", 1); // 0: modify, 1: new
+				intent.putExtra("db_access_info", "test_value");
+				intent.putExtra("add_from", EVENT_CAL_EVENT_LIST);
+				
+				startActivityForResult(intent, 0);
+			}
+		});
+		
 		printEventNumber.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				flag = PRINT_EVENT_NUMBER;
+				
 				String eventNumberStr = (eventNumber.getText().toString().equals(""))? null : eventNumber.getText().toString();
 				
 				if (eventNumberStr != null)
@@ -476,21 +540,21 @@ public class MainActivity extends Activity {
 					
 					eventCalEventList.setAdapter(eventListAdapter);
 					eventCalEventList.setOnItemClickListener(onEventListItemClickListener);
-					eventCalEventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-						@Override
-						public boolean onItemLongClick(AdapterView<?> arg0,
-								View arg1, int arg2, long arg3) {
-							Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
-							intent.putExtra("mode_setting", 1); // 0: modify, 1: new
-							intent.putExtra("db_access_info", "test_value");
-							intent.putExtra("add_from", PRINT_EVENT_NUMBER);
-							
-							startActivityForResult(intent, 0);
-							return true;
-						}
-						
-					});
+//					eventCalEventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//
+//						@Override
+//						public boolean onItemLongClick(AdapterView<?> arg0,
+//								View arg1, int arg2, long arg3) {
+//							Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
+//							intent.putExtra("mode_setting", 1); // 0: modify, 1: new
+//							intent.putExtra("db_access_info", "test_value");
+//							intent.putExtra("add_from", PRINT_EVENT_NUMBER);
+//							
+//							startActivityForResult(intent, 0);
+//							return true;
+//						}
+//						
+//					});
 				}
 			}
 		});
@@ -498,6 +562,8 @@ public class MainActivity extends Activity {
 		printEventRange.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				flag = PRINT_EVENT_RANGE;
+				
 				eventListAdapter.clear();
 				
 				ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(eventCalendar.startYear, eventCalendar.startMonth, eventCalendar.startDay, 
@@ -515,21 +581,21 @@ public class MainActivity extends Activity {
 					
 					eventCalEventList.setAdapter(eventListAdapter);
 					eventCalEventList.setOnItemClickListener(onEventListItemClickListener);
-					eventCalEventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-						@Override
-						public boolean onItemLongClick(AdapterView<?> arg0,
-								View arg1, int arg2, long arg3) {
-							Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
-							intent.putExtra("mode_setting", 1); // 0: modify, 1: new
-							intent.putExtra("db_access_info", "test_value");
-							intent.putExtra("add_from", PRINT_EVENT_RANGE);
-							
-							startActivityForResult(intent, 0);
-							return true;
-						}
-						
-					});
+//					eventCalEventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//
+//						@Override
+//						public boolean onItemLongClick(AdapterView<?> arg0,
+//								View arg1, int arg2, long arg3) {
+//							Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
+//							intent.putExtra("mode_setting", 1); // 0: modify, 1: new
+//							intent.putExtra("db_access_info", "test_value");
+//							intent.putExtra("add_from", PRINT_EVENT_RANGE);
+//							
+//							startActivityForResult(intent, 0);
+//							return true;
+//						}
+//						
+//					});
 				}
 			}
 		});
@@ -633,12 +699,11 @@ public class MainActivity extends Activity {
 		{
 			Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
 			intent.putExtra("mode_setting", 0); // 0: modify, 1: new
-//			intent.putExtra("db_access_info", "test_value");
 
-			SingleEvent event = (SingleEvent) eventListAdapter.getItem(pos);
-			Toast.makeText(MainActivity.this, event.GetName(), Toast.LENGTH_LONG).show();
-//			intent.putExtra("Event ID", ((SingleEvent) clickedView).GetId());
-//			startActivity(intent);
+			SingleEvent event = (SingleEvent) adapterView.getItemAtPosition(pos);
+			intent.putExtra("event_obj", event);
+			
+			startActivityForResult(intent, 0);
 		}
 	};
 	
@@ -672,20 +737,46 @@ public class MainActivity extends Activity {
 		
 		switch (resultCode) {
 		case SEVERAL_CAL_EVENT_LIST:
-			
 			break;
 			
 		case DAILY_CAL_EVENT_LIST:
 			btnDailyCal.performClick();
 			break;
 			
-		case PRINT_EVENT_RANGE:
-//			Toast.makeText(MainActivity.this, "fUCK!", Toast.LENGTH_LONG).show();
-			printEventRange.performClick();
+		case EVENT_CAL_EVENT_LIST:
+		{
+			switch (flag) {
+			case PRINT_EVENT_RANGE:
+				printEventRange.performClick();
+				break;
+				
+			case PRINT_EVENT_NUMBER:
+				printEventNumber.performClick();
+				break;
+
+			default:
+				break;
+			}
+		}
 			break;
 			
-		case PRINT_EVENT_NUMBER:
-			printEventNumber.performClick();
+		case MODIFY:
+		{
+			btnDailyCal.performClick();
+			
+			switch (flag) {
+			case PRINT_EVENT_RANGE:
+				printEventRange.performClick();
+				break;
+				
+			case PRINT_EVENT_NUMBER:
+				printEventNumber.performClick();
+				break;
+
+			default:
+				break;
+			}
+		}
 			break;
 
 		default:
