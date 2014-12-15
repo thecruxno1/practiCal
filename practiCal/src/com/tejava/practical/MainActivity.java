@@ -90,7 +90,7 @@ public class MainActivity extends Activity {
 	int selectedYear;
 	int selectedDayOfWeek;
 	
-	EventList eventList = new EventList(MainActivity.this);
+//	EventList eventList = new EventList(MainActivity.this);
 	
 //	//variables for Test()
 //	private EventList eventList1 = new EventList(MainActivity.this);
@@ -130,17 +130,17 @@ public class MainActivity extends Activity {
 	//test function
 	private void Test() throws Exception
 	{
-		eventList.Insert( 0, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
-		eventList.Insert( 1, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
-		eventList.Insert( 2, 2014, 2, 3, 4, 5, 6, 8, "Third", "This is third event");
-		eventList.Insert( 3, 2014, 2, 3, 4, 5, 6, 9, "Fourth", "This is fourth event");
-		eventList.Insert( 4, 2014, 2, 4, 4, 5, 6, 10, "Fifth", "This is fifth event");
-		eventList.Insert( 5, 2014, 2, 5, 4, 5, 6, 11, "Sixth", "This is sixth event");
-		eventList.Insert( 6, 2014, 2, 6, 4, 5, 6, 12, "Seventh", "This is seventh event");
-		eventList.Insert( 7, 2014, 2, 6, 4, 5, 6, 13, "Eighth", "This is eighth event");
-		eventList.Insert( 8, 2014, 2, 7, 4, 5, 6, 14, "Ninth", "This is ninth event");
-		eventList.Insert( 9, 2014, 2, 7, 4, 5, 6, 15, "Tenth", "This is tenth event");
-		eventList.Insert(10, 2014, 3, 7, 4, 5, 6, 16, "Eleventh", "This is eleventh event");
+//		eventList.Insert( 0, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
+//		eventList.Insert( 1, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
+//		eventList.Insert( 2, 2014, 2, 3, 4, 5, 6, 8, "Third", "This is third event");
+//		eventList.Insert( 3, 2014, 2, 3, 4, 5, 6, 9, "Fourth", "This is fourth event");
+//		eventList.Insert( 4, 2014, 2, 4, 4, 5, 6, 10, "Fifth", "This is fifth event");
+//		eventList.Insert( 5, 2014, 2, 5, 4, 5, 6, 11, "Sixth", "This is sixth event");
+//		eventList.Insert( 6, 2014, 2, 6, 4, 5, 6, 12, "Seventh", "This is seventh event");
+//		eventList.Insert( 7, 2014, 2, 6, 4, 5, 6, 13, "Eighth", "This is eighth event");
+//		eventList.Insert( 8, 2014, 2, 7, 4, 5, 6, 14, "Ninth", "This is ninth event");
+//		eventList.Insert( 9, 2014, 2, 7, 4, 5, 6, 15, "Tenth", "This is tenth event");
+//		eventList.Insert(10, 2014, 3, 7, 4, 5, 6, 16, "Eleventh", "This is eleventh event");
 		
 		//Toast.makeText(MainActivity.this, "size before delete: " + eventList.GetSize(), Toast.LENGTH_LONG).show();
 //		eventList1.Delete(0);
@@ -176,22 +176,41 @@ public class MainActivity extends Activity {
 		btnTEST = (Button) findViewById(R.id.test_btn1);
 		
 		// load event list
-		eventList.Insert( 0, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
-		eventList.Insert( 1, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
-		eventList.Insert( 2, 2014, 2, 3, 4, 5, 6, 8, "Third", "This is third event");
-		eventList.Insert( 3, 2014, 2, 3, 4, 5, 6, 9, "Fourth", "This is fourth event");
-		eventList.Insert( 4, 2014, 2, 4, 4, 5, 6, 10, "Fifth", "This is fifth event");
-		eventList.Insert( 5, 2014, 2, 5, 4, 5, 6, 11, "Sixth", "This is sixth event");
-		eventList.Insert( 6, 2014, 2, 6, 4, 5, 6, 12, "Seventh", "This is seventh event");
-		eventList.Insert( 7, 2014, 2, 6, 4, 5, 6, 13, "Eighth", "This is eighth event");
-		eventList.Insert( 8, 2014, 2, 7, 4, 5, 6, 14, "Ninth", "This is ninth event");
-		eventList.Insert( 9, 2014, 2, 7, 4, 5, 6, 15, "Tenth", "This is tenth event");
-		eventList.Insert(10, 2014, 3, 7, 4, 5, 6, 16, "Eleventh", "This is eleventh event");
-		
-		eventList.Save("save.txt");
-		eventList.Delete(0);
+//		eventList.Insert( 0, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
+//		eventList.Insert( 1, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
+//		eventList.Insert( 2, 2014, 2, 3, 4, 5, 6, 8, "Third", "This is third event");
+//		eventList.Insert( 3, 2014, 2, 3, 4, 5, 6, 9, "Fourth", "This is fourth event");
+//		eventList.Insert( 4, 2014, 2, 4, 4, 5, 6, 10, "Fifth", "This is fifth event");
+//		eventList.Insert( 5, 2014, 2, 5, 4, 5, 6, 11, "Sixth", "This is sixth event");
+//		eventList.Insert( 6, 2014, 2, 6, 4, 5, 6, 12, "Seventh", "This is seventh event");
+//		eventList.Insert( 7, 2014, 2, 6, 4, 5, 6, 13, "Eighth", "This is eighth event");
+//		eventList.Insert( 8, 2014, 2, 7, 4, 5, 6, 14, "Ninth", "This is ninth event");
+//		eventList.Insert( 9, 2014, 2, 7, 4, 5, 6, 15, "Tenth", "This is tenth event");
+//		eventList.Insert(10, 2014, 3, 7, 4, 5, 6, 16, "Eleventh", "This is eleventh event");
+//		
 //		eventList.Save("save.txt");
-		eventList.Load("save.txt");
+//		eventList.Delete(0);
+////		eventList.Save("save.txt");
+//		eventList.Load("save.txt");
+		
+		PractiCalEventList.practiCalEventList = new EventList(MainActivity.this);
+		
+		PractiCalEventList.practiCalEventList.Insert( 0, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
+		PractiCalEventList.practiCalEventList.Insert( 1, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
+		PractiCalEventList.practiCalEventList.Insert( 2, 2014, 2, 3, 4, 5, 6, 8, "Third", "This is third event");
+		PractiCalEventList.practiCalEventList.Insert( 3, 2014, 2, 3, 4, 5, 6, 9, "Fourth", "This is fourth event");
+		PractiCalEventList.practiCalEventList.Insert( 4, 2014, 2, 4, 4, 5, 6, 10, "Fifth", "This is fifth event");
+		PractiCalEventList.practiCalEventList.Insert( 5, 2014, 2, 5, 4, 5, 6, 11, "Sixth", "This is sixth event");
+		PractiCalEventList.practiCalEventList.Insert( 6, 2014, 2, 6, 4, 5, 6, 12, "Seventh", "This is seventh event");
+		PractiCalEventList.practiCalEventList.Insert( 7, 2014, 2, 6, 4, 5, 6, 13, "Eighth", "This is eighth event");
+		PractiCalEventList.practiCalEventList.Insert( 8, 2014, 2, 7, 4, 5, 6, 14, "Ninth", "This is ninth event");
+		PractiCalEventList.practiCalEventList.Insert( 9, 2014, 2, 7, 4, 5, 6, 15, "Tenth", "This is tenth event");
+		PractiCalEventList.practiCalEventList.Insert(10, 2014, 3, 7, 4, 5, 6, 16, "Eleventh", "This is eleventh event");
+		
+		PractiCalEventList.practiCalEventList.Save("save.txt");
+		PractiCalEventList.practiCalEventList.Delete(0);
+//		PractiCalEventList.practiCalEventList.Save("save.txt");
+		PractiCalEventList.practiCalEventList.Load("save.txt");
 	}
 
 	private void listenerInitialize() {
@@ -229,7 +248,7 @@ public class MainActivity extends Activity {
 				// display event list
 				dailyCalEventListAdapter.clear();
 				
-				ArrayList<SingleEvent> list = eventList.Search(selectedYear, selectedMonth, selectedDay);
+				ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(selectedYear, selectedMonth, selectedDay);
 				if (list.size() == 0) {
 					Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_LONG).show();
 				} else {
@@ -337,7 +356,7 @@ public class MainActivity extends Activity {
 					// display event list
 					dailyCalEventListAdapter.clear();
 					
-					ArrayList<SingleEvent> list = eventList.Search(selectedYear, selectedMonth, selectedDay);
+					ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(selectedYear, selectedMonth, selectedDay);
 					if (list.size() == 0) {
 						Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_LONG).show();
 					} else {
@@ -441,7 +460,7 @@ public class MainActivity extends Activity {
 				int month = fortoday.get(fortoday.MONTH) + 1;
 				int year = fortoday.get(fortoday.YEAR);
 				
-				ArrayList<SingleEvent> list = eventList.Search(year, month, day, eventCalendar.eventNumber);
+				ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(year, month, day, eventCalendar.eventNumber);
 				if (list.size() == 0) {
 					eventCalEventList.setAdapter(eventListAdapter);
 					Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_LONG).show();
@@ -476,7 +495,7 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				eventListAdapter.clear();
 				
-				ArrayList<SingleEvent> list = eventList.Search(eventCalendar.startYear, eventCalendar.startMonth, eventCalendar.startDay, 
+				ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(eventCalendar.startYear, eventCalendar.startMonth, eventCalendar.startDay, 
 						eventCalendar.endYear, eventCalendar.endMonth, eventCalendar.endDay);
 				if (list.size() == 0) {
 					eventCalEventList.setAdapter(eventListAdapter);
@@ -496,12 +515,17 @@ public class MainActivity extends Activity {
 						@Override
 						public boolean onItemLongClick(AdapterView<?> arg0,
 								View arg1, int arg2, long arg3) {
-							try {
-								eventList.Insert(11, 2014, 12, 15, 4, 5, 6, 16, "twelveth", "This is twelveth event");
-							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+//							try {
+//								PractiCalEventList.practiCalEventList.Insert(11, 2014, 12, 15, 4, 5, 6, 16, "twelveth", "This is twelveth event");
+//							} catch (Exception e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+							
+							Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
+							intent.putExtra("mode_setting", 1); // 0: modify, 1: new
+//							intent.putExtra("db_access_info", "test_value");
+							startActivity(intent);	
 							
 							printEventRange.performClick();
 							

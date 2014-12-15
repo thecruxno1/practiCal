@@ -203,6 +203,13 @@ public class EventmodActivity extends Activity {
 				// db_access_info.adm_3 = ET_event_additional_memo_3.getText().toString();
 				// db_access_info.adm_4 = ET_event_additional_memo_4.getText().toString();
 				
+				try {
+					PractiCalEventList.practiCalEventList.Insert(11, start_year, start_month, start_day, 
+							start_hour, end_hour, start_min, end_min, ET_event_name.getText().toString(), ET_event_description.getText().toString());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 
