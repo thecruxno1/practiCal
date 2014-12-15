@@ -10,8 +10,10 @@ import android.app.Dialog;
 import android.content.ClipData.Item;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.internal.widget.AdapterViewCompat.OnItemLongClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -63,7 +65,7 @@ public class MainActivity extends Activity {
 	TextView upcoming;
 	EditText eventNumber;
 	Button printEventNumber;
-	ListView eventList;
+	ListView eventCalEventList;
 	
 	EventCalendar eventCalendar;
 	EventListAdapter eventListAdapter;
@@ -87,11 +89,13 @@ public class MainActivity extends Activity {
 	int selectedYear;
 	int selectedDayOfWeek;
 	
-	//variables for Test()
-	private EventList eventList1 = new EventList(MainActivity.this);
-	private EventList eventList2 = new EventList(MainActivity.this);
-	private SingleEvent singleEvent = new SingleEvent();
-    FileOutputStream fos;
+	EventList eventList = new EventList(MainActivity.this);
+	
+//	//variables for Test()
+//	private EventList eventList1 = new EventList(MainActivity.this);
+//	private EventList eventList2 = new EventList(MainActivity.this);
+//	private SingleEvent singleEvent = new SingleEvent();
+//    FileOutputStream fos;
 
 	// test variable
 	Button btnTEST;
@@ -114,7 +118,7 @@ public class MainActivity extends Activity {
 			
 			listenerInitialize();
 			
-			Test();
+//			Test();
 		}
 		catch(Exception ex)
 		{
@@ -125,17 +129,17 @@ public class MainActivity extends Activity {
 	//test function
 	private void Test() throws Exception
 	{
-		eventList1.Insert( 0, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
-		eventList1.Insert( 1, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
-		eventList1.Insert( 2, 2014, 2, 3, 4, 5, 6, 8, "Third", "This is third event");
-		eventList1.Insert( 3, 2014, 2, 3, 4, 5, 6, 9, "Fourth", "This is fourth event");
-		eventList1.Insert( 4, 2014, 2, 4, 4, 5, 6, 10, "Fifth", "This is fifth event");
-		eventList1.Insert( 5, 2014, 2, 5, 4, 5, 6, 11, "Sixth", "This is sixth event");
-		eventList1.Insert( 6, 2014, 2, 6, 4, 5, 6, 12, "Seventh", "This is seventh event");
-		eventList1.Insert( 7, 2014, 2, 6, 4, 5, 6, 13, "Eighth", "This is eighth event");
-		eventList1.Insert( 8, 2014, 2, 7, 4, 5, 6, 14, "Ninth", "This is ninth event");
-		eventList1.Insert( 9, 2014, 2, 7, 4, 5, 6, 15, "Tenth", "This is tenth event");
-		eventList1.Insert(10, 2014, 3, 7, 4, 5, 6, 16, "Eleventh", "This is eleventh event");
+		eventList.Insert( 0, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
+		eventList.Insert( 1, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
+		eventList.Insert( 2, 2014, 2, 3, 4, 5, 6, 8, "Third", "This is third event");
+		eventList.Insert( 3, 2014, 2, 3, 4, 5, 6, 9, "Fourth", "This is fourth event");
+		eventList.Insert( 4, 2014, 2, 4, 4, 5, 6, 10, "Fifth", "This is fifth event");
+		eventList.Insert( 5, 2014, 2, 5, 4, 5, 6, 11, "Sixth", "This is sixth event");
+		eventList.Insert( 6, 2014, 2, 6, 4, 5, 6, 12, "Seventh", "This is seventh event");
+		eventList.Insert( 7, 2014, 2, 6, 4, 5, 6, 13, "Eighth", "This is eighth event");
+		eventList.Insert( 8, 2014, 2, 7, 4, 5, 6, 14, "Ninth", "This is ninth event");
+		eventList.Insert( 9, 2014, 2, 7, 4, 5, 6, 15, "Tenth", "This is tenth event");
+		eventList.Insert(10, 2014, 3, 7, 4, 5, 6, 16, "Eleventh", "This is eleventh event");
 		
 		//Toast.makeText(MainActivity.this, "size before delete: " + eventList.GetSize(), Toast.LENGTH_LONG).show();
 //		eventList1.Delete(0);
@@ -151,7 +155,7 @@ public class MainActivity extends Activity {
 //		Toast.makeText(MainActivity.this, list.get(0).GetStartHour() + ":" + list.get(0).GetStartMin(), Toast.LENGTH_LONG).show();
 	}
 
-	private void variableInitialize() {
+	private void variableInitialize() throws Exception {
 
 		// five function button find
 		btnMonthlyCal = (ImageView) findViewById(R.id.btn_monthly);
@@ -169,6 +173,24 @@ public class MainActivity extends Activity {
 
 		// test
 		btnTEST = (Button) findViewById(R.id.test_btn1);
+		
+		// load event list
+		eventList.Insert( 0, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
+		eventList.Insert( 1, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
+		eventList.Insert( 2, 2014, 2, 3, 4, 5, 6, 8, "Third", "This is third event");
+		eventList.Insert( 3, 2014, 2, 3, 4, 5, 6, 9, "Fourth", "This is fourth event");
+		eventList.Insert( 4, 2014, 2, 4, 4, 5, 6, 10, "Fifth", "This is fifth event");
+		eventList.Insert( 5, 2014, 2, 5, 4, 5, 6, 11, "Sixth", "This is sixth event");
+		eventList.Insert( 6, 2014, 2, 6, 4, 5, 6, 12, "Seventh", "This is seventh event");
+		eventList.Insert( 7, 2014, 2, 6, 4, 5, 6, 13, "Eighth", "This is eighth event");
+		eventList.Insert( 8, 2014, 2, 7, 4, 5, 6, 14, "Ninth", "This is ninth event");
+		eventList.Insert( 9, 2014, 2, 7, 4, 5, 6, 15, "Tenth", "This is tenth event");
+		eventList.Insert(10, 2014, 3, 7, 4, 5, 6, 16, "Eleventh", "This is eleventh event");
+		
+		eventList.Save("save.txt");
+		eventList.Delete(0);
+//		eventList.Save("save.txt");
+		eventList.Load("save.txt");
 	}
 
 	private void listenerInitialize() {
@@ -206,7 +228,7 @@ public class MainActivity extends Activity {
 				// display event list
 				dailyCalEventListAdapter.clear();
 				
-				ArrayList<SingleEvent> list = eventList1.Search(selectedYear, selectedMonth, selectedDay);
+				ArrayList<SingleEvent> list = eventList.Search(selectedYear, selectedMonth, selectedDay);
 				if (list.size() == 0) {
 					Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_LONG).show();
 				} else {
@@ -314,7 +336,7 @@ public class MainActivity extends Activity {
 					// display event list
 					dailyCalEventListAdapter.clear();
 					
-					ArrayList<SingleEvent> list = eventList1.Search(selectedYear, selectedMonth, selectedDay);
+					ArrayList<SingleEvent> list = eventList.Search(selectedYear, selectedMonth, selectedDay);
 					if (list.size() == 0) {
 						Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_LONG).show();
 					} else {
@@ -398,7 +420,7 @@ public class MainActivity extends Activity {
 		upcoming = (TextView) findViewById(R.id.upcoming);
 		eventNumber = (EditText) findViewById(R.id.event_number);
 		printEventNumber = (Button) findViewById(R.id.print_event_number);
-		eventList = (ListView) findViewById(R.id.eventcalendar_eventlist);
+		eventCalEventList = (ListView) findViewById(R.id.eventcalendar_eventlist);
 		
 		eventCalendar = new EventCalendar();
 		eventListAdapter = new EventListAdapter(this);
@@ -418,9 +440,9 @@ public class MainActivity extends Activity {
 				int month = fortoday.get(fortoday.MONTH) + 1;
 				int year = fortoday.get(fortoday.YEAR);
 				
-				ArrayList<SingleEvent> list = eventList1.Search(year, month, day, eventCalendar.eventNumber);
+				ArrayList<SingleEvent> list = eventList.Search(year, month, day, eventCalendar.eventNumber);
 				if (list.size() == 0) {
-					eventList.setAdapter(eventListAdapter);
+					eventCalEventList.setAdapter(eventListAdapter);
 					Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_LONG).show();
 				} else {
 					for (int i = 0; i < list.size(); i++)
@@ -430,8 +452,8 @@ public class MainActivity extends Activity {
 						eventListAdapter.addItem(list.get(i));
 					}
 					
-					eventList.setAdapter(eventListAdapter);
-					eventList.setOnItemClickListener(onEventListItemClickListener);
+					eventCalEventList.setAdapter(eventListAdapter);
+					eventCalEventList.setOnItemClickListener(onEventListItemClickListener);
 				}
 			}
 		});
@@ -441,10 +463,10 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				eventListAdapter.clear();
 				
-				ArrayList<SingleEvent> list = eventList1.Search(eventCalendar.startYear, eventCalendar.startMonth, eventCalendar.startDay, 
+				ArrayList<SingleEvent> list = eventList.Search(eventCalendar.startYear, eventCalendar.startMonth, eventCalendar.startDay, 
 						eventCalendar.endYear, eventCalendar.endMonth, eventCalendar.endDay);
 				if (list.size() == 0) {
-					eventList.setAdapter(eventListAdapter);
+					eventCalEventList.setAdapter(eventListAdapter);
 					Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_LONG).show();
 				} else {
 					for (int i = 0; i < list.size(); i++)
@@ -454,8 +476,8 @@ public class MainActivity extends Activity {
 						eventListAdapter.addItem(list.get(i));
 					}
 					
-					eventList.setAdapter(eventListAdapter);
-					eventList.setOnItemClickListener(onEventListItemClickListener);
+					eventCalEventList.setAdapter(eventListAdapter);
+					eventCalEventList.setOnItemClickListener(onEventListItemClickListener);
 				}
 			}
 		});
@@ -565,6 +587,15 @@ public class MainActivity extends Activity {
 			Toast.makeText(MainActivity.this, event.GetName(), Toast.LENGTH_LONG).show();
 //			intent.putExtra("Event ID", ((SingleEvent) clickedView).GetId());
 //			startActivity(intent);	
+		}
+	};
+	
+	private OnLongClickListener onEventListLongClickListener = new OnLongClickListener() {
+		
+		@Override
+		public boolean onLongClick(View v) {
+			// TODO Auto-generated method stub
+			return false;
 		}
 	};
 
