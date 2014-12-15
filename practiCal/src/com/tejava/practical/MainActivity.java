@@ -19,6 +19,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -49,7 +50,12 @@ public class MainActivity extends Activity {
 	TextView monthlyCalTop;
 
 	// Several Calendar related variable
+	TextView severalCalTop;
 	LinearLayout severalCalScreen;
+	SeveralCalendarView severalCal;
+	SeveralCalendarAdapter severalCalAdapter;
+	ListView severalCalEventList;
+	SeveralCalendarEventListAdapter severalCalEventListAdapter;
 
 	// Daily calendar related variable
 	LinearLayout dailyCalScreen;
@@ -76,10 +82,14 @@ public class MainActivity extends Activity {
 
 	// option menu related variable
 	LinearLayout optionScreen;
-	int setting;
+	int mouth_onclick_setting;
+	int several_days_setting;
 	RadioButton month_onclick_option1;
 	RadioButton month_onclick_option2;
 	RadioButton month_onclick_option3;
+	RadioButton several_days_option1;
+	RadioButton several_days_option2;
+	RadioButton several_days_option3;
 
 	// option menu <- (-_-)?
 
@@ -97,7 +107,7 @@ public class MainActivity extends Activity {
 	// FileOutputStream fos;
 
 	// test variable
-	Button btnTEST;
+	// Button btnTEST;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) throws RuntimeException {
@@ -106,12 +116,13 @@ public class MainActivity extends Activity {
 
 		try {
 			variableInitialize();
-
+			optionInitailize();
+			
 			monthlyCalInitialize();
 			severalCalInitialize();
 			dailyCalInitialize();
 			eventCalInitizliize();
-			optionInitailize();
+			
 
 			listenerInitialize();
 
@@ -185,8 +196,10 @@ public class MainActivity extends Activity {
 		selectedDayOfWeek = convertDaytoString(fortoday
 				.get(fortoday.DAY_OF_WEEK) - 1);
 
+		mouth_onclick_setting = 1;
+		several_days_setting = 7;
 		// test
-		btnTEST = (Button) findViewById(R.id.test_btn1);
+		// btnTEST = (Button) findViewById(R.id.test_btn1);
 
 		// load event list
 		// will be deleted
@@ -238,6 +251,14 @@ public class MainActivity extends Activity {
 		btnSeveralCal.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				severalCalTop.setText(selectedYear + " - " + selectedMonth);
+				severalCalAdapter.recalculate(selectedYear, selectedMonth - 1,
+						selectedDay);
+				severalCal.setAdapter(severalCalAdapter);
+				severalCalAdapter.notifyDataSetChanged();
+
+				loadSeveralEvent();
+
 				monthlyCalScreen.setVisibility(View.INVISIBLE);
 				severalCalScreen.setVisibility(View.VISIBLE);
 				dailyCalScreen.setVisibility(View.INVISIBLE);
@@ -298,16 +319,16 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		btnTEST.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this,
-						EventmodActivity.class);
-				intent.putExtra("mode_setting", 1); // 0: modify, 1: new
-				intent.putExtra("db_access_info", "test_value");
-				startActivity(intent);
-			}
-		});
+		// btnTEST.setOnClickListener(new OnClickListener() {
+		// @Override
+		// public void onClick(View v) {
+		// Intent intent = new Intent(MainActivity.this,
+		// EventmodActivity.class);
+		// intent.putExtra("mode_setting", 1); // 0: modify, 1: new
+		// intent.putExtra("db_access_info", "test_value");
+		// startActivity(intent);
+		// }
+		// });
 	}
 
 	private void monthlyCalInitialize() {
@@ -343,13 +364,22 @@ public class MainActivity extends Activity {
 					monthlyCalTop.setText(selectedYear + " - " + selectedMonth
 							+ " - " + selectedDay + ", " + selectedDayOfWeek);
 
-					if (setting == 2) {
+					if (mouth_onclick_setting == 2) {
+						severalCalTop.setText(selectedYear + " - "
+								+ selectedMonth);
+						severalCal.setAdapter(severalCalAdapter);
+						severalCalAdapter.recalculate(selectedYear,
+								selectedMonth - 1, selectedDay);
+						severalCalAdapter.notifyDataSetChanged();
+
+						loadSeveralEvent();
+
 						monthlyCalScreen.setVisibility(View.INVISIBLE);
 						severalCalScreen.setVisibility(View.VISIBLE);
 						dailyCalScreen.setVisibility(View.INVISIBLE);
 						eventCalScreen.setVisibility(View.INVISIBLE);
 						optionScreen.setVisibility(View.INVISIBLE);
-					} else if (setting == 3) {
+					} else if (mouth_onclick_setting == 3) {
 						dailyCalTop.setText(selectedYear + " - "
 								+ selectedMonth + " - " + selectedDay + ", "
 								+ selectedDayOfWeek);
@@ -409,7 +439,40 @@ public class MainActivity extends Activity {
 
 	private void severalCalInitialize() {
 		// // Several Calendar variable Init
-		severalCalScreen = (LinearLayout) findViewById(R.id.severaldayscalender_screen);
+		severalCalScreen = (LinearLayout) findViewById(R.id.severalcalendar_screen);
+		severalCal = (SeveralCalendarView) findViewById(R.id.severalcalendar);
+		severalCal.setSeveralNumber(several_days_setting);
+		
+		severalCalAdapter = new SeveralCalendarAdapter(this);
+		severalCalAdapter.setSeveralNumber(several_days_setting);
+		severalCalAdapter.setEventList(eventList);
+		severalCal.setAdapter(severalCalAdapter);
+
+		severalCalEventList = (ListView) findViewById(R.id.severalcalendar_eventlist);
+		severalCalEventListAdapter = new SeveralCalendarEventListAdapter(this);
+
+		severalCalTop = (TextView) findViewById(R.id.severalcalendar_month);
+		severalCalTop.setText(selectedYear + " - " + selectedMonth);
+
+		severalCal.setOnDataSelectionListener(new OnDataSelectionListener() {
+			public void onDataSelected(AdapterView parent, View v,
+					int position, long id) {
+				SeveralCalendarOneDay curItem = (SeveralCalendarOneDay) severalCalAdapter
+						.getItem(position);
+
+				if (curItem.getDay() != 0) {
+					selectedDay = curItem.getDay();
+					selectedMonth = curItem.getMonth();
+					selectedYear = curItem.getYear();
+					selectedDayOfWeek = curItem.getDayofWeekString();
+
+					severalCalTop.setText(selectedYear + " - " + selectedMonth
+							+ " - " + selectedDay + ", " + selectedDayOfWeek);
+
+					loadSeveralEvent();
+				}
+			}
+		});
 	}
 
 	private void dailyCalInitialize() {
@@ -532,6 +595,11 @@ public class MainActivity extends Activity {
 		month_onclick_option3 = (RadioButton) findViewById(R.id.onclick_monthlycal_daily);
 		month_onclick_option1.setChecked(true);
 
+		several_days_option1 = (RadioButton) findViewById(R.id.several_three);
+		several_days_option2 = (RadioButton) findViewById(R.id.several_five);
+		several_days_option3 = (RadioButton) findViewById(R.id.several_seven);
+		several_days_option3.setChecked(true);
+
 		// Option menu
 		month_onclick_option1
 				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -540,7 +608,7 @@ public class MainActivity extends Activity {
 					public void onCheckedChanged(CompoundButton buttonView,
 							boolean isChecked) {
 						if (isChecked)
-							setting = 1;
+							mouth_onclick_setting = 1;
 					}
 				});
 		month_onclick_option2
@@ -550,7 +618,7 @@ public class MainActivity extends Activity {
 					public void onCheckedChanged(CompoundButton buttonView,
 							boolean isChecked) {
 						if (isChecked)
-							setting = 2;
+							mouth_onclick_setting = 2;
 					}
 				});
 		month_onclick_option3
@@ -560,7 +628,43 @@ public class MainActivity extends Activity {
 					public void onCheckedChanged(CompoundButton buttonView,
 							boolean isChecked) {
 						if (isChecked)
-							setting = 3;
+							mouth_onclick_setting = 3;
+					}
+				});
+		several_days_option1
+				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView,
+							boolean isChecked) {
+						if (isChecked)
+							several_days_setting = 3;
+						severalCal.setSeveralNumber(several_days_setting);
+						severalCalAdapter.setSeveralNumber(several_days_setting);
+					}
+				});
+		several_days_option2
+				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView,
+							boolean isChecked) {
+						if (isChecked)
+							several_days_setting = 5;
+						severalCal.setSeveralNumber(several_days_setting);
+						severalCalAdapter.setSeveralNumber(several_days_setting);
+					}
+				});
+		several_days_option3
+				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView,
+							boolean isChecked) {
+						if (isChecked)
+							several_days_setting = 7;
+						severalCal.setSeveralNumber(several_days_setting);
+						severalCalAdapter.setSeveralNumber(several_days_setting);
 					}
 				});
 	}
@@ -652,8 +756,32 @@ public class MainActivity extends Activity {
 				// Toast.LENGTH_SHORT).show();
 				dailyCalEventListAdapter.addItem(list.get(i));
 			}
-			dailyCalEventList.setAdapter(dailyCalEventListAdapter);
+			
 		}
+		dailyCalEventList.setAdapter(dailyCalEventListAdapter);
+	}
+
+	private void loadSeveralEvent() {
+		// display event list
+		severalCalEventListAdapter.clear();
+
+		ArrayList<SingleEvent> list = eventList.Search(selectedYear,
+				selectedMonth, selectedDay);
+		if (list.size() == 0) {
+			Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_LONG)
+					.show();
+		} else {
+			for (int i = 0; i < list.size(); i++) {
+				// System.out.println(list.get(i).GetStartHour() + ":" +
+				// list.get(i).GetStartMin());
+				// Toast.makeText(MainActivity.this, list.get(i).GetStartHour()
+				// + ":" + list.get(i).GetStartMin(),
+				// Toast.LENGTH_SHORT).show();
+				severalCalEventListAdapter.addItem(list.get(i));
+			}
+			
+		}
+		severalCalEventList.setAdapter(severalCalEventListAdapter);
 	}
 
 	private DatePickerDialog.OnDateSetListener mMonthlyCalDateSetListener = new OnDateSetListener() {

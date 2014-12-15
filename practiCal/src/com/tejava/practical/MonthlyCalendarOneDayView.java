@@ -30,7 +30,6 @@ public class MonthlyCalendarOneDayView extends LinearLayout{
 	public MonthlyCalendarOneDayView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(context);
-		setBackgroundColor(Color.BLACK);
 	}
 	
 	public void init(Context context){
