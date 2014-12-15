@@ -655,6 +655,7 @@ public class MainActivity extends Activity {
 						if (isChecked)
 							several_days_setting = 3;
 						severalCal.setSeveralNumber(several_days_setting);
+						severalCal.init(MainActivity.this);
 						severalCalAdapter.setSeveralNumber(several_days_setting);
 					}
 				});
@@ -667,6 +668,7 @@ public class MainActivity extends Activity {
 						if (isChecked)
 							several_days_setting = 5;
 						severalCal.setSeveralNumber(several_days_setting);
+						severalCal.init(MainActivity.this);
 						severalCalAdapter.setSeveralNumber(several_days_setting);
 					}
 				});
@@ -679,6 +681,7 @@ public class MainActivity extends Activity {
 						if (isChecked)
 							several_days_setting = 7;
 						severalCal.setSeveralNumber(several_days_setting);
+						severalCal.init(MainActivity.this);
 						severalCalAdapter.setSeveralNumber(several_days_setting);
 					}
 				});
@@ -807,7 +810,7 @@ public class MainActivity extends Activity {
 						eventCalendar.endYear, eventCalendar.endMonth, eventCalendar.endDay);
 				if (list1.size() == 0) {
 					eventCalEventList.setAdapter(eventListAdapter);
-					Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_LONG).show();
+					Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_SHORT).show();
 				} else {
 					for (int i = 0; i < list1.size(); i++)
 					{
@@ -856,7 +859,7 @@ public class MainActivity extends Activity {
 				ArrayList<SingleEvent> list1 = PractiCalEventList.practiCalEventList.Search(year, month, day, eventCalendar.eventNumber);
 				if (list1.size() == 0) {
 					eventCalEventList.setAdapter(eventListAdapter);
-					Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_LONG).show();
+					Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_SHORT).show();
 				} else {
 					for (int i = 0; i < list1.size(); i++)
 					{
@@ -908,7 +911,7 @@ public class MainActivity extends Activity {
 		ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(selectedYear,
 				selectedMonth, selectedDay);
 		if (list.size() == 0) {
-			Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_LONG)
+			Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_SHORT)
 					.show();
 		} else {
 			for (int i = 0; i < list.size(); i++) {
@@ -931,7 +934,7 @@ public class MainActivity extends Activity {
 		ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(selectedYear,
 				selectedMonth, selectedDay);
 		if (list.size() == 0) {
-			Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_LONG)
+			Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_SHORT)
 					.show();
 		} else {
 			for (int i = 0; i < list.size(); i++) {
