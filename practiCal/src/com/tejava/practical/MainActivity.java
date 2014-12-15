@@ -515,19 +515,10 @@ public class MainActivity extends Activity {
 						@Override
 						public boolean onItemLongClick(AdapterView<?> arg0,
 								View arg1, int arg2, long arg3) {
-//							try {
-//								PractiCalEventList.practiCalEventList.Insert(11, 2014, 12, 15, 4, 5, 6, 16, "twelveth", "This is twelveth event");
-//							} catch (Exception e) {
-//								// TODO Auto-generated catch block
-//								e.printStackTrace();
-//							}
-							
 							Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
 							intent.putExtra("mode_setting", 1); // 0: modify, 1: new
 //							intent.putExtra("db_access_info", "test_value");
 							startActivity(intent);	
-							
-							printEventRange.performClick();
 							
 							return true;
 						}

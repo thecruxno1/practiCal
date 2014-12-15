@@ -76,13 +76,13 @@ public class EventmodActivity extends Activity {
 		today_info = new GregorianCalendar();
 
 		start_year = today_info.get(today_info.YEAR);
-		start_month = today_info.get(today_info.MONTH);
+		start_month = today_info.get(today_info.MONTH) + 1;
 		start_day = today_info.get(today_info.DAY_OF_MONTH);
 		start_hour = today_info.get(today_info.HOUR_OF_DAY);
 		start_min = today_info.get(today_info.MINUTE);
 
 		end_year = today_info.get(today_info.YEAR);
-		end_month = today_info.get(today_info.MONTH);
+		end_month = today_info.get(today_info.MONTH) + 1;
 		end_day = today_info.get(today_info.DAY_OF_MONTH);
 		end_hour = today_info.get(today_info.HOUR_OF_DAY);
 		end_min = today_info.get(today_info.MINUTE);
@@ -101,9 +101,9 @@ public class EventmodActivity extends Activity {
 		btn_ok = (Button) findViewById(R.id.btn_eventmod_ok);
 		btn_delete = (Button) findViewById(R.id.btn_eventmod_del);
 
-		btn_start_day.setText(start_year+"/"+(int)(start_month+1)+"/"+start_day);
+		btn_start_day.setText(start_year+"/"+start_month+"/"+start_day);
 		btn_start_time.setText(start_hour+":"+start_min);
-		btn_end_day.setText(end_year+"/"+(int)(end_month+1)+"/"+end_day);
+		btn_end_day.setText(end_year+"/"+end_month+"/"+end_day);
 		btn_end_time.setText(end_hour+":"+end_min);
 		
 		Intent intent = getIntent();
@@ -127,9 +127,9 @@ public class EventmodActivity extends Activity {
 			end_hour = 0;
 			end_min = 0;
 			
-			btn_start_day.setText(start_year+"/"+(int)(start_month+1)+"/"+start_day);
+			btn_start_day.setText(start_year+"/"+start_month+"/"+start_day);
 			btn_start_time.setText(start_hour+":"+start_min);
-			btn_end_day.setText(end_year+"/"+(int)(end_month+1)+"/"+end_day);
+			btn_end_day.setText(end_year+"/"+end_month+"/"+end_day);
 			btn_end_time.setText(end_hour+":"+end_min);
 			
 			ET_event_name.setText("db_access_info.event_name");
@@ -210,11 +210,8 @@ public class EventmodActivity extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-				Intent intent = new Intent(EventmodActivity.this, MainActivity.class);
-				intent.putExtra("mode_setting", 1); // 0: modify, 1: new
-//				intent.putExtra("db_access_info", "test_value");
-				startActivity(intent);	
+
+				finish();
 			}
 		});
 
@@ -237,10 +234,10 @@ public class EventmodActivity extends Activity {
 		@Override
 		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 			start_year = year;
-			start_month = monthOfYear;
+			start_month = monthOfYear+1;
 			start_day = dayOfMonth;
 			
-			btn_start_day.setText(start_year+"/"+(int)(start_month+1)+"/"+start_day);
+			btn_start_day.setText(start_year+"/"+start_month+"/"+start_day);
 		}
 	};
 	private TimePickerDialog.OnTimeSetListener mStartTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
@@ -256,10 +253,10 @@ public class EventmodActivity extends Activity {
 		@Override
 		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 			end_year = year;
-			end_month = monthOfYear;
+			end_month = monthOfYear+1;
 			end_day = dayOfMonth;
 			
-			btn_end_day.setText(end_year+"/"+(int)(end_month+1)+"/"+end_day);
+			btn_end_day.setText(end_year+"/"+end_month+"/"+end_day);
 		}
 	};
 	private TimePickerDialog.OnTimeSetListener mEndTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
