@@ -158,15 +158,16 @@
             <ListView
                 android:id="@+id/severalcalendar_eventlist"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" >
+                android:layout_height="200dp"
+                android:layout_weight="1" >
             </ListView>
-            
+
             <Button
                 android:id="@+id/several_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:text="Add" />
         </LinearLayout>
 
         <LinearLayout
@@ -288,6 +289,14 @@
                 android:text="Option Screen"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
+            <TextView
+                android:id="@+id/optiontext1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Set Click Action in Monthly Calendar"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#000000" />
+
             <RadioGroup
                 android:id="@+id/option_onclick_monthlycal"
                 android:layout_width="wrap_content"
@@ -311,6 +320,15 @@
                     android:layout_height="wrap_content"
                     android:text="Move to Daily Calendar" />
             </RadioGroup>
+
+            <TextView
+                android:id="@+id/optiontext2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Several Calendar Length"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#000000" />
+
             <RadioGroup
                 android:id="@+id/option_several_rength"
                 android:layout_width="wrap_content"
@@ -334,6 +352,7 @@
                     android:layout_height="wrap_content"
                     android:text="Show 7 days in several-calendar" />
             </RadioGroup>
+
         </LinearLayout>
     </FrameLayout>
 

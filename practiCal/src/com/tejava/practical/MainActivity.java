@@ -280,7 +280,7 @@ public class MainActivity extends Activity {
 		monthlyCal = (MonthlyCalendarView) findViewById(R.id.monthlycalendar);
 
 		monthlyCalAdapter = new MonthlyCalendarAdapter(this);
-		monthlyCalAdapter.setEventlist(eventList);
+		monthlyCalAdapter.setEventlist(PractiCalEventList.practiCalEventList);
 		monthlyCal.setAdapter(monthlyCalAdapter);
 
 		monthlyCalPrevious = (Button) findViewById(R.id.monthlycalendar_top_previous);
@@ -359,7 +359,7 @@ public class MainActivity extends Activity {
 		monthlyCalPrevious.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				monthlyCalAdapter.setPreviousMonth();
-				monthlyCalAdapter.setEventlist(eventList);
+				monthlyCalAdapter.setEventlist(PractiCalEventList.practiCalEventList);
 				monthlyCalAdapter.notifyDataSetChanged();
 
 				monthlyCalTop.setText(monthlyCalAdapter.curYear + " - "
@@ -370,7 +370,7 @@ public class MainActivity extends Activity {
 		monthlyCalNext.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				monthlyCalAdapter.setNextMonth();
-				monthlyCalAdapter.setEventlist(eventList);
+				monthlyCalAdapter.setEventlist(PractiCalEventList.practiCalEventList);
 				monthlyCalAdapter.notifyDataSetChanged();
 
 				monthlyCalTop.setText(monthlyCalAdapter.curYear + " - "
@@ -387,7 +387,7 @@ public class MainActivity extends Activity {
 		
 		severalCalAdapter = new SeveralCalendarAdapter(this);
 		severalCalAdapter.setSeveralNumber(several_days_setting);
-		severalCalAdapter.setEventList(eventList);
+		severalCalAdapter.setEventList(PractiCalEventList.practiCalEventList);
 		severalCal.setAdapter(severalCalAdapter);
 		
 		severalCalAdd = (Button) findViewById(R.id.several_add);
@@ -895,13 +895,17 @@ public class MainActivity extends Activity {
 		default:
 			break;
 		}
+		monthlyCalAdapter.notifyDataSetChanged();
+		severalCalAdapter.notifyDataSetChanged();
+		dailyCalEventListAdapter.notifyDataSetChanged();
+		
 	};
 
 	private void loadDailyEvent() {
 		// display event list
 		dailyCalEventListAdapter.clear();
 
-		ArrayList<SingleEvent> list = eventList.Search(selectedYear,
+		ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(selectedYear,
 				selectedMonth, selectedDay);
 		if (list.size() == 0) {
 			Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_LONG)
@@ -924,7 +928,7 @@ public class MainActivity extends Activity {
 		// display event list
 		severalCalEventListAdapter.clear();
 
-		ArrayList<SingleEvent> list = eventList.Search(selectedYear,
+		ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(selectedYear,
 				selectedMonth, selectedDay);
 		if (list.size() == 0) {
 			Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_LONG)
