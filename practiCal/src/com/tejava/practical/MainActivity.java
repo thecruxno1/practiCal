@@ -32,6 +32,9 @@ public class MainActivity extends Activity {
 
 	/* variable declaration */
 
+	// this eventList stores whole events of this calendar
+	EventList eventList = new EventList(MainActivity.this);
+
 	// five function button
 	ImageView btnMonthlyCal;
 	ImageView btnSeveralCal;
@@ -54,7 +57,7 @@ public class MainActivity extends Activity {
 	LinearLayout dailyCalScreen;
 	TextView dailyCalTop;
 	ListView dailyCalEventList;
-	
+
 	EventListAdapter dailyCalEventListAdapter;
 
 	// Event calendar related variable
@@ -66,13 +69,13 @@ public class MainActivity extends Activity {
 	EditText eventNumber;
 	Button printEventNumber;
 	ListView eventCalEventList;
-	
+
 	EventCalendar eventCalendar;
 	EventListAdapter eventListAdapter;
-	
+
 	static final int EVENT_MOD_START_DATE_DIALOG_ID = 200;
 	static final int EVENT_MOD_END_DATE_DIALOG_ID = 210;
-	
+
 	// option menu related variable
 	LinearLayout optionScreen;
 	int setting;
@@ -87,72 +90,84 @@ public class MainActivity extends Activity {
 	int selectedDay;
 	int selectedMonth;
 	int selectedYear;
-	int selectedDayOfWeek;
-	
-	EventList eventList = new EventList(MainActivity.this);
-	
-//	//variables for Test()
-//	private EventList eventList1 = new EventList(MainActivity.this);
-//	private EventList eventList2 = new EventList(MainActivity.this);
-//	private SingleEvent singleEvent = new SingleEvent();
-//    FileOutputStream fos;
+	String selectedDayOfWeek;
+
+	// //variables for Test()
+	// private EventList eventList1 = new EventList(MainActivity.this);
+	// private EventList eventList2 = new EventList(MainActivity.this);
+	// private SingleEvent singleEvent = new SingleEvent();
+	// FileOutputStream fos;
 
 	// test variable
 	Button btnTEST;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) throws RuntimeException
-	{
+	protected void onCreate(Bundle savedInstanceState) throws RuntimeException {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		try
-		{
+		try {
 			variableInitialize();
-			
+
 			monthlyCalInitialize();
 			severalCalInitialize();
 			dailyCalInitialize();
 			eventCalInitizliize();
 			optionInitailize();
-			
+
 			listenerInitialize();
-			
-//			Test();
-		}
-		catch(Exception ex)
-		{
-			
+
+			// Test();
+		} catch (Exception ex) {
+
 		}
 	}
-	
-	//test function
-	private void Test() throws Exception
-	{
-		eventList.Insert( 0, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
-		eventList.Insert( 1, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
-		eventList.Insert( 2, 2014, 2, 3, 4, 5, 6, 8, "Third", "This is third event");
-		eventList.Insert( 3, 2014, 2, 3, 4, 5, 6, 9, "Fourth", "This is fourth event");
-		eventList.Insert( 4, 2014, 2, 4, 4, 5, 6, 10, "Fifth", "This is fifth event");
-		eventList.Insert( 5, 2014, 2, 5, 4, 5, 6, 11, "Sixth", "This is sixth event");
-		eventList.Insert( 6, 2014, 2, 6, 4, 5, 6, 12, "Seventh", "This is seventh event");
-		eventList.Insert( 7, 2014, 2, 6, 4, 5, 6, 13, "Eighth", "This is eighth event");
-		eventList.Insert( 8, 2014, 2, 7, 4, 5, 6, 14, "Ninth", "This is ninth event");
-		eventList.Insert( 9, 2014, 2, 7, 4, 5, 6, 15, "Tenth", "This is tenth event");
-		eventList.Insert(10, 2014, 3, 7, 4, 5, 6, 16, "Eleventh", "This is eleventh event");
-		
-		//Toast.makeText(MainActivity.this, "size before delete: " + eventList.GetSize(), Toast.LENGTH_LONG).show();
-//		eventList1.Delete(0);
-//		Toast.makeText(MainActivity.this, eventList1.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
-//		eventList1.Delete(0);
-//		Toast.makeText(MainActivity.this, eventList1.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
-//		eventList1.Delete(0);
-//		Toast.makeText(MainActivity.this, eventList1.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
-//		eventList1.Delete(0);
-		//Toast.makeText(MainActivity.this, "size before delete: " + eventList.GetSize(), Toast.LENGTH_LONG).show();
-		
-//		ArrayList<SingleEvent> list = eventList1.Search(2014, 1, 1, 10);
-//		Toast.makeText(MainActivity.this, list.get(0).GetStartHour() + ":" + list.get(0).GetStartMin(), Toast.LENGTH_LONG).show();
+
+	// test function
+	private void Test() throws Exception {
+		eventList.Insert(0, 2014, 1, 2, 3, 4, 5, 6, "First",
+				"This is first event");
+		eventList.Insert(1, 2014, 2, 3, 4, 5, 6, 7, "Second",
+				"This is second event");
+		eventList.Insert(2, 2014, 2, 3, 4, 5, 6, 8, "Third",
+				"This is third event");
+		eventList.Insert(3, 2014, 2, 3, 4, 5, 6, 9, "Fourth",
+				"This is fourth event");
+		eventList.Insert(4, 2014, 2, 4, 4, 5, 6, 10, "Fifth",
+				"This is fifth event");
+		eventList.Insert(5, 2014, 2, 5, 4, 5, 6, 11, "Sixth",
+				"This is sixth event");
+		eventList.Insert(6, 2014, 2, 6, 4, 5, 6, 12, "Seventh",
+				"This is seventh event");
+		eventList.Insert(7, 2014, 2, 6, 4, 5, 6, 13, "Eighth",
+				"This is eighth event");
+		eventList.Insert(8, 2014, 2, 7, 4, 5, 6, 14, "Ninth",
+				"This is ninth event");
+		eventList.Insert(9, 2014, 2, 7, 4, 5, 6, 15, "Tenth",
+				"This is tenth event");
+		eventList.Insert(10, 2014, 3, 7, 4, 5, 6, 16, "Eleventh",
+				"This is eleventh event");
+		eventList.Insert(11, 2014, 12, 25, 4, 5, 6, 16, "twelfth",
+				"This is twelfth event");
+
+		// Toast.makeText(MainActivity.this, "size before delete: " +
+		// eventList.GetSize(), Toast.LENGTH_LONG).show();
+		// eventList1.Delete(0);
+		// Toast.makeText(MainActivity.this, eventList1.Search(2014, 2,
+		// 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
+		// eventList1.Delete(0);
+		// Toast.makeText(MainActivity.this, eventList1.Search(2014, 2,
+		// 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
+		// eventList1.Delete(0);
+		// Toast.makeText(MainActivity.this, eventList1.Search(2014, 2,
+		// 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
+		// eventList1.Delete(0);
+		// Toast.makeText(MainActivity.this, "size before delete: " +
+		// eventList.GetSize(), Toast.LENGTH_LONG).show();
+
+		// ArrayList<SingleEvent> list = eventList1.Search(2014, 1, 1, 10);
+		// Toast.makeText(MainActivity.this, list.get(0).GetStartHour() + ":" +
+		// list.get(0).GetStartMin(), Toast.LENGTH_LONG).show();
 	}
 
 	private void variableInitialize() throws Exception {
@@ -169,27 +184,64 @@ public class MainActivity extends Activity {
 		selectedDay = fortoday.get(fortoday.DATE);
 		selectedMonth = fortoday.get(fortoday.MONTH) + 1;
 		selectedYear = fortoday.get(fortoday.YEAR);
-		selectedDayOfWeek = fortoday.get(fortoday.DAY_OF_WEEK) - 1;
+		switch (fortoday.get(fortoday.DAY_OF_WEEK) - 1) {
+		case 0:
+			selectedDayOfWeek = "SUN";
+			break;
+		case 1:
+			selectedDayOfWeek = "MON";
+			break;
+		case 2:
+			selectedDayOfWeek = "TUE";
+			break;
+		case 3:
+			selectedDayOfWeek = "WED";
+			break;
+		case 4:
+			selectedDayOfWeek = "TUR";
+			break;
+		case 5:
+			selectedDayOfWeek = "FRI";
+			break;
+		case 6:
+			selectedDayOfWeek = "SAT";
+			break;
+		}
+		;
 
 		// test
 		btnTEST = (Button) findViewById(R.id.test_btn1);
-		
+
 		// load event list
-		eventList.Insert( 0, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
-		eventList.Insert( 1, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
-		eventList.Insert( 2, 2014, 2, 3, 4, 5, 6, 8, "Third", "This is third event");
-		eventList.Insert( 3, 2014, 2, 3, 4, 5, 6, 9, "Fourth", "This is fourth event");
-		eventList.Insert( 4, 2014, 2, 4, 4, 5, 6, 10, "Fifth", "This is fifth event");
-		eventList.Insert( 5, 2014, 2, 5, 4, 5, 6, 11, "Sixth", "This is sixth event");
-		eventList.Insert( 6, 2014, 2, 6, 4, 5, 6, 12, "Seventh", "This is seventh event");
-		eventList.Insert( 7, 2014, 2, 6, 4, 5, 6, 13, "Eighth", "This is eighth event");
-		eventList.Insert( 8, 2014, 2, 7, 4, 5, 6, 14, "Ninth", "This is ninth event");
-		eventList.Insert( 9, 2014, 2, 7, 4, 5, 6, 15, "Tenth", "This is tenth event");
-		eventList.Insert(10, 2014, 3, 7, 4, 5, 6, 16, "Eleventh", "This is eleventh event");
-		
+		// will be deleted
+		eventList.Insert(0, 2014, 1, 2, 3, 4, 5, 6, "First",
+				"This is first event");
+		eventList.Insert(1, 2014, 2, 3, 4, 5, 6, 7, "Second",
+				"This is second event");
+		eventList.Insert(2, 2014, 2, 3, 4, 5, 6, 8, "Third",
+				"This is third event");
+		eventList.Insert(3, 2014, 2, 3, 4, 5, 6, 9, "Fourth",
+				"This is fourth event");
+		eventList.Insert(4, 2014, 2, 4, 4, 5, 6, 10, "Fifth",
+				"This is fifth event");
+		eventList.Insert(5, 2014, 2, 5, 4, 5, 6, 11, "Sixth",
+				"This is sixth event");
+		eventList.Insert(6, 2014, 2, 6, 4, 5, 6, 12, "Seventh",
+				"This is seventh event");
+		eventList.Insert(7, 2014, 2, 6, 4, 5, 6, 13, "Eighth",
+				"This is eighth event");
+		eventList.Insert(8, 2014, 2, 7, 4, 5, 6, 14, "Ninth",
+				"This is ninth event");
+		eventList.Insert(9, 2014, 2, 7, 4, 5, 6, 15, "Tenth",
+				"This is tenth event");
+		eventList.Insert(10, 2014, 3, 7, 4, 5, 6, 16, "Eleventh",
+				"This is eleventh event");
+		eventList.Insert(11, 2014, 12, 25, 4, 5, 6, 16, "twelfth",
+				"This is twelfth event");
+
 		eventList.Save("save.txt");
 		eventList.Delete(0);
-//		eventList.Save("save.txt");
+		// eventList.Save("save.txt");
 		eventList.Load("save.txt");
 	}
 
@@ -224,24 +276,9 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				dailyCalTop.setText(selectedYear + ". " + selectedMonth + ". "
 						+ selectedDay);
-				
-				// display event list
-				dailyCalEventListAdapter.clear();
-				
-				ArrayList<SingleEvent> list = eventList.Search(selectedYear, selectedMonth, selectedDay);
-				if (list.size() == 0) {
-					Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_LONG).show();
-				} else {
-					for (int i = 0; i < list.size(); i++)
-					{
-//						System.out.println(list.get(i).GetStartHour() + ":" + list.get(i).GetStartMin());
-//						Toast.makeText(MainActivity.this, list.get(i).GetStartHour() + ":" + list.get(i).GetStartMin(), Toast.LENGTH_SHORT).show();
-						dailyCalEventListAdapter.addItem(list.get(i));
-					}
-					
-					dailyCalEventList.setAdapter(dailyCalEventListAdapter);
-				}
-					
+
+				loadDailyEvent();
+
 				monthlyCalScreen.setVisibility(View.INVISIBLE);
 				severalCalScreen.setVisibility(View.INVISIBLE);
 				dailyCalScreen.setVisibility(View.VISIBLE);
@@ -259,10 +296,13 @@ public class MainActivity extends Activity {
 				eventCalendar.endYear = selectedYear;
 				eventCalendar.endMonth = selectedMonth;
 				eventCalendar.endDay = selectedDay;
-				
-				startDay.setText(eventCalendar.startYear+"/"+eventCalendar.startMonth+"/"+eventCalendar.startDay);
-				endDay.setText(eventCalendar.endYear+"/"+eventCalendar.endMonth+"/"+eventCalendar.endDay);
-				
+
+				startDay.setText(eventCalendar.startYear + "/"
+						+ eventCalendar.startMonth + "/"
+						+ eventCalendar.startDay);
+				endDay.setText(eventCalendar.endYear + "/"
+						+ eventCalendar.endMonth + "/" + eventCalendar.endDay);
+
 				monthlyCalScreen.setVisibility(View.INVISIBLE);
 				severalCalScreen.setVisibility(View.INVISIBLE);
 				dailyCalScreen.setVisibility(View.INVISIBLE);
@@ -281,45 +321,71 @@ public class MainActivity extends Activity {
 				optionScreen.setVisibility(View.VISIBLE);
 			}
 		});
-		
+
 		btnTEST.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
+				Intent intent = new Intent(MainActivity.this,
+						EventmodActivity.class);
 				intent.putExtra("mode_setting", 1); // 0: modify, 1: new
 				intent.putExtra("db_access_info", "test_value");
-				startActivity(intent);				
+				startActivity(intent);
 			}
 		});
 	}
 
 	private void monthlyCalInitialize() {
 		// monthly calendar variable initialize
+
 		monthlyCalScreen = (LinearLayout) findViewById(R.id.monthlycalendar_screen);
-		// monthlyCal = (CalendarView) findViewById(R.id.monthlycalendar);
 		monthlyCal = (MonthlyCalendarView) findViewById(R.id.monthlycalendar);
-		
+
 		monthlyCalAdapter = new MonthlyCalendarAdapter(this);
+		monthlyCalAdapter.setEventlist(eventList);
 		monthlyCal.setAdapter(monthlyCalAdapter);
-		
+
 		monthlyCalPrevious = (Button) findViewById(R.id.monthlycalendar_top_previous);
 		monthlyCalNext = (Button) findViewById(R.id.monthlycalendar_top_next);
 		monthlyCalTop = (TextView) findViewById(R.id.monthlycalendar_top_date);
-		
+
 		monthlyCalTop.setText(selectedYear + " - " + selectedMonth + " - "
 				+ selectedDay + ", " + selectedDayOfWeek);
 
 		// Monthly Calendar listner Init
 		monthlyCal.setOnDataSelectionListener(new OnDataSelectionListener() {
 			public void onDataSelected(AdapterView parent, View v,
-					int position, long id) {	
+					int position, long id) {
 				MonthlyCalendarOneDay curItem = (MonthlyCalendarOneDay) monthlyCalAdapter
 						.getItem(position);
 
 				selectedDay = curItem.getDay();
 				selectedMonth = curItem.getMonth();
 				selectedYear = curItem.getYear();
-				selectedDayOfWeek = curItem.getDayOfWeek();
+				switch (curItem.getDayOfWeek()) {
+				case 0:
+					selectedDayOfWeek = "SUN";
+					break;
+				case 1:
+					selectedDayOfWeek = "MON";
+					break;
+				case 2:
+					selectedDayOfWeek = "TUE";
+					break;
+				case 3:
+					selectedDayOfWeek = "WED";
+					break;
+				case 4:
+					selectedDayOfWeek = "TUR";
+					break;
+				case 5:
+					selectedDayOfWeek = "FRI";
+					break;
+				case 6:
+					selectedDayOfWeek = "SAT";
+					break;
+				}
+				;
+
 				monthlyCalTop.setText(selectedYear + " - " + selectedMonth
 						+ " - " + selectedDay + ", " + selectedDayOfWeek);
 
@@ -330,26 +396,11 @@ public class MainActivity extends Activity {
 					eventCalScreen.setVisibility(View.INVISIBLE);
 					optionScreen.setVisibility(View.INVISIBLE);
 				} else if (setting == 3) {
-					dailyCalTop.setText(selectedYear + ". " + selectedMonth + ". "
-							+ selectedDay);
-					
-					// display event list
-					dailyCalEventListAdapter.clear();
-					
-					ArrayList<SingleEvent> list = eventList.Search(selectedYear, selectedMonth, selectedDay);
-					if (list.size() == 0) {
-						Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_LONG).show();
-					} else {
-						for (int i = 0; i < list.size(); i++)
-						{
-//							System.out.println(list.get(i).GetStartHour() + ":" + list.get(i).GetStartMin());
-//							Toast.makeText(MainActivity.this, list.get(i).GetStartHour() + ":" + list.get(i).GetStartMin(), Toast.LENGTH_SHORT).show();
-							dailyCalEventListAdapter.addItem(list.get(i));
-						}
-						
-						dailyCalEventList.setAdapter(dailyCalEventListAdapter);
-					}
-					
+					dailyCalTop.setText(selectedYear + ". " + selectedMonth
+							+ ". " + selectedDay + ". " + selectedDayOfWeek);
+
+					loadDailyEvent();
+
 					monthlyCalScreen.setVisibility(View.INVISIBLE);
 					severalCalScreen.setVisibility(View.INVISIBLE);
 					dailyCalScreen.setVisibility(View.VISIBLE);
@@ -376,6 +427,7 @@ public class MainActivity extends Activity {
 		monthlyCalPrevious.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				monthlyCalAdapter.setPreviousMonth();
+				monthlyCalAdapter.setEventlist(eventList);
 				monthlyCalAdapter.notifyDataSetChanged();
 
 				int tempmonth = monthlyCalAdapter.curMonth + 1;
@@ -387,6 +439,7 @@ public class MainActivity extends Activity {
 		monthlyCalNext.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				monthlyCalAdapter.setNextMonth();
+				monthlyCalAdapter.setEventlist(eventList);
 				monthlyCalAdapter.notifyDataSetChanged();
 
 				int tempmonth = monthlyCalAdapter.curMonth + 1;
@@ -399,7 +452,6 @@ public class MainActivity extends Activity {
 	private void severalCalInitialize() {
 		// // Several Calendar variable Init
 		severalCalScreen = (LinearLayout) findViewById(R.id.severaldayscalender_screen);
-
 	}
 
 	private void dailyCalInitialize() {
@@ -407,7 +459,6 @@ public class MainActivity extends Activity {
 		dailyCalScreen = (LinearLayout) findViewById(R.id.dailycalendar_screen);
 		dailyCalTop = (TextView) findViewById(R.id.dailycalendar_top);
 		dailyCalEventList = (ListView) findViewById(R.id.dailycalender_eventlist);
-		
 		dailyCalEventListAdapter = new EventListAdapter(this);
 	}
 
@@ -421,83 +472,98 @@ public class MainActivity extends Activity {
 		eventNumber = (EditText) findViewById(R.id.event_number);
 		printEventNumber = (Button) findViewById(R.id.print_event_number);
 		eventCalEventList = (ListView) findViewById(R.id.eventcalendar_eventlist);
-		
+
 		eventCalendar = new EventCalendar();
 		eventListAdapter = new EventListAdapter(this);
-		
+
 		// Event Calendar listener initialize
 		printEventNumber.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String eventNumberStr = (eventNumber.getText().toString().equals(""))? null : eventNumber.getText().toString();
-				
+				String eventNumberStr = (eventNumber.getText().toString()
+						.equals("")) ? null : eventNumber.getText().toString();
+
 				if (eventNumberStr != null)
-					eventCalendar.eventNumber = Integer.parseInt(eventNumberStr);
-				
+					eventCalendar.eventNumber = Integer
+							.parseInt(eventNumberStr);
+
 				eventListAdapter.clear();
-				
+
 				int day = fortoday.get(fortoday.DATE);
 				int month = fortoday.get(fortoday.MONTH) + 1;
 				int year = fortoday.get(fortoday.YEAR);
-				
-				ArrayList<SingleEvent> list = eventList.Search(year, month, day, eventCalendar.eventNumber);
+
+				ArrayList<SingleEvent> list = eventList.Search(year, month,
+						day, eventCalendar.eventNumber);
 				if (list.size() == 0) {
 					eventCalEventList.setAdapter(eventListAdapter);
-					Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_LONG).show();
+					Toast.makeText(MainActivity.this, "No events",
+							Toast.LENGTH_LONG).show();
 				} else {
-					for (int i = 0; i < list.size(); i++)
-					{
-//						System.out.println(list.get(i).GetStartHour() + ":" + list.get(i).GetStartMin());
-//						Toast.makeText(MainActivity.this, list.get(i).GetStartHour() + ":" + list.get(i).GetStartMin(), Toast.LENGTH_SHORT).show();
+					for (int i = 0; i < list.size(); i++) {
+						// System.out.println(list.get(i).GetStartHour() + ":" +
+						// list.get(i).GetStartMin());
+						// Toast.makeText(MainActivity.this,
+						// list.get(i).GetStartHour() + ":" +
+						// list.get(i).GetStartMin(),
+						// Toast.LENGTH_SHORT).show();
 						eventListAdapter.addItem(list.get(i));
 					}
-					
+
 					eventCalEventList.setAdapter(eventListAdapter);
-					eventCalEventList.setOnItemClickListener(onEventListItemClickListener);
+					eventCalEventList
+							.setOnItemClickListener(onEventListItemClickListener);
 				}
 			}
 		});
-		
+
 		printEventRange.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				eventListAdapter.clear();
-				
-				ArrayList<SingleEvent> list = eventList.Search(eventCalendar.startYear, eventCalendar.startMonth, eventCalendar.startDay, 
-						eventCalendar.endYear, eventCalendar.endMonth, eventCalendar.endDay);
+
+				ArrayList<SingleEvent> list = eventList.Search(
+						eventCalendar.startYear, eventCalendar.startMonth,
+						eventCalendar.startDay, eventCalendar.endYear,
+						eventCalendar.endMonth, eventCalendar.endDay);
 				if (list.size() == 0) {
 					eventCalEventList.setAdapter(eventListAdapter);
-					Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_LONG).show();
+					Toast.makeText(MainActivity.this, "No events",
+							Toast.LENGTH_LONG).show();
 				} else {
-					for (int i = 0; i < list.size(); i++)
-					{
-//						System.out.println(list.get(i).GetStartHour() + ":" + list.get(i).GetStartMin());
-//						Toast.makeText(MainActivity.this, list.get(i).GetStartHour() + ":" + list.get(i).GetStartMin(), Toast.LENGTH_SHORT).show();
+					for (int i = 0; i < list.size(); i++) {
+						// System.out.println(list.get(i).GetStartHour() + ":" +
+						// list.get(i).GetStartMin());
+						// Toast.makeText(MainActivity.this,
+						// list.get(i).GetStartHour() + ":" +
+						// list.get(i).GetStartMin(),
+						// Toast.LENGTH_SHORT).show();
 						eventListAdapter.addItem(list.get(i));
 					}
-					
+
 					eventCalEventList.setAdapter(eventListAdapter);
-					eventCalEventList.setOnItemClickListener(onEventListItemClickListener);
+					eventCalEventList
+							.setOnItemClickListener(onEventListItemClickListener);
 				}
 			}
 		});
-		
+
 		startDay.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				showDialog(EVENT_MOD_START_DATE_DIALOG_ID);
 			}
 		});
-		
+
 		endDay.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				showDialog(EVENT_MOD_END_DATE_DIALOG_ID);
 			}
 		});
-		
-//		eventList1.Save("test.txt");
-//		eventList2.Load("test.txt");
+
+		// eventList1.Save("test.txt");
+		// eventList2.Load("test.txt");
 	}
 
 	private void optionInitailize() {
@@ -506,6 +572,7 @@ public class MainActivity extends Activity {
 		month_onclick_option1 = (RadioButton) findViewById(R.id.onclick_monthlycal_noaction);
 		month_onclick_option2 = (RadioButton) findViewById(R.id.onclick_monthlycal_several);
 		month_onclick_option3 = (RadioButton) findViewById(R.id.onclick_monthlycal_daily);
+		month_onclick_option1.setChecked(true);
 
 		// Option menu
 		month_onclick_option1
@@ -539,64 +606,96 @@ public class MainActivity extends Activity {
 					}
 				});
 	}
-	
+
 	// for date picker dialog
 	private DatePickerDialog.OnDateSetListener mStartDateSetListener = new DatePickerDialog.OnDateSetListener() {
 		@Override
-		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+		public void onDateSet(DatePicker view, int year, int monthOfYear,
+				int dayOfMonth) {
 			eventCalendar.startYear = year;
-			eventCalendar.startMonth = monthOfYear+1;
+			eventCalendar.startMonth = monthOfYear + 1;
 			eventCalendar.startDay = dayOfMonth;
-			
-//			startDay.setText(eventCalendar.startYear+"/"+(int)(eventCalendar.startMonth+1)+"/"+eventCalendar.startDay);
-			startDay.setText(eventCalendar.startYear+"/"+eventCalendar.startMonth+"/"+eventCalendar.startDay);
+
+			// startDay.setText(eventCalendar.startYear+"/"+(int)(eventCalendar.startMonth+1)+"/"+eventCalendar.startDay);
+			startDay.setText(eventCalendar.startYear + "/"
+					+ eventCalendar.startMonth + "/" + eventCalendar.startDay);
 		}
 	};
 	private DatePickerDialog.OnDateSetListener mEndDateSetListener = new DatePickerDialog.OnDateSetListener() {
 		@Override
-		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+		public void onDateSet(DatePicker view, int year, int monthOfYear,
+				int dayOfMonth) {
 			eventCalendar.endYear = year;
-			eventCalendar.endMonth = monthOfYear+1;
+			eventCalendar.endMonth = monthOfYear + 1;
 			eventCalendar.endDay = dayOfMonth;
-			
-//			endDay.setText(eventCalendar.endYear+"/"+(int)(eventCalendar.endMonth+1)+"/"+eventCalendar.endDay);
-			endDay.setText(eventCalendar.endYear+"/"+eventCalendar.endMonth+"/"+eventCalendar.endDay);
+
+			// endDay.setText(eventCalendar.endYear+"/"+(int)(eventCalendar.endMonth+1)+"/"+eventCalendar.endDay);
+			endDay.setText(eventCalendar.endYear + "/" + eventCalendar.endMonth
+					+ "/" + eventCalendar.endDay);
 		}
 	};
-	
+
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
 		case EVENT_MOD_START_DATE_DIALOG_ID:
-			return new DatePickerDialog(this, mStartDateSetListener, eventCalendar.startYear, eventCalendar.startMonth, eventCalendar.startDay);
+			return new DatePickerDialog(this, mStartDateSetListener,
+					eventCalendar.startYear, eventCalendar.startMonth,
+					eventCalendar.startDay);
 		case EVENT_MOD_END_DATE_DIALOG_ID:
-			return new DatePickerDialog(this, mEndDateSetListener, eventCalendar.endYear, eventCalendar.endMonth, eventCalendar.endDay);
+			return new DatePickerDialog(this, mEndDateSetListener,
+					eventCalendar.endYear, eventCalendar.endMonth,
+					eventCalendar.endDay);
 		}
 
 		return null;
 	}
-	
+
 	private OnItemClickListener onEventListItemClickListener = new OnItemClickListener() {
-		public void onItemClick(AdapterView<?> adapterView, View clickedView, int pos, long id)
-		{
-			Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
+		public void onItemClick(AdapterView<?> adapterView, View clickedView,
+				int pos, long id) {
+			Intent intent = new Intent(MainActivity.this,
+					EventmodActivity.class);
 			intent.putExtra("mode_setting", 0); // 0: modify, 1: new
-//			intent.putExtra("db_access_info", "test_value");
+			// intent.putExtra("db_access_info", "test_value");
 
 			SingleEvent event = (SingleEvent) eventListAdapter.getItem(pos);
-			Toast.makeText(MainActivity.this, event.GetName(), Toast.LENGTH_LONG).show();
-//			intent.putExtra("Event ID", ((SingleEvent) clickedView).GetId());
-//			startActivity(intent);	
+			Toast.makeText(MainActivity.this, event.GetName(),
+					Toast.LENGTH_LONG).show();
+			// intent.putExtra("Event ID", ((SingleEvent) clickedView).GetId());
+			// startActivity(intent);
 		}
 	};
-	
+
 	private OnLongClickListener onEventListLongClickListener = new OnLongClickListener() {
-		
+
 		@Override
 		public boolean onLongClick(View v) {
 			// TODO Auto-generated method stub
 			return false;
 		}
 	};
+
+	private void loadDailyEvent() {
+		// display event list
+		dailyCalEventListAdapter.clear();
+
+		ArrayList<SingleEvent> list = eventList.Search(selectedYear,
+				selectedMonth, selectedDay);
+		if (list.size() == 0) {
+			Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_LONG)
+					.show();
+		} else {
+			for (int i = 0; i < list.size(); i++) {
+				// System.out.println(list.get(i).GetStartHour() + ":" +
+				// list.get(i).GetStartMin());
+				// Toast.makeText(MainActivity.this, list.get(i).GetStartHour()
+				// + ":" + list.get(i).GetStartMin(),
+				// Toast.LENGTH_SHORT).show();
+				dailyCalEventListAdapter.addItem(list.get(i));
+			}
+			dailyCalEventList.setAdapter(dailyCalEventListAdapter);
+		}
+	}
 
 }

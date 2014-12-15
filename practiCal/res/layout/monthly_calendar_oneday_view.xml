@@ -10,11 +10,19 @@
         android:layout_height="wrap_content"
         android:text="TextView" />
 
+    <!--
     <ListView
         android:id="@+id/monthlycalendar_oneday_eventlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
     </ListView>
-
+  -->
+    <TextView
+        android:id="@+id/monthlycalendar_oneday_eventlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+        android:text = "event"
+        android:visibility="invisible">
+    </TextView>
  
 </LinearLayout>

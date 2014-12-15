@@ -1,5 +1,6 @@
 package com.tejava.practical;
 
+import java.util.Calendar;
 import java.util.Vector;
 
 public class MonthlyCalendarOneDay {
@@ -8,24 +9,22 @@ public class MonthlyCalendarOneDay {
 	private int monthValue;
 	private int dayValue;
 	private int dayOfWeek;
-	//public Vector<String> singleEventList;
-	
+	private String dayOfWeekString;
+
 	public MonthlyCalendarOneDay() {
 
 	}
 
 	public MonthlyCalendarOneDay(int day) {
 		dayValue = day;
-		//singleEventList = new Vector<String>();
 	}
 
 	public MonthlyCalendarOneDay(int day, int month, int year) {
 		dayValue = day;
 		monthValue = month;
 		yearValue = year;
-		//singleEventList = new Vector<String>();
 	}
-	
+
 	public int getDay() {
 		return dayValue;
 	}
@@ -33,30 +32,51 @@ public class MonthlyCalendarOneDay {
 	public void setDay(int day) {
 		this.dayValue = day;
 	}
-	
-	public int getMonth()
-	{
+
+	public int getMonth() {
 		return monthValue;
 	}
-	
-	public void setMonth(int month){
+
+	public void setMonth(int month) {
 		this.monthValue = month;
 	}
-	
-	public int getYear(){
+
+	public int getYear() {
 		return yearValue;
 	}
-	
-	public void setYear(int year){
+
+	public void setYear(int year) {
 		this.yearValue = year;
 	}
-	
-	public int getDayOfWeek(){
+
+	public int getDayOfWeek() {
 		return dayOfWeek;
 	}
-	
-	public void setDayOfWeek(int dow)
-	{
+
+	public void setDayOfWeek(int dow) {
 		this.dayOfWeek = dow;
+		setDayofWeekString(dayOfWeek);
+	}
+
+	public void setDayofWeekString(int dow) {
+		if (dow == 0) {
+			dayOfWeekString = "SUN";
+		} else if (dow == 1) {
+			dayOfWeekString = "MON";
+		} else if (dow == 2) {
+			dayOfWeekString = "TUE";
+		} else if (dow == 3) {
+			dayOfWeekString = "WED";
+		} else if (dow == 4) {
+			dayOfWeekString = "THU";
+		} else if (dow == 5) {
+			dayOfWeekString = "FRI";
+		} else if (dow == 6) {
+			dayOfWeekString = "SAT";
+		}
+	}
+
+	public String getDayofWeekString() {
+		return dayOfWeekString;
 	}
 }

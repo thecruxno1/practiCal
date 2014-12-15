@@ -18,7 +18,8 @@ public class MonthlyCalendarOneDayView extends LinearLayout{
 
 	MonthlyCalendarOneDay item;
 	TextView dayValue;
-	ListView singleEventList;
+	//ListView singleEventList;
+	TextView eventAlert;
 	ArrayAdapter<String> adapter;
 	
 	public MonthlyCalendarOneDayView(Context context) {
@@ -37,10 +38,11 @@ public class MonthlyCalendarOneDayView extends LinearLayout{
 		inflater.inflate(R.layout.monthly_calendar_oneday_view, this, true);
 		
 		dayValue = (TextView) findViewById(R.id.monthlycalendar_oneday_date);
-		singleEventList = (ListView) findViewById(R.id.monthlycalendar_oneday_eventlist);
+		//singleEventList = (ListView) findViewById(R.id.monthlycalendar_oneday_eventlist);
+		eventAlert = (TextView) findViewById(R.id.monthlycalendar_oneday_eventlist);
 		
-		adapter = new ArrayAdapter<String>(context, R.layout.monthlycalender_string);
-		singleEventList.setAdapter(adapter);
+		//adapter = new ArrayAdapter<String>(context, R.layout.monthlycalender_string);
+		//singleEventList.setAdapter(adapter);
 	}
 	
 	public void setAdapter(BaseAdapter adapter) {

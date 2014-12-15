@@ -5,8 +5,7 @@
 
     <!--
     all of the calendar, and option screen will appear in FrameLayout
-    according to software specification, this layout is named 'main screen'
-    -->
+    according to software specification, this layout is named 'main screen'    -->
 
     <FrameLayout
         android:id="@+id/mainscreen"
@@ -52,6 +51,70 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Next" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/monthlycalendar_dayofweek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/monthlycalendar_dayofweek_sun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="SUN"
+                    android:textColor="#ff0000" />
+
+                <TextView
+                    android:id="@+id/monthlycalendar_dayofweek_mon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="MON"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/monthlycalendar_dayofweek_tue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="TUE"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/monthlycalendar_dayofweek_wed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="WED"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/monthlycalendar_dayofweek_tur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="TUR"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/monthlycalendar_dayofweek_fri"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="FRI"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/monthlycalendar_dayofweek_sat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="SAT"
+                    android:textColor="#0000ff" />
+
             </LinearLayout>
 
             <com.tejava.practical.MonthlyCalendarView
@@ -113,60 +176,59 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:visibility="invisible" >
-            
+
             <LinearLayout
                 android:id="@+id/eventcalendar_range"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
-                
+
                 <Button
                     android:id="@+id/start_day"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Start Day" />
-                
+
                 <Button
                     android:id="@+id/end_day"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="End Day" />
-                
+
                 <Button
                     android:id="@+id/print_event_range"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Print" />
             </LinearLayout>
-            
+
             <LinearLayout
-            	android:id="@+id/eventcalendar_number"
-            	android:layout_width="wrap_content"
-            	android:layout_height="wrap_content"
-            	android:orientation="horizontal" >
-                
+                android:id="@+id/eventcalendar_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
                 <TextView
                     android:id="@+id/upcoming"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:text="Upcoming Events"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:layout_gravity="center_vertical" />
-                
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
                 <EditText
                     android:id="@+id/event_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="3"
                     android:hint="10" />
-                
+
                 <Button
                     android:id="@+id/print_event_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Print"
-                    android:layout_gravity="right" />
-                
+                    android:layout_gravity="right"
+                    android:text="Print" />
             </LinearLayout>
 
             <ListView

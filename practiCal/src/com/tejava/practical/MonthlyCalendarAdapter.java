@@ -1,5 +1,6 @@
 package com.tejava.practical;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.R.color;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.Toast;
 
 public class MonthlyCalendarAdapter extends BaseAdapter {
 
@@ -41,6 +43,9 @@ public class MonthlyCalendarAdapter extends BaseAdapter {
 	Calendar mCalendar;
 	boolean recreateItems = false;
 
+	EventList list = new EventList(mContext);
+	
+	
 	public MonthlyCalendarAdapter(Context context) {
 		super();
 		mContext = context;
@@ -195,22 +200,15 @@ public class MonthlyCalendarAdapter extends BaseAdapter {
 		// FIXME
 		// get database
 		// remove db
-		itemView.adapter.clear();
 		// insert db
-		if (items[position].getDay() == 25 && items[position].getMonth() == 12)
-			itemView.adapter.add("Christmas");
-		if (items[position].getDay() == 20 && items[position].getMonth() == 6) {
-			itemView.adapter.add("Seungdo's Birthday1");
-			itemView.adapter.add("Seungdo's Birthday2");
-			itemView.adapter.add("Seungdo's Birthday3");
-			itemView.adapter.add("Seungdo's Birthday4");
-			itemView.adapter.add("Seungdo's Birthday5");
-			itemView.adapter.add("Seungdo's Birthday6");
-			itemView.adapter.add("Seungdo's Birthday7");
-			itemView.adapter.add("Seungdo's Birthday8");
-			itemView.adapter.add("Seungdo's Birthday9");
-			itemView.adapter.add("Seungdo's Birthday10");
+		ArrayList<SingleEvent> templist = list.Search(items[position].getYear(), items[position].getMonth(), items[position].getDay());
+		if (templist.size() == 0) {
+			itemView.eventAlert.setText("");
+		} else {
+			itemView.eventAlert.setText(templist.size()+" event exists");
+			itemView.eventAlert.setVisibility(View.VISIBLE);
 		}
+		
 		return itemView;
 	}
 
@@ -257,5 +255,9 @@ public class MonthlyCalendarAdapter extends BaseAdapter {
 
 	public int getSelectedPosition() {
 		return selectedPosition;
+	}
+
+	public void setEventlist(EventList eventList) {
+		this.list = eventList;
 	}
 }
