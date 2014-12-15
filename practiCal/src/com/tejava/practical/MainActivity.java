@@ -144,30 +144,48 @@ public class MainActivity extends Activity {
 	//test function
 	private void Test() throws Exception
 	{
-//		eventList.Insert( 0, 2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
-//		eventList.Insert( 1, 2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
-//		eventList.Insert( 2, 2014, 2, 3, 4, 5, 6, 8, "Third", "This is third event");
-//		eventList.Insert( 3, 2014, 2, 3, 4, 5, 6, 9, "Fourth", "This is fourth event");
-//		eventList.Insert( 4, 2014, 2, 4, 4, 5, 6, 10, "Fifth", "This is fifth event");
-//		eventList.Insert( 5, 2014, 2, 5, 4, 5, 6, 11, "Sixth", "This is sixth event");
-//		eventList.Insert( 6, 2014, 2, 6, 4, 5, 6, 12, "Seventh", "This is seventh event");
-//		eventList.Insert( 7, 2014, 2, 6, 4, 5, 6, 13, "Eighth", "This is eighth event");
-//		eventList.Insert( 8, 2014, 2, 7, 4, 5, 6, 14, "Ninth", "This is ninth event");
-//		eventList.Insert( 9, 2014, 2, 7, 4, 5, 6, 15, "Tenth", "This is tenth event");
-//		eventList.Insert(10, 2014, 3, 7, 4, 5, 6, 16, "Eleventh", "This is eleventh event");
+//		eventList.Insert(2014, 1, 2, 3, 4, 5, 6,     "First",    "This is first event", 0, 0, 0, "Hanyang Univ.");
+//		eventList.Insert(2014, 2, 3, 4, 5, 6, 7,    "Second",   "This is second event", 0, 1, 1, "Hanyang Univ.");
+//		eventList.Insert(2014, 2, 3, 4, 5, 6, 8,     "Third",    "This is third event", 1, 0, 0, "Hanyang Univ.");
+//		eventList.Insert(2014, 2, 3, 4, 5, 6, 9,    "Fourth",   "This is fourth event", 1, 4, 0, "The temple of the RilyongGod");
+//		eventList.Insert(2014, 2, 4, 4, 5, 6, 10,    "Fifth",    "This is fifth event", 2, 5, 0, "Hanyang Univ.");
+//		eventList.Insert(2014, 2, 5, 4, 5, 6, 11,    "Sixth",    "This is sixth event", 2, 6, 0, "Seoul");
+//		eventList.Insert(2014, 2, 6, 4, 5, 6, 12,  "Seventh",  "This is seventh event", 4, 2, 1, "Hell");
+//		eventList.Insert(2014, 2, 6, 4, 5, 6, 13,   "Eighth",   "This is eighth event", 3, 1, 0, "Heaven");
+//		eventList.Insert(2014, 2, 7, 4, 5, 6, 14,    "Ninth",    "This is ninth event", 3, 9, 0, "Paradise");
+//		eventList.Insert(2014, 2, 7, 4, 5, 6, 15,    "Tenth",    "This is tenth event", 0, 4, 0, "USA");
+//		eventList.Insert(2014, 3, 7, 4, 5, 6, 16, "Eleventh", "This is eleventh event", 6, 4, 0, "Lab");
+//		
+//		singleEvent.SetId(9);
+//		singleEvent.SetYear(2014);
+//		singleEvent.SetMonth(1);
+//		singleEvent.SetDay(1);
+//		singleEvent.SetStartHour(1);
+//		singleEvent.SetStartMin(1);
+//		singleEvent.SetEndHour(1);
+//		singleEvent.SetEndMin(2);
+//		singleEvent.SetName("Modified");
+//		singleEvent.SetDescription("This event is modified");
+//		singleEvent.SetEventGroup(9);
+//		singleEvent.SetColor(1);
+//		singleEvent.SetImportant(1);
+//		singleEvent.SetLocation("Here I am");
 		
 		//Toast.makeText(MainActivity.this, "size before delete: " + eventList.GetSize(), Toast.LENGTH_LONG).show();
-//		eventList1.Delete(0);
-//		Toast.makeText(MainActivity.this, eventList1.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
-//		eventList1.Delete(0);
-//		Toast.makeText(MainActivity.this, eventList1.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
-//		eventList1.Delete(0);
-//		Toast.makeText(MainActivity.this, eventList1.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
-//		eventList1.Delete(0);
+//		Toast.makeText(MainActivity.this, eventList.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
+//		eventList.Edit(singleEvent);
+//		Toast.makeText(MainActivity.this, eventList.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
+//		eventList.Insert(2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
+//		Toast.makeText(MainActivity.this, eventList.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
+//		eventList.Insert(2014, 1, 1, 3, 4, 5, 6, "First", "This is first event");
+//		Toast.makeText(MainActivity.this, eventList.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
+//		eventList.Delete(0);
+//		Toast.makeText(MainActivity.this, eventList.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
+//		eventList.Delete(0);
 		//Toast.makeText(MainActivity.this, "size before delete: " + eventList.GetSize(), Toast.LENGTH_LONG).show();
 		
-//		ArrayList<SingleEvent> list = eventList1.Search(2014, 1, 1, 10);
-//		Toast.makeText(MainActivity.this, list.get(0).GetStartHour() + ":" + list.get(0).GetStartMin(), Toast.LENGTH_LONG).show();
+		//ArrayList<SingleEvent> list = eventList.Search(2014, 2, 7, 7);
+//		Toast.makeText(MainActivity.this, eventList.Search(2014, 2, 4).get(0).GetId() + " is ID!", Toast.LENGTH_LONG).show();
 	}
 
 	private void variableInitialize() throws Exception {
@@ -204,23 +222,23 @@ public class MainActivity extends Activity {
 ////		eventList.Save("save.txt");
 //		eventList.Load("save.txt");
 		
-		PractiCalEventList.practiCalEventList = new EventList(MainActivity.this);
-		
-		PractiCalEventList.practiCalEventList.Insert(2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
-		PractiCalEventList.practiCalEventList.Insert(2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
-		PractiCalEventList.practiCalEventList.Insert(2014, 2, 3, 4, 5, 6, 8, "Third", "This is third event");
-		PractiCalEventList.practiCalEventList.Insert(2014, 2, 3, 4, 5, 6, 9, "Fourth", "This is fourth event");
-		PractiCalEventList.practiCalEventList.Insert(2014, 2, 4, 4, 5, 6, 10, "Fifth", "This is fifth event");
-		PractiCalEventList.practiCalEventList.Insert(2014, 2, 5, 4, 5, 6, 11, "Sixth", "This is sixth event");
-		PractiCalEventList.practiCalEventList.Insert(2014, 2, 6, 4, 5, 6, 12, "Seventh", "This is seventh event");
-		PractiCalEventList.practiCalEventList.Insert(2014, 2, 6, 4, 5, 6, 13, "Eighth", "This is eighth event");
-		PractiCalEventList.practiCalEventList.Insert(2014, 2, 7, 4, 5, 6, 14, "Ninth", "This is ninth event");
-		PractiCalEventList.practiCalEventList.Insert(2014, 2, 7, 4, 5, 6, 15, "Tenth", "This is tenth event");
-		PractiCalEventList.practiCalEventList.Insert(2014, 3, 7, 4, 5, 6, 16, "Eleventh", "This is eleventh event");
-		
-		PractiCalEventList.practiCalEventList.Save("save.txt");
-		PractiCalEventList.practiCalEventList.Delete(0);
+//		PractiCalEventList.practiCalEventList = new EventList(MainActivity.this);
+//		
+//		PractiCalEventList.practiCalEventList.Insert(2014, 1, 2, 3, 4, 5, 6, "First", "This is first event");
+//		PractiCalEventList.practiCalEventList.Insert(2014, 2, 3, 4, 5, 6, 7, "Second", "This is second event");
+//		PractiCalEventList.practiCalEventList.Insert(2014, 2, 3, 4, 5, 6, 8, "Third", "This is third event");
+//		PractiCalEventList.practiCalEventList.Insert(2014, 2, 3, 4, 5, 6, 9, "Fourth", "This is fourth event");
+//		PractiCalEventList.practiCalEventList.Insert(2014, 2, 4, 4, 5, 6, 10, "Fifth", "This is fifth event");
+//		PractiCalEventList.practiCalEventList.Insert(2014, 2, 5, 4, 5, 6, 11, "Sixth", "This is sixth event");
+//		PractiCalEventList.practiCalEventList.Insert(2014, 2, 6, 4, 5, 6, 12, "Seventh", "This is seventh event");
+//		PractiCalEventList.practiCalEventList.Insert(2014, 2, 6, 4, 5, 6, 13, "Eighth", "This is eighth event");
+//		PractiCalEventList.practiCalEventList.Insert(2014, 2, 7, 4, 5, 6, 14, "Ninth", "This is ninth event");
+//		PractiCalEventList.practiCalEventList.Insert(2014, 2, 7, 4, 5, 6, 15, "Tenth", "This is tenth event");
+//		PractiCalEventList.practiCalEventList.Insert(2014, 3, 7, 4, 5, 6, 16, "Eleventh", "This is eleventh event");
+//		
 //		PractiCalEventList.practiCalEventList.Save("save.txt");
+//		PractiCalEventList.practiCalEventList.Delete(0);
+////		PractiCalEventList.practiCalEventList.Save("save.txt");
 		PractiCalEventList.practiCalEventList.Load("save.txt");
 	}
 
@@ -313,27 +331,27 @@ public class MainActivity extends Activity {
 			}
 		});
 		
-		btnTEST.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				try{
-					SingleEvent testevent = new SingleEvent(12334, 1987, 7, 15, 15, 18, 0, 10, "birth", "birthday");	
-							
-				
-				Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
-				intent.putExtra("mode_setting", 0); // 0: modify, 1: new
-				
-				intent.putExtra("event_obj", testevent);
-				
-				intent.putExtra("db_access_info", "test_value");
-				startActivity(intent);		
-				
-				}
-				catch(Exception ex){
-					
-				}	
-			}
-		});
+//		btnTEST.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				try{
+//					SingleEvent testevent = new SingleEvent(12334, 1987, 7, 15, 15, 18, 0, 10, "birth", "birthday");	
+//							
+//				
+//				Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
+//				intent.putExtra("mode_setting", 0); // 0: modify, 1: new
+//				
+//				intent.putExtra("event_obj", testevent);
+//				
+//				intent.putExtra("db_access_info", "test_value");
+//				startActivity(intent);		
+//				
+//				}
+//				catch(Exception ex){
+//					
+//				}	
+//			}
+//		});
 	}
 
 	private void monthlyCalInitialize() {
