@@ -26,6 +26,11 @@ public class EventListAdapter extends BaseAdapter {
 		dataList.add(event);
 	}
 	
+	public void clear()
+	{
+		dataList.clear();
+	}
+	
 	@Override
 	public int getCount()
 	{
