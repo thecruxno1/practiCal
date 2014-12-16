@@ -363,11 +363,11 @@ public class EventmodActivity extends Activity {
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
 		case EVENT_MOD_START_DATE_DIALOG_ID:
-			return new DatePickerDialog(this, mStartDateSetListener, start_year, start_month, start_day);
+			return new DatePickerDialog(this, mStartDateSetListener, start_year, start_month-1, start_day);
 		case EVENT_MOD_START_TIME_DIALOG_ID:
 			return new TimePickerDialog(this, mStartTimeSetListener, start_hour, start_min, true);
 		case EVENT_MOD_END_DATE_DIALOG_ID:
-			return new DatePickerDialog(this, mEndDateSetListener, end_year, end_month, end_day);
+			return new DatePickerDialog(this, mEndDateSetListener, end_year, end_month-1, end_day);
 		case EVENT_MOD_END_TIME_DIALOG_ID:
 			return new TimePickerDialog(this, mEndTimeSetListener, end_hour, end_min, true);
 		}

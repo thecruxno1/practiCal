@@ -728,13 +728,9 @@ public class MainActivity extends Activity {
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
 		case EVENT_MOD_START_DATE_DIALOG_ID:
-			return new DatePickerDialog(this, mStartDateSetListener,
-					eventCalendar.startYear, eventCalendar.startMonth,
-					eventCalendar.startDay);
+			return new DatePickerDialog(this, mStartDateSetListener, eventCalendar.startYear, eventCalendar.startMonth-1, eventCalendar.startDay);
 		case EVENT_MOD_END_DATE_DIALOG_ID:
-			return new DatePickerDialog(this, mEndDateSetListener,
-					eventCalendar.endYear, eventCalendar.endMonth,
-					eventCalendar.endDay);
+			return new DatePickerDialog(this, mEndDateSetListener, eventCalendar.endYear, eventCalendar.endMonth-1, eventCalendar.endDay);
 		}
 
 		return null;
