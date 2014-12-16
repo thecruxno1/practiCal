@@ -7,14 +7,12 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.v7.internal.widget.AdapterViewCompat;
-import android.support.v7.internal.widget.AdapterViewCompat.OnItemLongClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -22,13 +20,11 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -186,8 +182,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				severalCalTop.setText(selectedYear + " - " + selectedMonth);
-				severalCalAdapter.recalculate(selectedYear, selectedMonth - 1,
-						selectedDay);
+				severalCalAdapter.recalculate(selectedYear, selectedMonth - 1, selectedDay);
 				severalCal.setAdapter(severalCalAdapter);
 				severalCalAdapter.notifyDataSetChanged();
 
@@ -198,7 +193,6 @@ public class MainActivity extends Activity {
 				dailyCalScreen.setVisibility(View.INVISIBLE);
 				eventCalScreen.setVisibility(View.INVISIBLE);
 				optionScreen.setVisibility(View.INVISIBLE);
-
 			}
 		});
 
@@ -206,27 +200,26 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				loadDailyEvent();
-
 				dailyCalTop.setText(selectedYear + ". " + selectedMonth + ". "+ selectedDay);
+				loadDailyEvent();
 				
-				// display event list
-				dailyCalEventListAdapter.clear();
-				
-				ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(selectedYear, selectedMonth, selectedDay);
-				if (list.size() == 0) {
-					Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_SHORT).show();
-				} else {
-					for (int i = 0; i < list.size(); i++)
-					{
-//						System.out.println(list.get(i).GetStartHour() + ":" + list.get(i).GetStartMin());
-//						Toast.makeText(MainActivity.this, list.get(i).GetStartHour() + ":" + list.get(i).GetStartMin(), Toast.LENGTH_SHORT).show();
-						dailyCalEventListAdapter.addItem(list.get(i));
-					}
-					
-					dailyCalEventList.setAdapter(dailyCalEventListAdapter);
-					dailyCalEventList.setOnItemClickListener(onEventListItemClickListener);
-				}
+//				// display event list
+//				dailyCalEventListAdapter.clear();
+//				
+//				ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(selectedYear, selectedMonth, selectedDay);
+//				if (list.size() == 0) {
+//					Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_SHORT).show();
+//				} else {
+//					for (int i = 0; i < list.size(); i++)
+//					{
+////						System.out.println(list.get(i).GetStartHour() + ":" + list.get(i).GetStartMin());
+////						Toast.makeText(MainActivity.this, list.get(i).GetStartHour() + ":" + list.get(i).GetStartMin(), Toast.LENGTH_SHORT).show();
+//						dailyCalEventListAdapter.addItem(list.get(i));
+//					}
+//					
+//					dailyCalEventList.setAdapter(dailyCalEventListAdapter);
+//					dailyCalEventList.setOnItemClickListener(onEventListItemClickListener);
+//				}
 					
 				monthlyCalScreen.setVisibility(View.INVISIBLE);
 				severalCalScreen.setVisibility(View.INVISIBLE);
@@ -251,6 +244,9 @@ public class MainActivity extends Activity {
 						+ eventCalendar.startDay);
 				endDay.setText(eventCalendar.endYear + "/"
 						+ eventCalendar.endMonth + "/" + eventCalendar.endDay);
+				
+				// clear event list
+				eventListAdapter.clear();
 
 				monthlyCalScreen.setVisibility(View.INVISIBLE);
 				severalCalScreen.setVisibility(View.INVISIBLE);
@@ -396,7 +392,11 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
+				intent.putExtra("mode_setting", 1); // 0: modify, 1: new
+				intent.putExtra("add_from", SEVERAL_CAL_EVENT_LIST);
 				
+				startActivityForResult(intent, 0);
 			}
 		});
 
@@ -443,7 +443,6 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
 				intent.putExtra("mode_setting", 1); // 0: modify, 1: new
-				intent.putExtra("db_access_info", "test_value");
 				intent.putExtra("add_from", DAILY_CAL_EVENT_LIST);
 				
 				startActivityForResult(intent, 0);
@@ -477,110 +476,120 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
 				intent.putExtra("mode_setting", 1); // 0: modify, 1: new
-				intent.putExtra("db_access_info", "test_value");
 				intent.putExtra("add_from", EVENT_CAL_EVENT_LIST);
 				
 				startActivityForResult(intent, 0);
 			}
 		});
 		
-		printEventNumber.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-
-				flag = PRINT_EVENT_NUMBER;
-				
-				String eventNumberStr = (eventNumber.getText().toString().equals(""))? null : eventNumber.getText().toString();
-				
-				if (eventNumberStr != null)
-					eventCalendar.eventNumber = Integer
-							.parseInt(eventNumberStr);
-
-				eventListAdapter.clear();
-
-				int day = fortoday.get(fortoday.DATE);
-				int month = fortoday.get(fortoday.MONTH) + 1;
-				int year = fortoday.get(fortoday.YEAR);
-				
-				ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(year, month, day, eventCalendar.eventNumber);
-				if (list.size() == 0) {
-					eventCalEventList.setAdapter(eventListAdapter);
-					Toast.makeText(MainActivity.this, "No events",
-							Toast.LENGTH_LONG).show();
-				} else {
-					for (int i = 0; i < list.size(); i++) {
-						// System.out.println(list.get(i).GetStartHour() + ":" +
-						// list.get(i).GetStartMin());
-						// Toast.makeText(MainActivity.this,
-						// list.get(i).GetStartHour() + ":" +
-						// list.get(i).GetStartMin(),
-						// Toast.LENGTH_SHORT).show();
-						eventListAdapter.addItem(list.get(i));
-					}
-
-					eventCalEventList.setAdapter(eventListAdapter);
-					eventCalEventList.setOnItemClickListener(onEventListItemClickListener);
-//					eventCalEventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//
-//						@Override
-//						public boolean onItemLongClick(AdapterView<?> arg0,
-//								View arg1, int arg2, long arg3) {
-//							Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
-//							intent.putExtra("mode_setting", 1); // 0: modify, 1: new
-//							intent.putExtra("db_access_info", "test_value");
-//							intent.putExtra("add_from", PRINT_EVENT_NUMBER);
-//							
-//							startActivityForResult(intent, 0);
-//							return true;
-//						}
-//						
-//					});
-				}
-			}
-		});
-
 		printEventRange.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				flag = PRINT_EVENT_RANGE;
+				loadEventRange();
 				
-				eventListAdapter.clear();
+				// hide keyboard
+				InputMethodManager mInputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+				mInputMethodManager.hideSoftInputFromWindow(eventNumber.getWindowToken(), 0);
 				
-				ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(eventCalendar.startYear, eventCalendar.startMonth, eventCalendar.startDay, 
-						eventCalendar.endYear, eventCalendar.endMonth, eventCalendar.endDay);
-				if (list.size() == 0) {
-					eventCalEventList.setAdapter(eventListAdapter);
-					Toast.makeText(MainActivity.this, "No events",
-							Toast.LENGTH_LONG).show();
-				} else {
-					for (int i = 0; i < list.size(); i++) {
-						// System.out.println(list.get(i).GetStartHour() + ":" +
-						// list.get(i).GetStartMin());
-						// Toast.makeText(MainActivity.this,
-						// list.get(i).GetStartHour() + ":" +
-						// list.get(i).GetStartMin(),
-						// Toast.LENGTH_SHORT).show();
-						eventListAdapter.addItem(list.get(i));
-					}
-
-					eventCalEventList.setAdapter(eventListAdapter);
-					eventCalEventList.setOnItemClickListener(onEventListItemClickListener);
-//					eventCalEventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//				flag = PRINT_EVENT_RANGE;
+//				
+//				eventListAdapter.clear();
+//				
+//				ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(eventCalendar.startYear, eventCalendar.startMonth, eventCalendar.startDay, 
+//						eventCalendar.endYear, eventCalendar.endMonth, eventCalendar.endDay);
+//				if (list.size() == 0) {
+//					eventCalEventList.setAdapter(eventListAdapter);
+//					Toast.makeText(MainActivity.this, "No events",
+//							Toast.LENGTH_SHORT).show();
+//				} else {
+//					for (int i = 0; i < list.size(); i++) {
+//						// System.out.println(list.get(i).GetStartHour() + ":" +
+//						// list.get(i).GetStartMin());
+//						// Toast.makeText(MainActivity.this,
+//						// list.get(i).GetStartHour() + ":" +
+//						// list.get(i).GetStartMin(),
+//						// Toast.LENGTH_SHORT).show();
+//						eventListAdapter.addItem(list.get(i));
+//					}
 //
-//						@Override
-//						public boolean onItemLongClick(AdapterView<?> arg0,
-//								View arg1, int arg2, long arg3) {
-//							Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
-//							intent.putExtra("mode_setting", 1); // 0: modify, 1: new
-//							intent.putExtra("db_access_info", "test_value");
-//							intent.putExtra("add_from", PRINT_EVENT_RANGE);
-//							
-//							startActivityForResult(intent, 0);
-//							return true;
-//						}
-//						
-//					});
-				}
+//					eventCalEventList.setAdapter(eventListAdapter);
+//					eventCalEventList.setOnItemClickListener(onEventListItemClickListener);
+////					eventCalEventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+////
+////						@Override
+////						public boolean onItemLongClick(AdapterView<?> arg0,
+////								View arg1, int arg2, long arg3) {
+////							Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
+////							intent.putExtra("mode_setting", 1); // 0: modify, 1: new
+////							intent.putExtra("db_access_info", "test_value");
+////							intent.putExtra("add_from", PRINT_EVENT_RANGE);
+////							
+////							startActivityForResult(intent, 0);
+////							return true;
+////						}
+////						
+////					});
+//				}
+			}
+		});
+		
+		printEventNumber.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				loadEventNumber();
+				
+				// hide keyboard
+				InputMethodManager mInputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+				mInputMethodManager.hideSoftInputFromWindow(eventNumber.getWindowToken(), 0);
+				
+//				flag = PRINT_EVENT_NUMBER;
+//				
+//				String eventNumberStr = (eventNumber.getText().toString().equals(""))? null : eventNumber.getText().toString();
+//				
+//				if (eventNumberStr != null)
+//					eventCalendar.eventNumber = Integer
+//							.parseInt(eventNumberStr);
+//
+//				eventListAdapter.clear();
+//
+//				int day = fortoday.get(fortoday.DATE);
+//				int month = fortoday.get(fortoday.MONTH) + 1;
+//				int year = fortoday.get(fortoday.YEAR);
+//				
+//				ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(year, month, day, eventCalendar.eventNumber);
+//				if (list.size() == 0) {
+//					eventCalEventList.setAdapter(eventListAdapter);
+//					Toast.makeText(MainActivity.this, "No events",
+//							Toast.LENGTH_SHORT).show();
+//				} else {
+//					for (int i = 0; i < list.size(); i++) {
+//						// System.out.println(list.get(i).GetStartHour() + ":" +
+//						// list.get(i).GetStartMin());
+//						// Toast.makeText(MainActivity.this,
+//						// list.get(i).GetStartHour() + ":" +
+//						// list.get(i).GetStartMin(),
+//						// Toast.LENGTH_SHORT).show();
+//						eventListAdapter.addItem(list.get(i));
+//					}
+//
+//					eventCalEventList.setAdapter(eventListAdapter);
+//					eventCalEventList.setOnItemClickListener(onEventListItemClickListener);
+////					eventCalEventList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+////
+////						@Override
+////						public boolean onItemLongClick(AdapterView<?> arg0,
+////								View arg1, int arg2, long arg3) {
+////							Intent intent = new Intent(MainActivity.this, EventmodActivity.class);
+////							intent.putExtra("mode_setting", 1); // 0: modify, 1: new
+////							intent.putExtra("db_access_info", "test_value");
+////							intent.putExtra("add_from", PRINT_EVENT_NUMBER);
+////							
+////							startActivityForResult(intent, 0);
+////							return true;
+////						}
+////						
+////					});
+//				}
 			}
 		});
 
@@ -752,10 +761,13 @@ public class MainActivity extends Activity {
 		
 		switch (resultCode) {
 		case SEVERAL_CAL_EVENT_LIST:
+//			btnSeveralCal.performClick();
+			loadSeveralEvent();
 			break;
 			
 		case DAILY_CAL_EVENT_LIST:
-			btnDailyCal.performClick();
+//			btnDailyCal.performClick();
+			loadDailyEvent();
 			break;
 			
 		case EVENT_CAL_EVENT_LIST:
@@ -785,7 +797,7 @@ public class MainActivity extends Activity {
 			
 			ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(selectedYear, selectedMonth, selectedDay);
 			if (list.size() == 0) {
-				Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_SHORT).show();
 			} else {
 				for (int i = 0; i < list.size(); i++)
 				{
@@ -810,7 +822,7 @@ public class MainActivity extends Activity {
 						eventCalendar.endYear, eventCalendar.endMonth, eventCalendar.endDay);
 				if (list1.size() == 0) {
 					eventCalEventList.setAdapter(eventListAdapter);
-					Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_SHORT).show();
+//					Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_SHORT).show();
 				} else {
 					for (int i = 0; i < list1.size(); i++)
 					{
@@ -859,7 +871,7 @@ public class MainActivity extends Activity {
 				ArrayList<SingleEvent> list1 = PractiCalEventList.practiCalEventList.Search(year, month, day, eventCalendar.eventNumber);
 				if (list1.size() == 0) {
 					eventCalEventList.setAdapter(eventListAdapter);
-					Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_SHORT).show();
+//					Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_SHORT).show();
 				} else {
 					for (int i = 0; i < list1.size(); i++)
 					{
@@ -908,11 +920,9 @@ public class MainActivity extends Activity {
 		// display event list
 		dailyCalEventListAdapter.clear();
 
-		ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(selectedYear,
-				selectedMonth, selectedDay);
+		ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(selectedYear, selectedMonth, selectedDay);
 		if (list.size() == 0) {
-			Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_SHORT)
-					.show();
+//			Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_SHORT).show();
 		} else {
 			for (int i = 0; i < list.size(); i++) {
 				// System.out.println(list.get(i).GetStartHour() + ":" +
@@ -923,19 +933,19 @@ public class MainActivity extends Activity {
 				dailyCalEventListAdapter.addItem(list.get(i));
 			}
 			
+			dailyCalEventList.setAdapter(dailyCalEventListAdapter);
+			dailyCalEventList.setOnItemClickListener(onEventListItemClickListener);
 		}
-		dailyCalEventList.setAdapter(dailyCalEventListAdapter);
+//		dailyCalEventList.setAdapter(dailyCalEventListAdapter);
 	}
 
 	private void loadSeveralEvent() {
 		// display event list
 		severalCalEventListAdapter.clear();
 
-		ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(selectedYear,
-				selectedMonth, selectedDay);
+		ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(selectedYear, selectedMonth, selectedDay);
 		if (list.size() == 0) {
-			Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_SHORT)
-					.show();
+//			Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_SHORT).show();
 		} else {
 			for (int i = 0; i < list.size(); i++) {
 				// System.out.println(list.get(i).GetStartHour() + ":" +
@@ -946,8 +956,59 @@ public class MainActivity extends Activity {
 				severalCalEventListAdapter.addItem(list.get(i));
 			}
 			
+			severalCalEventList.setAdapter(severalCalEventListAdapter);
+			severalCalEventList.setOnItemClickListener(onEventListItemClickListener);
 		}
-		severalCalEventList.setAdapter(severalCalEventListAdapter);
+//		severalCalEventList.setAdapter(severalCalEventListAdapter);
+	}
+	
+	private void loadEventRange() {
+		flag = PRINT_EVENT_RANGE;
+		
+		eventListAdapter.clear();
+		
+		ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(eventCalendar.startYear, eventCalendar.startMonth, eventCalendar.startDay, 
+				eventCalendar.endYear, eventCalendar.endMonth, eventCalendar.endDay);
+		if (list.size() == 0) {
+			eventCalEventList.setAdapter(eventListAdapter);
+//			Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_SHORT).show();
+		} else {
+			for (int i = 0; i < list.size(); i++) {
+				eventListAdapter.addItem(list.get(i));
+			}
+
+			eventCalEventList.setAdapter(eventListAdapter);
+			eventCalEventList.setOnItemClickListener(onEventListItemClickListener);
+		}
+	}
+	
+	private void loadEventNumber() {
+		flag = PRINT_EVENT_NUMBER;
+		
+		String eventNumberStr = (eventNumber.getText().toString().equals(""))? null : eventNumber.getText().toString();
+		
+		if (eventNumberStr != null)
+			eventCalendar.eventNumber = Integer
+					.parseInt(eventNumberStr);
+
+		eventListAdapter.clear();
+
+		int day = fortoday.get(fortoday.DATE);
+		int month = fortoday.get(fortoday.MONTH) + 1;
+		int year = fortoday.get(fortoday.YEAR);
+		
+		ArrayList<SingleEvent> list = PractiCalEventList.practiCalEventList.Search(year, month, day, eventCalendar.eventNumber);
+		if (list.size() == 0) {
+			eventCalEventList.setAdapter(eventListAdapter);
+//			Toast.makeText(MainActivity.this, "No events", Toast.LENGTH_SHORT).show();
+		} else {
+			for (int i = 0; i < list.size(); i++) {
+				eventListAdapter.addItem(list.get(i));
+			}
+
+			eventCalEventList.setAdapter(eventListAdapter);
+			eventCalEventList.setOnItemClickListener(onEventListItemClickListener);
+		}
 	}
 
 	private DatePickerDialog.OnDateSetListener mMonthlyCalDateSetListener = new OnDateSetListener() {

@@ -113,7 +113,6 @@
                 android:hint="type description"
                 android:lines="8" >
 
-                <requestFocus />
             </EditText>
         </LinearLayout>
 
@@ -138,7 +137,6 @@
                 android:ems="10"
                 android:hint="type location" >
 
-                <requestFocus />
             </EditText>
 
             <TextView
@@ -151,12 +149,10 @@
                 android:id="@+id/eventmod_isIPT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:background="#dddddd"
                 android:ems="10"
                 android:hint="is it important?" >
 
-                <requestFocus />
             </EditText>
 
             <TextView
@@ -174,7 +170,6 @@
                 android:ems="10"
                 android:hint="select event group" >
 
-                <requestFocus />
             </EditText>
 
             <TextView
@@ -192,7 +187,6 @@
                 android:ems="10"
                 android:hint="color~" >
 
-                <requestFocus />
             </EditText>
         </LinearLayout>
 

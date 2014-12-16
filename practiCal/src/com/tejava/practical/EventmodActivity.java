@@ -1,23 +1,21 @@
 package com.tejava.practical;
 
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 public class EventmodActivity extends Activity {
 
@@ -274,6 +272,15 @@ public class EventmodActivity extends Activity {
 				}
 				
 				finish();
+				
+				// hide keyboard
+				InputMethodManager mInputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+				mInputMethodManager.hideSoftInputFromWindow(ET_event_color.getWindowToken(), 0);
+				mInputMethodManager.hideSoftInputFromWindow(ET_event_description.getWindowToken(), 0);
+				mInputMethodManager.hideSoftInputFromWindow(ET_event_group_number.getWindowToken(), 0);
+				mInputMethodManager.hideSoftInputFromWindow(ET_event_important.getWindowToken(), 0);
+				mInputMethodManager.hideSoftInputFromWindow(ET_event_location.getWindowToken(), 0);
+				mInputMethodManager.hideSoftInputFromWindow(ET_event_name.getWindowToken(), 0);
 			}
 		});
 
@@ -299,6 +306,15 @@ public class EventmodActivity extends Activity {
 				}
 				
 				finish();
+				
+				// hide keyboard
+				InputMethodManager mInputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+				mInputMethodManager.hideSoftInputFromWindow(ET_event_color.getWindowToken(), 0);
+				mInputMethodManager.hideSoftInputFromWindow(ET_event_description.getWindowToken(), 0);
+				mInputMethodManager.hideSoftInputFromWindow(ET_event_group_number.getWindowToken(), 0);
+				mInputMethodManager.hideSoftInputFromWindow(ET_event_important.getWindowToken(), 0);
+				mInputMethodManager.hideSoftInputFromWindow(ET_event_location.getWindowToken(), 0);
+				mInputMethodManager.hideSoftInputFromWindow(ET_event_name.getWindowToken(), 0);
 			 }
 		});
 		
