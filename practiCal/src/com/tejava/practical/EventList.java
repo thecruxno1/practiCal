@@ -194,7 +194,6 @@ public class EventList
 	
 	public void Load(String loadFileName) throws Exception
 	{
-
 		String fullPath = Environment.getExternalStorageDirectory().toString() + "/" + loadFileName;
 		FileInputStream fileIn;
 		try
