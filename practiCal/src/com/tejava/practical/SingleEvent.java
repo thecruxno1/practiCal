@@ -253,7 +253,7 @@ public class SingleEvent implements java.io.Serializable
 	{
 		try
 		{
-			if(newEndMin < 0 || newEndMin >23)
+			if(newEndMin < 0 || newEndMin > 59)
 			{
 				throw new Exception();
 			}
