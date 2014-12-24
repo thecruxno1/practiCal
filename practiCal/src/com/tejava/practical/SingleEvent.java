@@ -14,6 +14,7 @@ public class SingleEvent implements java.io.Serializable
 	private String location;
 	private long startYearMonthDayAndTime, endYearMonthDayAndTime;
 	private int yearMonthDay;
+
 	public static final long serialVersionUID = 1L;
 	
 	public SingleEvent()
@@ -60,10 +61,7 @@ public class SingleEvent implements java.io.Serializable
 		SetYearMonthDay(newSingleEvent.GetYearMonthDay());
 	}
 	
-	public void Copy(int newId, int newYear, int newMonth, int newDay,
-			int newStartHour, int newEndHour, int newStartMin, int newEndMin,
-			String newName, String newDescription, int newEventGroup, int newColor,
-			int newImportant, String newLocation) throws Exception
+	public void Copy(int newId, int newYear, int newMonth, int newDay,int newStartHour, int newEndHour, int newStartMin, int newEndMin,	String newName, String newDescription, int newEventGroup, int newColor,	int newImportant, String newLocation) throws Exception
 	{
 		SetId(newId);
 		SetYear(newYear);

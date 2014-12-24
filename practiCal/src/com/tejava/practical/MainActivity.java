@@ -114,6 +114,8 @@ public class MainActivity extends Activity {
 	int selectedMonth;
 	int selectedYear;
 	String selectedDayOfWeek;
+	
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) throws RuntimeException {
@@ -121,6 +123,8 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		try {
+			
+			
 			variableInitialize();
 			optionInitailize();
 			
@@ -131,6 +135,8 @@ public class MainActivity extends Activity {
 			
 
 			listenerInitialize();
+			
+			
 
 			// Test();
 		} catch (Exception ex) {
@@ -160,7 +166,23 @@ public class MainActivity extends Activity {
 		
 		
 		PractiCalEventList.practiCalEventList = new EventList(MainActivity.this);
+		//
 		
+		int testid, testday, testHour, testEventGroup;
+		testid = 0;
+
+		for(testday=1;testday<31;testday++){
+			for(testHour=1;testHour<21;testHour++){
+				for(testEventGroup=1;testEventGroup<3;testEventGroup++){
+					SingleEvent SingleEvent1 = new SingleEvent(0,2014, 12, testday, testHour, testHour, 10, 30,"test"+testid , "Description", testEventGroup, 1, 1, "test");
+					PractiCalEventList.practiCalEventList.Insert(SingleEvent1);
+					testid++;
+					
+				}	
+			}			
+		}
+		//
+		PractiCalEventList.practiCalEventList.Save("save.txt");
 		PractiCalEventList.practiCalEventList.Load("save.txt");
 	}
 
